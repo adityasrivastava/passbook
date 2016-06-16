@@ -1,0 +1,174 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<title>Passbook Sample Page</title>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fileDownload/1.4.2/jquery.fileDownload.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+	<script type="text/javascript" src="app/app.js"></script>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+    var userName = /*[[${user.name}]]*/ null;
+    /*]]>*/
+</script>
+
+	<script>
+	var updatePage = false;
+	</script>
+	<style type="text/css">
+/* 		label{
+			font-size: 20px;
+			color: white;
+		}
+		h3{
+			color: white;
+		}
+
+		h1{
+			color: white;
+		}
+		body{
+			background-color: #CBE32D;
+		} */
+	</style>
+</head>	
+
+<body >
+<hr/>
+	<div class="container" ng-app="passbookApp">
+
+		<div class="main-content" ng-controller="passbookCtrl">
+
+			<div class="form-group">
+		<!-- 		<div class="col-sm-1">
+					<img src="images/us/web/Add_to_Apple_Wallet_rgb_US-UK.svg" class="img-thumbnail" height="300" width="300">
+				</div> -->
+
+				<div>
+					<h1>Apple Passbook Web Application</h1>
+				</div>
+			</div>
+
+			<div class="golf-course-container form-group">
+				<div class="golf-course-label">
+					<label>Gold Course</label>
+				</div>
+
+				<div class="golf-course-input-box">
+					<select class="form-control" name="gold_course" ng-model="user.golf_course" ng-options="course.golfCourseId as course.courseName for course in data_properties.golf_course_list"> </select>
+				</div>	
+			</div>
+
+			<div class="form-group">
+
+				<div >
+
+					<h3>Choose Game:</h3>
+
+				</div>
+
+			</div>
+
+
+
+			<div class="hole-type-container form-group">
+				<div class="hole-type-label">
+					<label>Hole Type:</label>
+				</div>
+
+				<div class="hole-type-input-box ">
+					<select class="form-control" name="hole_type" ng-model="user.hole_type" ng-options="hole_type.holeTypeId as hole_type.holes for hole_type in data_properties.hole_type_list"></select>
+				</div>	
+			</div>
+
+			<div class="tee-type-container form-group">
+				<div class="tee-type-label ">
+					<label>Tee Type:</label>
+				</div>
+
+				<div class="tee-type-input-box ">
+					<select class="form-control" name="tee_type" ng-model="user.tee_type" ng-options="tee_type.teeId as tee_type.color for tee_type in data_properties.tee_type_list"></select>
+				</div>	
+			</div>
+
+
+			<div class="name-container form-group">
+				<div class="name-label ">
+					<label>Name</label>
+				</div>
+
+				<div class="name-input-box">
+					<input class="form-control" name="name" ng-model="user.name" />
+				</div>	
+			</div>
+
+
+			<div class="age-container form-group">
+				<div class="age-label ">
+					<label>Age</label>
+				</div>
+
+				<div class="age-input-box ">
+					<input class="form-control" name="age" ng-model="user.age" />
+				</div>	
+			</div>
+
+
+
+
+			<div class="gender-container form-group">
+				<div class="gender-label">
+					<label>Gender</label>
+				</div>
+				<div class="gender-input-box">
+					<select class="form-control" name="gender" ng-model="user.gender" ng-options="gender.value as gender.value for gender in data_properties.genders" >
+					</select>
+				</div>	
+			</div>
+
+
+			<div class="handicap-container form-group">
+				<div class="handicap-label">
+					<label>Handicap</label>
+				</div>
+
+				<div class="handicap-input-box">
+					<input class="form-control" name="handicap" ng-model="user.handicap" />
+				</div>	
+			</div>
+
+			<br/>
+			<div class="submit-container form-group">
+				<div class="submit-button col-sm-1">
+					<a class="btn btn-primary" ng-href="{{createPassbook()}}" name="create" >Create</a>
+				</div>
+<!-- 
+				<div class="submit-button col-sm-1">
+					<a class="btn btn-primary" ng-click="createPassbook1()" name="create" download>Create1</a>
+				</div> -->
+				<div class="clear-button col-sm-1">
+					<button class="btn btn-primary" name="clear" ng-click="clearPassbook()">Clear</button>
+				</div>
+			</div>
+
+			<div class="error-message row">
+				<div class="col-sm-5" style="color: #D04545;">
+					{{error}}
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+<hr/>
+
+</body>
+
+</html>

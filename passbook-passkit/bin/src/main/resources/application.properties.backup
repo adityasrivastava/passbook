@@ -1,0 +1,14 @@
+PASS.LOGO_TEXT                      =
+PASS.ORGANIZATION_NAME              =Aviva India
+PASS.DESCRIPTION                    =Aviva Insurence Card
+#pass type id
+PASS.PASS_TYPE_IDENTIFIER           =pass.com.aviva.avivaindia
+#Oragnization Unit
+PASS.TEAM_IDENTIFIER                =4TZH9W7376
+PASS.P12_CERTIFICATE_FILE_PATH      =/Users/adityasrivastava/Documents/Passbook/passkit/files/certificates/Certificates.p12
+PASS.P12_CERTIFICATE_ALIAS          =aviva
+PASS.P12_CERTIFICATE_PASSWORD       =aviva
+PASS.APPLE_WWDRCA_FILE_PATH         =/Users/adityasrivastava/Documents/Passbook/passkit/files/certificates/AppleWWDRCA.cer
+PASS.RESOURCE_LOCATION_PATH         =/Users/adityasrivastava/Documents/Passbook/passkit/files/storecard/
+PASS.AUTH_TOKEN =lksfdjlkdfs19031231209312
+PASS.WEB_SERVICE_URL=http://0.0.0.0:8080/

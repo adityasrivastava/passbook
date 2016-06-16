@@ -1,0 +1,83 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<title>Sign up</title>
+
+</head>
+
+<body>
+	<hr/>
+	<div class="container">
+	<h1>Sign Up Form</h1>
+	<form name="signupform" th:action="@{/signup}" method="post"
+		enctype="utf8" role="form">
+<!-- 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
+ -->		
+ 			<div class="form-group">
+ 			
+ 			<label for="firstName">First Name</label>
+ 			<input class="form-control" id="firstName" th:name="firstName" th:type="text" th:value="*{register.firstName}" /> 
+ 			</div>
+ 			
+ 			<div class="form-group">
+ 			
+ 			<label for="lastName">Last Name</label>
+ 			
+ 			<input class="form-control" th:name="lastName" th:type="text" th:value="*{register.lastName}" />
+ 			
+ 			</div>
+ 			
+			<div class="form-group">
+			
+			
+			<label for="email">Email Address</label>
+			<input id="email" class="form-control" th:name="email" th:type="text" th:value="*{register.email}" />
+			
+			</div>
+			
+			<div class="form-group">
+			
+			<label for="password">Password</label>
+			<input id="password" ng-model="password" class="form-control" th:name="password" th:type="password" th:value="*{register.password}" /> 
+			
+			</div>
+			
+			
+			<!-- <div class="form-group">
+			
+			<label for="confirmPassword">Confirm Password</label>
+			<input id="confirmPassword" ng-model="passwordConfirm" class="form-control" th:name="passwordConfirm" th:type="password" th:value="*{register.passwordVerification}" /> 
+			</div>
+			
+			    <div ng-if="password != passwordConfirm" class="form-group">
+               	<div  class="alert alert-danger">    
+                    Password do not match.
+                </div>
+            </div> -->
+			
+			
+			<div class="form-group">
+			
+			<input class="btn btn-primary" th:name="submit" th:type="submit" value="Register" />
+			
+			</div>
+			
+	</form>
+	
+	
+	
+	</div>
+<hr/>
+</body>
+
+</html>
+
+
+

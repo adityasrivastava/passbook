@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<title>Passbook Update Sample Page</title>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="app/app.js"></script>
+
+	<script>
+		var updatePage = true;
+
+	</script>
+	<style type="text/css">
+		label{
+			font-size: 20px;
+			color: white;
+		}
+
+		h1{
+			color: white;
+		}
+		body{
+			background-color: #CBE32D;
+		}
+	</style>
+</head>	
+
+<body >
+	<div class="container-fluid" ng-app="passbookApp">
+
+		<div class="main-content col-sm-12" ng-controller="passbookCtrl">
+
+
+			<br/>
+
+			<div class="game-container row">
+				<div class="game-label col-sm-2">
+					<label>Select Game Id:</label>
+				</div>
+
+				<div class="game-input-box col-sm-2">
+					<select class="form-control" name="game" ng-model="user.golf" ng-options="golf.id as golf.id for golf in data_properties.golf"></select>
+				</div>	
+			</div>
+
+
+			<div class="hole-container row">
+				<div class="hole-label col-sm-2">
+					<label>Select hole:</label>
+				</div>
+
+				<div class="hole-input-box col-sm-2">
+					<select class="form-control" name="hole" ng-model="user.hole" ng-options="hole.holes as hole.holes for hole in data_properties.hole_type_list"></select>
+				</div>	
+			</div>
+
+
+			<div class="score-container row">
+				<div class="score-label col-sm-2">
+					<label>Score</label>
+				</div>
+
+				<div class="score-input-box col-sm-3">
+					<input name="score" ng-model="user.score"/>
+				</div>	
+			</div>
+
+
+
+
+			<div class="submit-container row">
+
+				<div class="update-button col-sm-1">
+					<button class="btn btn-primary" name="update" ng-click="updatePassbook()">Update</button>
+				</div>
+
+			</div>
+
+			<div class="status-container row" style="color: red;">
+
+				<h5>{{update}}</h5>
+
+			</div>
+
+		</div>
+
+	</div>
+
+
+
+</body>
+
+</html>

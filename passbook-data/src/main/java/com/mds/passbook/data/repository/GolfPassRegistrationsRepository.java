@@ -1,0 +1,12 @@
+package com.mds.passbook.data.repository;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.mds.passbook.data.repository.dao.PassRegistrationsDao;
+
+public interface GolfPassRegistrationsRepository extends CrudRepository<PassRegistrationsDao, Integer>{
+		List<PassRegistrationsDao> findByPassTypeId(String passTypeId);
+		PassRegistrationsDao findBySerialNumberAndPassTypeId(String serialNumber, String passTypeId);
+}
