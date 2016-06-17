@@ -37,7 +37,7 @@ public class PassbookServiceBean implements PassbookService{
 	public InputStream createPassbook(String name, String age, String gender, String golf_course, String hole_type, String tee_type, String handicap, GolfUserDao userDao){
 
 		GolfUser user;
-		GolfGame golf;
+		GolfGame golfGame;
 		List<GolfScoreDao>  dao = null;
 		GolfWallet wallet;
 		GolfDao golfDao;
@@ -47,7 +47,7 @@ public class PassbookServiceBean implements PassbookService{
 		
 		wallet = new GolfWallet();
 		user = new GolfUser();
-		golf = new GolfGame();
+		golfGame = new GolfGame();
 		
 		scores = new ArrayList<com.mds.passkit.GolfScore>();
 		
@@ -60,16 +60,16 @@ public class PassbookServiceBean implements PassbookService{
 
 		user = golfService.updateUser(user);
 
-		golf.setCourseId(Long.valueOf(golf_course));
-		golf.setHoleTypeId(Long.valueOf(hole_type));
-		golf.setTeeTypeId(Long.valueOf(tee_type));
-		golf.setUserId(user.getUserId());
-		golf.setPassTypeId("pass.com.mds.passbookapp");
+		golfGame.setCourseId(Long.valueOf(golf_course));
+		golfGame.setHoleTypeId(Long.valueOf(hole_type));
+		golfGame.setTeeTypeId(Long.valueOf(tee_type));
+		golfGame.setUserId(user.getUserId());
+		golfGame.setPassTypeId("pass.com.mds.passbookapp");
 
-		dao = golfService.addGolf(golf);
+		dao = golfService.addGolf(golfGame);
 		
 		golfDao = dao.get(0).getGolf();
-		System.out.println("------->"+golfDao.getId());
+
 		wallet.setSerialNumber(""+golfDao.getId());
 		wallet.setUserName(golfDao.getUsersId().getName());
 		wallet.setUserGender(golfDao.getUsersId().getGender());
@@ -147,9 +147,7 @@ public class PassbookServiceBean implements PassbookService{
 		// Update pass table with devid and push token
 		
 		golfPass = golfService.findGolfPassById(userPassId);
-		
-		System.out.println("---->"+golfPass);
-		
+
 		golfPass.setDeviceId(deviceId);
 		golfPass.setToken(pushToken);
 		golfPass.setPassAdded(true);

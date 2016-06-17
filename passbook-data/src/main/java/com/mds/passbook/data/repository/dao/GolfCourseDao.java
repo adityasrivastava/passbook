@@ -13,7 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity(name="GOLF_COURSE")
-public class GolfCourseDao extends BaseEntity<Long> implements Serializable{
+public class GolfCourseDao extends BaseEntity<Long> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

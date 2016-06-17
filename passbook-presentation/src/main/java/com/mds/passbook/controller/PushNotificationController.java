@@ -216,9 +216,6 @@ public class PushNotificationController {
 		update.setSerialNumbers(passRegistrationsArr);
 		
 		return new ResponseEntity<GameUpdate>(update, HttpStatus.OK);
-
-//		return new ResponseEntity<String>("{\"serialNumbers\": [\"2221\"], \"lastUpdated\" : \""
-//				+ new Timestamp(System.currentTimeMillis() - (1000 * 60 * 60)) + "\"}", HttpStatus.OK);
 	}
 
 	/**

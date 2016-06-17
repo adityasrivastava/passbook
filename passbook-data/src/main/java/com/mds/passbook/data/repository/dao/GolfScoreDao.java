@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity(name = "GOLF_SCORE")
-public class GolfScoreDao extends BaseEntity<Long> implements Serializable {
+public class GolfScoreDao extends BaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

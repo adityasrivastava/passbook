@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="GOLF_USER")
-public class GolfUserDao extends BaseEntity<Long> implements Serializable{
+public class GolfUserDao extends BaseEntity<Long>{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

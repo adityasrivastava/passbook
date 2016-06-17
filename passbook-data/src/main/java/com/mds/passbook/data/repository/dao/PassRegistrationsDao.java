@@ -45,6 +45,14 @@ public class PassRegistrationsDao extends BaseEntity<Long> {
 
 	}
 
+	public GolfDao getGolf() {
+		return golf;
+	}
+
+	public void setGolf(GolfDao golf) {
+		this.golf = golf;
+	}
+
 	public GolfPassDao getPass() {
 		return pass;
 	}

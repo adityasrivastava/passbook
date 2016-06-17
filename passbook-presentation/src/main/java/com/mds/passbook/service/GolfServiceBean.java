@@ -389,7 +389,7 @@ public class GolfServiceBean implements GolfService {
 		PassRegistrationsDao passRegisterDao = new PassRegistrationsDao();
 		passRegisterDao.setPass(userDao.getPass());
 		passRegisterDao.setPassTypeId(golf.getPassTypeId());
-
+		passRegisterDao.setGolf(golfDao);
 		passRegisterDao.setSerialNumber("" + golfDao.getId());
 		golfPassRegisterRepo.save(passRegisterDao);
 

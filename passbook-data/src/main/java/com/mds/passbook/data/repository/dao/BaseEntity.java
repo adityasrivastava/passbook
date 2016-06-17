@@ -8,11 +8,11 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class BaseEntity<ID> {
 
-    @Column(name = "CREATION_DATE")
+    @Column(name = "CREATION_DATE", nullable=false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime creationTime;
 
-    @Column(name = "MODIFY_DATE")
+    @Column(name = "MODIFY_DATE",  nullable=false)
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime modificationTime;
 
