@@ -8,7 +8,7 @@ import com.mds.passbook.data.repository.dao.GolfCourseDao;
 import com.mds.passbook.data.repository.dao.GolfDao;
 import com.mds.passbook.data.repository.dao.GolfUserDao;
 
-public interface GolfRepository extends CrudRepository<GolfDao, Integer>{
+public interface GolfRepository extends CrudRepository<GolfDao, Long>{
 	
 	public GolfDao findByGolfCoursesId(GolfCourseDao golfCourseId);
 	public List<GolfDao> findByUsersId(GolfUserDao usersId);

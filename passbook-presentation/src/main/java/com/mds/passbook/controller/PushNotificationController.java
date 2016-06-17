@@ -244,7 +244,7 @@ public class PushNotificationController {
 
 		GolfWallet wallet = new GolfWallet();
 
-		dao = golfService.getScoresById(Integer.parseInt(serialNumber));
+		dao = golfService.getScoresById(Long.valueOf(serialNumber));
 
 		GolfDao golfDao = dao.get(0).getGolf();
 

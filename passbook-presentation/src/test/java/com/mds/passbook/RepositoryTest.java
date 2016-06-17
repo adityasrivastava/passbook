@@ -72,7 +72,7 @@ public class RepositoryTest {
 	
 	@org.junit.Test
 	public void findOneTest(){
-		GolfDao g = golfRepo.findOne(new Integer(1));
+		GolfDao g = golfRepo.findOne(new Long(1));
 		System.out.println("Golf "+g.getId()+">>>>>>>>>>>>>>>>>>>>FIND ONE BY ID>>>>>>>>>>>>>>>>>>>>");
 		System.out.println(g.toString());
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -275,13 +275,13 @@ public class RepositoryTest {
 		// Read Golf
 		GolfDao newGolf = new GolfDao();
 		GolfCourseDao g = new GolfCourseDao();
-		g.setGolfCourseId(2);
+		g.setGolfCourseId(new Long(2));
 		GolfDao find = golfRepo.findByGolfCoursesId(g);
 		
 		
 		// Read Golf score 
 		GolfDao gc = new GolfDao();
-		gc.setId(1);
+		gc.setId(new Long(1));
 		List<GolfScoreDao> readScore = golfScoreRepo.findByGolf(gc);
 		
 		for(GolfScoreDao gm: readScore){

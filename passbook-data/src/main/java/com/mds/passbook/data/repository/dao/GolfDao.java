@@ -17,12 +17,12 @@ import javax.persistence.OneToOne;
 
 
 @Entity(name="GOLF")
-public class GolfDao extends AbstractDateStampEntity implements Serializable{
+public class GolfDao extends BaseEntity<Long> implements Serializable{
 	
 	@Id
 	@GeneratedValue
 	@Column(name="GOLF_ID")
-	private int id;
+	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name="GOLF_USER",
@@ -55,7 +55,7 @@ public class GolfDao extends AbstractDateStampEntity implements Serializable{
 		
 	}
 	
-	public GolfDao(int id){
+	public GolfDao(Long id){
 		this.id = id;
 	}
 	
@@ -87,10 +87,10 @@ public class GolfDao extends AbstractDateStampEntity implements Serializable{
 		this.scoresId = scoresId;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public GolfUserDao getUsersId() {

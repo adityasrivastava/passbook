@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.mds.passbook.data.repository.dao.GolfHolesDao;
 
-public interface GolfHolesRepository extends CrudRepository<GolfHolesDao, Integer>{
+public interface GolfHolesRepository extends CrudRepository<GolfHolesDao, Long>{
 
 }

@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.mds.passbook.data.repository.dao.GolfTeeDao;
 
-public interface GolfTeeRepository extends CrudRepository<GolfTeeDao, Integer>{
+public interface GolfTeeRepository extends CrudRepository<GolfTeeDao, Long>{
 
 }

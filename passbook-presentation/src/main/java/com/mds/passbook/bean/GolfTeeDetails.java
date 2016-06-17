@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class GolfTeeDetails implements Serializable{
 	
-	private int teeTypeId;
+	private Long teeTypeId;
 	private int holeNumber;
 	private int yards;
 	private int par;
@@ -30,10 +30,10 @@ public class GolfTeeDetails implements Serializable{
 	public void setStroke(int stroke) {
 		this.stroke = stroke;
 	}
-	public int getTeeTypeId() {
+	public Long getTeeTypeId() {
 		return teeTypeId;
 	}
-	public void setTeeTypeId(int teeTypeId) {
+	public void setTeeTypeId(Long teeTypeId) {
 		this.teeTypeId = teeTypeId;
 	}
 	public int getYards() {

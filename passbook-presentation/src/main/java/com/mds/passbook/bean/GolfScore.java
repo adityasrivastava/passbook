@@ -2,7 +2,7 @@ package com.mds.passbook.bean;
 
 public class GolfScore {
 	
-	private int scoreId;
+	private Long scoreId;
 	private int score;
 	private int holeNumber;
 	private GolfTeeDetails golfTeeDetailsId;
@@ -16,10 +16,10 @@ public class GolfScore {
 	public void setHoleNumber(int holeNumber) {
 		this.holeNumber = holeNumber;
 	}
-	public int getScoreId() {
+	public Long getScoreId() {
 		return scoreId;
 	}
-	public void setScoreId(int scoreId) {
+	public void setScoreId(Long scoreId) {
 		this.scoreId = scoreId;
 	}
 	public GolfTeeDetails getGolfTeeDetailsId() {
@@ -34,13 +34,6 @@ public class GolfScore {
 	public void setGolf(Golf golf) {
 		this.golf = golf;
 	}
-	public int getId() {
-		return scoreId;
-	}
-	public void setId(int scoreId) {
-		this.scoreId = scoreId;
-	}
-
 	public int getScore() {
 		return score;
 	}

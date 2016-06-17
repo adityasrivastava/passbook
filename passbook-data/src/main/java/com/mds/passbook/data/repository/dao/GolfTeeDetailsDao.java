@@ -12,12 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity(name="GOLF_TEE_DETAILS")
-public class GolfTeeDetailsDao extends AbstractDateStampEntity implements Serializable{
+public class GolfTeeDetailsDao extends BaseEntity<Long> implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="TEE_TYPE_ID")
-	private int teeTypeId;
+	private Long teeTypeId;
 	
 	@Column(name="HOLE_NUMBER")
 	private int holeNumber;
@@ -54,10 +54,10 @@ public class GolfTeeDetailsDao extends AbstractDateStampEntity implements Serial
 	public void setStroke(int stroke) {
 		this.stroke = stroke;
 	}
-	public int getTeeTypeId() {
+	public Long getTeeTypeId() {
 		return teeTypeId;
 	}
-	public void setTeeTypeId(int teeTypeId) {
+	public void setTeeTypeId(Long teeTypeId) {
 		this.teeTypeId = teeTypeId;
 	}
 	public int getYards() {
@@ -77,6 +77,10 @@ public class GolfTeeDetailsDao extends AbstractDateStampEntity implements Serial
 	public String toString() {
 		return "GolfTeeDetailsDao [teeTypeId=" + teeTypeId + ", holeNumber=" + holeNumber + ", yards=" + yards
 				+ ", par=" + par + ", stroke=" + stroke + "]";
+	}
+	@Override
+	public Long getId() {
+		return teeTypeId;
 	}
 	
 	

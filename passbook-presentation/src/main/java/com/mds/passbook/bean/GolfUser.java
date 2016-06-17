@@ -6,7 +6,7 @@ import java.util.List;
 public class GolfUser {
 	
 
-	private int userId;
+	private Long userId;
 	private String name;
 	private int age;
 	private String gender;
@@ -41,10 +41,10 @@ public class GolfUser {
 		this.pass = pass;
 	}
 
-	public int getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public String getName() {

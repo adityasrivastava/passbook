@@ -12,12 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity(name = "GOLF_SCORE")
-public class GolfScoreDao extends AbstractDateStampEntity implements Serializable {
+public class GolfScoreDao extends BaseEntity<Long> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "SCORE_ID")
-	private int scoreId;
+	private Long scoreId;
 
 	@Column(name = "SCORE")
 	private int score;
@@ -56,11 +56,11 @@ public class GolfScoreDao extends AbstractDateStampEntity implements Serializabl
 	//
 	// this.golfTeeDetailsId = golfTeeDetailsId;
 	// }
-	public int getScoreId() {
+	public Long getScoreId() {
 		return scoreId;
 	}
 
-	public void setScoreId(int scoreId) {
+	public void setScoreId(Long scoreId) {
 		this.scoreId = scoreId;
 	}
 
@@ -79,14 +79,8 @@ public class GolfScoreDao extends AbstractDateStampEntity implements Serializabl
 	public void setGolf(GolfDao golf) {
 		this.golf = golf;
 	}
-
-	public int getId() {
-		return scoreId;
-	}
-
-	public void setId(int scoreId) {
-		this.scoreId = scoreId;
-	}
+	
+	
 
 	public int getScore() {
 		return score;
@@ -99,6 +93,11 @@ public class GolfScoreDao extends AbstractDateStampEntity implements Serializabl
 	@Override
 	public String toString() {
 		return "GolfScore [scoreId=" + scoreId + ", score=" + score + ", golf=" + golf + "]";
+	}
+
+	@Override
+	public Long getId() {
+		return scoreId;
 	}
 
 }

@@ -2,11 +2,11 @@ package com.mds.passbook.bean;
 
 public class GolfGame {
 	
-	private int id;
-	private int courseId;
-	private int holeTypeId;
-	private int teeTypeId;
-	private int userId;
+	private Long id;
+	private Long courseId;
+	private Long holeTypeId;
+	private Long teeTypeId;
+	private Long userId;
 	private String passTypeId;
 	private GolfPass pass;
 	
@@ -22,34 +22,34 @@ public class GolfGame {
 	public void setPass(GolfPass pass) {
 		this.pass = pass;
 	}
-	public int getCourseId() {
+	public Long getCourseId() {
 		return courseId;
 	}
-	public void setCourseId(int courseId) {
+	public void setCourseId(Long courseId) {
 		this.courseId = courseId;
 	}
-	public int getHoleTypeId() {
+	public Long getHoleTypeId() {
 		return holeTypeId;
 	}
-	public void setHoleTypeId(int holeTypeId) {
+	public void setHoleTypeId(Long holeTypeId) {
 		this.holeTypeId = holeTypeId;
 	}
-	public int getTeeTypeId() {
+	public Long getTeeTypeId() {
 		return teeTypeId;
 	}
-	public void setTeeTypeId(int teeTypeId) {
+	public void setTeeTypeId(Long teeTypeId) {
 		this.teeTypeId = teeTypeId;
 	}
-	public int getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

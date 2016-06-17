@@ -12,12 +12,12 @@ import javax.persistence.OneToOne;
 
 
 @Entity(name="PASS_REGISTRATION")
-public class PassRegistrationsDao extends AbstractDateStampEntity {
+public class PassRegistrationsDao extends BaseEntity<Long> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "REGISTER_PASS_ID")
-	private int registerPassId;
+	private Long registerPassId;
 
 	@Column(name = "PASS_TYPE_ID")
 	private String passTypeId;
@@ -53,11 +53,11 @@ public class PassRegistrationsDao extends AbstractDateStampEntity {
 		this.pass = pass;
 	}
 
-	public int getRegisterPassId() {
+	public Long getRegisterPassId() {
 		return registerPassId;
 	}
 
-	public void setRegisterPassId(int registerPassId) {
+	public void setRegisterPassId(Long registerPassId) {
 		this.registerPassId = registerPassId;
 	}
 
@@ -81,6 +81,11 @@ public class PassRegistrationsDao extends AbstractDateStampEntity {
 	public String toString() {
 		return "PassRegistrationsDao [registerPassId=" + registerPassId + ", passTypeId=" + passTypeId
 				+ ", serialNumber=" + serialNumber + ", pass=" + pass + "]";
+	}
+
+	@Override
+	public Long getId() {
+		return registerPassId;
 	}
 	
 	

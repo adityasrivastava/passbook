@@ -50,7 +50,7 @@ public class ViewController {
 			
 			Integer golfUserId = Integer.parseInt(userId);
 			
-			user = golfUserService.findOne(golfUserId);
+			user = golfUserService.findOne(Long.valueOf(userId));
 			
 			model.addAttribute("user", user);
 

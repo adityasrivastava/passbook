@@ -108,7 +108,7 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public GolfUser getUserById(int id) {
+	public GolfUser getUserById(Long id) {
 		GolfUserDao userDao = new GolfUserDao();
 		return null;
 	}
@@ -119,7 +119,7 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public Golf getGolfById(int id) {
+	public Golf getGolfById(Long id) {
 		
 		GolfDao golfDao;
 		Golf golf;
@@ -147,7 +147,7 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public GolfScoreDao getScoreById(int id) {
+	public GolfScoreDao getScoreById(Long id) {
 		return golfScoreRepo.findOne(id);
 	}
 
@@ -176,7 +176,7 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public GolfTeeDao getTeeById(int id) {
+	public GolfTeeDao getTeeById(Long id) {
 		return golfTeeRepo.findOne(id);
 	}
 
@@ -209,8 +209,8 @@ public class GolfServiceBean implements GolfService {
 		passDao = new GolfPassDao(golfPass.getToken(), golfPass.isPassAdded());
 		userDao = new GolfUserDao(user.getName(), user.getAge(), user.getGender(), user.getHandicap(), passDao);
 
-		golfDao = new GolfDao(userDao, new GolfCourseDao(Integer.parseInt(golfCourseId)),
-				new GolfHolesDao(Integer.parseInt(holeTypeId)), new GolfTeeDao(Integer.parseInt(teeTypeId)));
+		golfDao = new GolfDao(userDao, new GolfCourseDao(Long.valueOf(golfCourseId)),
+				new GolfHolesDao(Long.valueOf(holeTypeId)), new GolfTeeDao(Long.valueOf(teeTypeId)));
 
 		golfRepo.save(golfDao);
 	}
@@ -403,7 +403,7 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public void deleteGolf(int id) {
+	public void deleteGolf(Long id) {
 		golfRepo.delete(id);
 	}
 
@@ -419,7 +419,7 @@ public class GolfServiceBean implements GolfService {
 
 		scoreDao = new GolfScoreDao();
 
-		scoreDao.setGolf(new GolfDao(score.getId()));
+		scoreDao.setGolf(new GolfDao(score.getScoreId()));
 
 		golfScoreRepo.save(scoreDao);
 	}
@@ -437,7 +437,7 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public List<GolfScoreDao> getScoresById(int id) {
+	public List<GolfScoreDao> getScoresById(Long id) {
 		GolfScoreDao scoreDao;
 		GolfDao golfDao;
 
@@ -544,11 +544,11 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public GolfPass findGolfPassById(int id) {
+	public GolfPass findGolfPassById(Long id) {
 		GolfPass golfPass;
 		GolfPassDao golfPassDao;
 
-		golfPassDao = golfPassRepo.findOne(new Integer(id));
+		golfPassDao = golfPassRepo.findOne(id);
 
 		golfPass = GolfMapper.INSTANCE.GolfPassDAOtoGolfPassDTO(golfPassDao);
 

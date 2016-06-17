@@ -13,12 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity(name="GOLF_TEE")
-public class GolfTeeDao extends AbstractDateStampEntity implements Serializable{
+public class GolfTeeDao extends BaseEntity<Long> implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="TEE_ID")
-	private int teeId;
+	private Long teeId;
 	
 	@Column(name="COLOR")
 	private String color;
@@ -30,7 +30,7 @@ public class GolfTeeDao extends AbstractDateStampEntity implements Serializable{
 		
 	}
 
-	public GolfTeeDao(int teeId) {
+	public GolfTeeDao(Long teeId) {
 		this.teeId = teeId;
 	}
 
@@ -42,11 +42,11 @@ public class GolfTeeDao extends AbstractDateStampEntity implements Serializable{
 		this.teeDetails = teeDetails;
 	}
 
-	public int getTeeId() {
+	public Long getTeeId() {
 		return teeId;
 	}
 
-	public void setTeeId(int teeId) {
+	public void setTeeId(Long teeId) {
 		this.teeId = teeId;
 	}
 
@@ -61,6 +61,11 @@ public class GolfTeeDao extends AbstractDateStampEntity implements Serializable{
 	@Override
 	public String toString() {
 		return "GolfTee [teeId=" + teeId + ", color=" + color + "]";
+	}
+
+	@Override
+	public Long getId() {
+		return teeId;
 	}
 
 }

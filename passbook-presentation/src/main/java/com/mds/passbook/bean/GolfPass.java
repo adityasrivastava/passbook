@@ -4,7 +4,7 @@ import java.util.List;
 
 public class GolfPass {
 
-	private int passId;
+	private Long passId;
 	private String token;
 	private String deviceId;
 	private boolean passAdded;
@@ -19,11 +19,11 @@ public class GolfPass {
 		this.passAdded = passAdded;
 	}
 
-	public int getPassId() {
+	public Long getPassId() {
 		return passId;
 	}
 
-	public void setPassId(int passId) {
+	public void setPassId(Long passId) {
 		this.passId = passId;
 	}
 

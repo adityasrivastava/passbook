@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.mds.passbook.data.repository.dao.PassRegistrationsDao;
 
-public interface GolfPassRegistrationsRepository extends CrudRepository<PassRegistrationsDao, Integer>{
+public interface GolfPassRegistrationsRepository extends CrudRepository<PassRegistrationsDao, Long>{
 		List<PassRegistrationsDao> findByPassTypeId(String passTypeId);
 		PassRegistrationsDao findBySerialNumberAndPassTypeId(String serialNumber, String passTypeId);
 }

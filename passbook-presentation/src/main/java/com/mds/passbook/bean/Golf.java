@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Golf {
 	
-	private int id;
+	private Long id;
 	private GolfUser usersId;
 	private GolfCourse golfCoursesId;
 	private GolfHoles holeTypesId;
@@ -14,7 +14,7 @@ public class Golf {
 
 	
 	
-	public Golf(int id, GolfUser usersId, GolfCourse golfCoursesId, GolfHoles holeTypesId, GolfTee teeTypesId,
+	public Golf(Long id, GolfUser usersId, GolfCourse golfCoursesId, GolfHoles holeTypesId, GolfTee teeTypesId,
 			List<GolfScore> scoresId) {
 		this.id = id;
 		this.usersId = usersId;
@@ -26,7 +26,7 @@ public class Golf {
 	
 	
 
-	public Golf(int id) {
+	public Golf(Long id) {
 		this.id = id;
 	}
 
@@ -44,10 +44,10 @@ public class Golf {
 		this.scoresId = scoresId;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public GolfUser getUsersId() {

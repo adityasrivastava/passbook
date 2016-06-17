@@ -13,12 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity(name="GOLF_HOLES")
-public class GolfHolesDao extends AbstractDateStampEntity implements Serializable{
+public class GolfHolesDao extends BaseEntity<Long> implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="HOLDE_TYPE_ID")
-	private int holeTypeId;
+	private Long holeTypeId;
 	
 	@Column(name="HOLES")
 	private int holes;
@@ -30,7 +30,7 @@ public class GolfHolesDao extends AbstractDateStampEntity implements Serializabl
 		
 	}
 
-	public GolfHolesDao(int holeTypeId) {
+	public GolfHolesDao(Long holeTypeId) {
 		super();
 		this.holeTypeId = holeTypeId;
 	}
@@ -40,10 +40,10 @@ public class GolfHolesDao extends AbstractDateStampEntity implements Serializabl
 	public void setGolf(List<GolfDao> golf) {
 		this.golf = golf;
 	}
-	public int getHoleTypeId() {
+	public Long getHoleTypeId() {
 		return holeTypeId;
 	}
-	public void setHoleTypeId(int holeTypeId) {
+	public void setHoleTypeId(Long holeTypeId) {
 		this.holeTypeId = holeTypeId;
 	}
 	
@@ -56,6 +56,11 @@ public class GolfHolesDao extends AbstractDateStampEntity implements Serializabl
 	@Override
 	public String toString() {
 		return "GolfHoles [holeTypeId=" + holeTypeId + ", holes=" + holes + "]";
+	}
+
+	@Override
+	public Long getId() {
+		return holeTypeId;
 	}
 
 	

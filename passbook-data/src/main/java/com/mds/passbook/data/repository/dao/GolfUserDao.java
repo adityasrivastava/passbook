@@ -15,12 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity(name="GOLF_USER")
-public class GolfUserDao extends AbstractDateStampEntity implements Serializable{
+public class GolfUserDao extends BaseEntity<Long> implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="USER_ID")
-	private int userId;
+	private Long userId;
 	
 	@Column(name="NAME")
 	private String name;
@@ -55,7 +55,7 @@ public class GolfUserDao extends AbstractDateStampEntity implements Serializable
 		
 	}
 	
-	public GolfUserDao(int userId){
+	public GolfUserDao(Long userId){
 		this.userId = userId;
 	}
 
@@ -69,10 +69,10 @@ public class GolfUserDao extends AbstractDateStampEntity implements Serializable
 		this.pass = pass;
 	}
 
-	public int getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public String getName() {
@@ -114,6 +114,11 @@ public class GolfUserDao extends AbstractDateStampEntity implements Serializable
 	public String toString() {
 		return "GolfUser [userId=" + userId + ", name=" + name + ", age=" + age + ", gender=" + gender + ", handicap="
 				+ handicap + ", pass=" + pass + "]";
+	}
+
+	@Override
+	public Long getId() {
+		return userId;
 	}
 
 	

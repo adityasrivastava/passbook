@@ -6,7 +6,7 @@ import java.util.List;
 
 public class GolfTee implements Serializable{
 
-	private int teeId;
+	private Long teeId;
 	private String color;
 	private List<GolfTeeDetails> teeDetails = new ArrayList<GolfTeeDetails>();
 	
@@ -16,7 +16,7 @@ public class GolfTee implements Serializable{
 	
 	
 
-	public GolfTee(int teeId, String color, List<GolfTeeDetails> teeDetails) {
+	public GolfTee(Long teeId, String color, List<GolfTeeDetails> teeDetails) {
 		this.teeId = teeId;
 		this.color = color;
 		this.teeDetails = teeDetails;
@@ -32,11 +32,11 @@ public class GolfTee implements Serializable{
 		this.teeDetails = teeDetails;
 	}
 
-	public int getTeeId() {
+	public Long getTeeId() {
 		return teeId;
 	}
 
-	public void setTeeId(int teeId) {
+	public void setTeeId(Long teeId) {
 		this.teeId = teeId;
 	}
 

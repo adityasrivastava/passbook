@@ -22,6 +22,7 @@ import com.mds.passbook.data.repository.dao.GolfScoreDao;
 import com.mds.passbook.data.repository.dao.GolfUserDao;
 import com.mds.passkit.GeneratePass;
 import com.mds.passkit.GolfWallet;
+import com.mds.passbook.service.PassbookService;
 
 @Component
 public class PassbookServiceBean implements PassbookService{
@@ -59,9 +60,9 @@ public class PassbookServiceBean implements PassbookService{
 
 		user = golfService.updateUser(user);
 
-		golf.setCourseId(Integer.parseInt(golf_course));
-		golf.setHoleTypeId(Integer.parseInt(hole_type));
-		golf.setTeeTypeId(Integer.parseInt(tee_type));
+		golf.setCourseId(Long.valueOf(golf_course));
+		golf.setHoleTypeId(Long.valueOf(hole_type));
+		golf.setTeeTypeId(Long.valueOf(tee_type));
 		golf.setUserId(user.getUserId());
 		golf.setPassTypeId("pass.com.mds.passbookapp");
 
@@ -141,7 +142,7 @@ public class PassbookServiceBean implements PassbookService{
 		
 		passRegi = golfService.getPassRegisteredBySerialNumberAndPassTypeId(serialNumber, passTypeId);
 	
-		int userPassId = passRegi.getPass().getPassId();
+		Long userPassId = passRegi.getPass().getPassId();
 		
 		// Update pass table with devid and push token
 		
@@ -164,7 +165,7 @@ public class PassbookServiceBean implements PassbookService{
 		GolfScore golfScore;
 		golfScore = new GolfScore();
 		golfScore.setHoleNumber(Integer.parseInt(hole));
-		golfScore.setGolf(new Golf(Integer.parseInt(gameId)));
+		golfScore.setGolf(new Golf(Long.valueOf(gameId)));
 		golfScore.setScore(Integer.parseInt(score));
 
 		GolfScoreDao scoreUpdated = golfService.updateScore(golfScore);

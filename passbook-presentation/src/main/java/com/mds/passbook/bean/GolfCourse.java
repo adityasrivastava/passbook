@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GolfCourse {
 
-	private int golfCourseId;
+	private Long golfCourseId;
 	private String courseName;
 	private List<Golf> golf = new ArrayList<Golf>();
 
@@ -13,7 +13,7 @@ public class GolfCourse {
 
 	}
 
-	public GolfCourse(int golfCourseId, String courseName) {
+	public GolfCourse(Long golfCourseId, String courseName) {
 		this.golfCourseId = golfCourseId;
 		this.courseName = courseName;
 	}
@@ -34,11 +34,11 @@ public class GolfCourse {
 		this.golf = golf;
 	}
 
-	public int getGolfCourseId() {
+	public Long getGolfCourseId() {
 		return golfCourseId;
 	}
 
-	public void setGolfCourseId(int golfCourseId) {
+	public void setGolfCourseId(Long golfCourseId) {
 		this.golfCourseId = golfCourseId;
 	}
 

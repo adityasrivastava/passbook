@@ -12,12 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity(name = "GOLF_PASS")
-public class GolfPassDao extends AbstractDateStampEntity implements Serializable {
+public class GolfPassDao extends BaseEntity<Long> implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PASS_ID")
-	private int passId;
+	private Long passId;
 
 	@Column(name = "PUSH_TOKEN")
 	private String token;
@@ -53,11 +53,11 @@ public class GolfPassDao extends AbstractDateStampEntity implements Serializable
 		this.registeredPass = registeredPass;
 	}
 
-	public int getPassId() {
+	public Long getPassId() {
 		return passId;
 	}
 
-	public void setPassId(int passId) {
+	public void setPassId(Long passId) {
 		this.passId = passId;
 	}
 
@@ -92,6 +92,11 @@ public class GolfPassDao extends AbstractDateStampEntity implements Serializable
 	@Override
 	public String toString() {
 		return "GolfPass [passId=" + passId + ", token=" + token + ", passAdded=" + passAdded + "]";
+	}
+
+	@Override
+	public Long getId() {
+		return passId;
 	}
 
 }

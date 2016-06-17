@@ -13,12 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity(name="GOLF_COURSE")
-public class GolfCourseDao extends AbstractDateStampEntity implements Serializable{
+public class GolfCourseDao extends BaseEntity<Long> implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="GOLF_COURSE_ID")
-	private int golfCourseId;
+	private Long golfCourseId;
 	
 	@Column(name="COURSE_NAME")
 	private String courseName;
@@ -30,7 +30,7 @@ public class GolfCourseDao extends AbstractDateStampEntity implements Serializab
 		
 	}
 
-	public GolfCourseDao(int golfCourseId) {
+	public GolfCourseDao(Long golfCourseId) {
 		super();
 		this.golfCourseId = golfCourseId;
 	}
@@ -47,16 +47,22 @@ public class GolfCourseDao extends AbstractDateStampEntity implements Serializab
 	public void setGolf(List<GolfDao> golf) {
 		this.golf = golf;
 	}
-	public int getGolfCourseId() {
+	public Long getGolfCourseId() {
 		return golfCourseId;
 	}
-	public void setGolfCourseId(int golfCourseId) {
+	public void setGolfCourseId(Long golfCourseId) {
 		this.golfCourseId = golfCourseId;
 	}
 	
 	@Override
 	public String toString() {
 		return "GolfCourse [golfCourseId=" + golfCourseId + ", courseName=" + courseName + "]";
+	}
+
+	@Override
+	public Long getId() {
+		
+		return golfCourseId;
 	}
 
 }

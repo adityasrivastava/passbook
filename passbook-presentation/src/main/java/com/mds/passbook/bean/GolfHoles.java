@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GolfHoles {
 
-	private int holeTypeId;
+	private Long holeTypeId;
 	private int holes;
 
 	private List<Golf> golf = new ArrayList<Golf>();
@@ -14,7 +14,7 @@ public class GolfHoles {
 
 	}
 
-	public GolfHoles(int holeTypeId, int holes) {
+	public GolfHoles(Long holeTypeId, int holes) {
 		this.holeTypeId = holeTypeId;
 		this.holes = holes;
 	}
@@ -27,11 +27,11 @@ public class GolfHoles {
 		this.golf = golf;
 	}
 
-	public int getHoleTypeId() {
+	public Long getHoleTypeId() {
 		return holeTypeId;
 	}
 
-	public void setHoleTypeId(int holeTypeId) {
+	public void setHoleTypeId(Long holeTypeId) {
 		this.holeTypeId = holeTypeId;
 	}
 
