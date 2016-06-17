@@ -8,15 +8,16 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class BaseEntity<ID> {
 
-    @Column(name = "creation_time", nullable = false)
+    @Column(name = "CREATION_DATE")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime creationTime;
 
-    @Column(name = "modification_time", nullable = false)
+    @Column(name = "MODIFY_DATE")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime modificationTime;
 
     @Version
+    @Column(name = "VERSION")
     private long version;
 
     public abstract ID getId();

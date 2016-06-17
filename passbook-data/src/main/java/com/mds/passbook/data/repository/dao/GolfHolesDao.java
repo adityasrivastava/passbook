@@ -17,7 +17,7 @@ public class GolfHolesDao extends BaseEntity<Long> implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="HOLDE_TYPE_ID")
+	@Column(name="HOLE_TYPE_ID")
 	private Long holeTypeId;
 	
 	@Column(name="HOLES")

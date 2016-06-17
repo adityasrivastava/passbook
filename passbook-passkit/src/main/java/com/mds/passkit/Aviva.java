@@ -24,7 +24,7 @@ public class Aviva {
     public void generateStorePass(String outFilePath, String authToken, String serialNumber, PassInformation passInfo) throws PasskitException, IOException {
         
     	Properties properties = PassKitUtils.getProperties();
-    	
+    	 System.out.println("WEBURL-------->"+properties.getProperty(PasskitConstants.Keys.WEB_SERVICE_URL));
     	// Bypass default Java Security certificate key length 
     	try {
 	    		java.lang.reflect.Field field = Class.forName("javax.crypto.JceSecurity").
@@ -38,6 +38,7 @@ public class Aviva {
     	// Create Pass in pkpass file with signed certificates 
     	try {
             String resourcePath = properties.getProperty(PasskitConstants.Keys.RESOURCE_LOCATION_PATH);
+            System.out.println("WEBURL-------->"+properties.getProperty(PasskitConstants.Keys.WEB_SERVICE_URL));
             
             Location location = new Location();
             location.latitude(28.6139);

@@ -34,8 +34,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.mds.passkit</groupId>
-			<artifactId>passkit</artifactId>
+			<groupId>com.mds.passbook.passkit</groupId>
+			<artifactId>passbook-passkit</artifactId>
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
@@ -53,14 +53,14 @@
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.mds</groupId>
 			<artifactId>passkit</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
+ -->
 
-	
 
 
 		<!-- http://mvnrepository.com/artifact/com.googlecode.jmapper-framework/jmapper-core -->
@@ -164,23 +164,38 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<jvmArguments>
+						-Xdebug
+						-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005
 						-Xbootclasspath/p:${settings.localRepository}/org/mortbay/jetty/alpn/alpn-boot/${alpn-version}/alpn-boot-${alpn-version}.jar
 					</jvmArguments>
 				</configuration>
 			</plugin>
 
+		<!-- 	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+ -->
 
-			<plugin>
+	<!-- 		<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 
 				<configuration>
-					<!-- or whatever version you use -->
+					or whatever version you use
 					<source>1.8</source>
 					<target>1.8</target>
 					<verbose>true</verbose>
 				</configuration>
-			</plugin>
+			</plugin> -->
 		</plugins>
 
 	</build>

@@ -91,4 +91,40 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+
+		<plugins>
+		<!-- 	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+
+				<configuration>
+					or whatever version you use
+					<source>1.8</source>
+					<target>1.8</target>
+					<verbose>true</verbose>
+				</configuration>
+			</plugin>
+ -->
+		<!-- 	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+ -->
+
+
+		</plugins>
+
+
+
+	</build>
 </project>
