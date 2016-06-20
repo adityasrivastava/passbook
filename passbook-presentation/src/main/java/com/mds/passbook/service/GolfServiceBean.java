@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mds.passbook.bean.Golf;
 import com.mds.passbook.bean.GolfCourse;
@@ -37,6 +38,7 @@ import com.mds.passbook.data.repository.dao.PassRegistrationsDao;
 import com.mds.passbook.mapper.GolfMapper;
 
 @Component
+@Transactional
 public class GolfServiceBean implements GolfService {
 
 	@Autowired
@@ -92,6 +94,7 @@ public class GolfServiceBean implements GolfService {
 		GolfUserDao userDao = new GolfUserDao();
 		
 		userDao = GolfMapper.INSTANCE.GolfUserDTOtoGolfUserDAO(user);
+		
 		userDao = golfUserRepo.save(userDao);
 		
 		user = GolfMapper.INSTANCE.GolfUserDAOtoGolfUserDTO(userDao);

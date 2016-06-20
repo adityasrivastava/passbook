@@ -16,7 +16,7 @@ public abstract class BaseEntity<ID> {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     private DateTime modificationTime;
 
-    @Version
+//    @Version
     @Column(name = "VERSION")
     private long version;
 
