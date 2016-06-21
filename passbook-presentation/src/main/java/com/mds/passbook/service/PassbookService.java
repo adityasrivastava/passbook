@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.mds.passbook.data.repository.dao.GolfDao;
+import com.mds.passbook.data.repository.dao.GolfScoreDao;
 import com.mds.passbook.data.repository.dao.GolfUserDao;
 
 @Service
@@ -19,5 +21,6 @@ public interface PassbookService {
 	void addPassbook(String serialNumber, String deviceId, String passTypeId, String pushToken);
 	String updateGolfScore(String hole, String score, String gameId);
 	
+	List<com.mds.passkit.GolfScore> generateGolfScore(GolfDao golfDao, List<GolfScoreDao> scoreDaoList);
 
 }

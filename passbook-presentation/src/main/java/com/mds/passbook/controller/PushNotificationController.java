@@ -57,10 +57,10 @@ public class PushNotificationController {
 
 	@Autowired
 	GolfService golfService;
-	
+
 	@Autowired
 	UserProfileRepository userProfileRepo;
-	
+
 	@Autowired
 	PassbookService passbookService;
 
@@ -73,13 +73,14 @@ public class PushNotificationController {
 	}
 
 	@RequestMapping(value = "/createPassbook", method = RequestMethod.GET, produces = "application/vnd.apple.pkpass")
-	public ResponseEntity<InputStreamResource> createPass(@RequestParam Map<String, String> requestParams, Principal principal) throws IOException {
+	public ResponseEntity<InputStreamResource> createPass(@RequestParam Map<String, String> requestParams,
+			Principal principal) throws IOException {
 
 		HttpHeaders responseHeaders;
 		InputStream passInputStream = null;
 
 		responseHeaders = new HttpHeaders();
-		
+
 		String username = principal.getName();
 		UserProfile profile = userProfileRepo.findByEmail(username);
 
@@ -123,7 +124,7 @@ public class PushNotificationController {
 
 		token = payload.get("pushToken").toString();
 		logger.info("Push Token {}", token);
-		
+
 		passbookService.addPassbook(serialNumber, deviceLibraryIdentifier, passTypeIdentifier, token);
 
 		return new ResponseEntity<String>(HttpStatus.CREATED);
@@ -176,19 +177,18 @@ public class PushNotificationController {
 
 		List<PassRegistrations> register = golfService.findUpdatedPass(passTypeIdentifier, deviceLibraryIdentifier);
 		List<String> serialNumbersList = new ArrayList<String>();
-		
-		
+
 		GameUpdate update = new GameUpdate();
 		update.setLastUpdated(update.currentTimeStamp());
 
 		for (PassRegistrations passRegi : register) {
 			serialNumbersList.add(passRegi.getSerialNumber());
 		}
-		
+
 		String[] passRegistrationsArr = serialNumbersList.toArray(new String[serialNumbersList.size()]);
-		
+
 		update.setSerialNumbers(passRegistrationsArr);
-		
+
 		return new ResponseEntity<GameUpdate>(update, HttpStatus.OK);
 	}
 
@@ -206,56 +206,32 @@ public class PushNotificationController {
 			@PathVariable("passTypeIdentifier") String passTypeIdentifier,
 			@PathVariable("serialNumber") String serialNumber,
 			@RequestBody(required = false) Map<String, Object> payload, Principal principal) throws IOException {
-		File newPass;
-		InputStream passInputStream = null;
-		HttpHeaders responseHeaders;
-		GeneratePass generatePass;
 
-		List<GolfScoreDao> dao = null;
-
-		GolfWallet wallet = new GolfWallet();
-
-		dao = golfService.getScoresById(Long.valueOf(serialNumber));
-
-		GolfDao golfDao = dao.get(0).getGolf();
-
-		responseHeaders = new HttpHeaders();
-		generatePass = new GeneratePass();
-
-		wallet.setSerialNumber("" + golfDao.getId());
-		wallet.setUserName(golfDao.getUsersId().getName());
-		wallet.setUserGender(golfDao.getUsersId().getGender());
-		wallet.setUserAge("" + golfDao.getUsersId().getAge());
-		wallet.setGolfHoleType("" + golfDao.getHoleTypesId().getHoles());
-		wallet.setGolfCourseName(golfDao.getGolfCoursesId().getCourseName());
-
-		List<com.mds.passkit.GolfScore> scores = new ArrayList<com.mds.passkit.GolfScore>();
-
-		for (GolfScoreDao scoreDao : dao) {
-			scores.add(new com.mds.passkit.GolfScore(scoreDao.getScore(), scoreDao.getHoleNumber(),
-					scoreDao.getGolfTeeDetailsId().getPar(), scoreDao.getGolfTeeDetailsId().getStroke(),
-					scoreDao.getGolfTeeDetailsId().getGolfTee().getColor(), scoreDao.getGolfTeeDetailsId().getYards(),
-					wallet));
-		}
-
-		// Create Pass
-		try {
-			generatePass.createGenericPass("passes/file3.pkpass", scores);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
 		logger.info("Generating pass for update response....");
 		logger.debug("PassType: {} >>> SerialNo.: {}", passTypeIdentifier, serialNumber);
 		logger.debug("Request: {}", payload);
+		
+		InputStream passInputStream = null;
+		HttpHeaders responseHeaders;
+		List<GolfScoreDao> golfDaoList = null;
+		List<com.mds.passkit.GolfScore> scores = null;
+		GolfWallet wallet;
 
 		responseHeaders = new HttpHeaders();
-		generatePass = new GeneratePass();
+
+		wallet = new GolfWallet();
+
+		golfDaoList = golfService.getScoresById(Long.valueOf(serialNumber));
+
+		GolfDao golfDao = golfDaoList.get(0).getGolf();
+
+		scores = passbookService.generateGolfScore(golfDao, golfDaoList);
+
+		passbookService.generatePass("passes/file3.pkpass", scores);
 
 		// Get new generated pass
-		newPass = new File("passes/file3.pkpass");
-
-		passInputStream = new FileInputStream(newPass);
+		passInputStream = passbookService.readPassFile("passes/file3.pkpass");
 
 		// Setup headers for 0 expiry and no cache
 		responseHeaders.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -266,7 +242,7 @@ public class PushNotificationController {
 		responseHeaders.setLastModified(new Date().getTime());
 
 		// Send in response
-		return ResponseEntity.ok().headers(responseHeaders).contentLength(newPass.length())
+		return ResponseEntity.ok().headers(responseHeaders).contentLength(passbookService.getFileSize())
 				.body(new InputStreamResource(passInputStream));
 	}
 
