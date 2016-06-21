@@ -80,17 +80,19 @@ public class PushNotificationController {
 		InputStream passInputStream = null;
 
 		responseHeaders = new HttpHeaders();
-
+		
 		String username = principal.getName();
+		
 		UserProfile profile = userProfileRepo.findByEmail(username);
 
+		passbookService.setFileName(username);
 		passInputStream = passbookService.createPassbook(requestParams, profile.getUserId());
 
 		// Setup headers for 0 expiry and no cache
 		responseHeaders.add("Cache-Control", "no-cache, no-store, must-revalidate");
 		responseHeaders.add("Pragma", "no-cache");
 		responseHeaders.add("Expires", "0");
-		responseHeaders.setContentDispositionFormData("filename", "file1.pkpass");
+		responseHeaders.setContentDispositionFormData("filename", passbookService.getFileName());
 		responseHeaders.setLastModified(new Date().getTime());
 
 		// Send in response
@@ -211,34 +213,22 @@ public class PushNotificationController {
 		logger.info("Generating pass for update response....");
 		logger.debug("PassType: {} >>> SerialNo.: {}", passTypeIdentifier, serialNumber);
 		logger.debug("Request: {}", payload);
-		
+
 		InputStream passInputStream = null;
 		HttpHeaders responseHeaders;
-		List<GolfScoreDao> golfDaoList = null;
-		List<com.mds.passkit.GolfScore> scores = null;
-		GolfWallet wallet;
+		String fileName = principal.getName();
 
 		responseHeaders = new HttpHeaders();
-
-		wallet = new GolfWallet();
-
-		golfDaoList = golfService.getScoresById(Long.valueOf(serialNumber));
-
-		GolfDao golfDao = golfDaoList.get(0).getGolf();
-
-		scores = passbookService.generateGolfScore(golfDao, golfDaoList);
-
-		passbookService.generatePass("passes/file3.pkpass", scores);
-
-		// Get new generated pass
-		passInputStream = passbookService.readPassFile("passes/file3.pkpass");
+		
+		passbookService.setFileName(fileName);
+		passInputStream = passbookService.updatePassbook(serialNumber, passTypeIdentifier, payload);
 
 		// Setup headers for 0 expiry and no cache
 		responseHeaders.add("Cache-Control", "no-cache, no-store, must-revalidate");
 		responseHeaders.add("Pragma", "no-cache");
 		responseHeaders.add("Expires", "0");
 		responseHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-		responseHeaders.setContentDispositionFormData("filename", "file3.pkpass");
+		responseHeaders.setContentDispositionFormData("filename", passbookService.getFileName());
 		responseHeaders.setLastModified(new Date().getTime());
 
 		// Send in response

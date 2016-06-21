@@ -5,11 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import com.mds.passbook.bean.Golf;
@@ -30,6 +33,11 @@ public class PassbookServiceBean implements PassbookService {
 
 	@Autowired
 	GolfService golfService;
+	
+	@Autowired
+	Environment env;
+	
+	String fileName;
 
 	File newPass;
 	InputStream fileInputStream = null;
@@ -95,6 +103,34 @@ public class PassbookServiceBean implements PassbookService {
 
 		return scores;
 	}
+	
+	@Override
+	public InputStream updatePassbook(String serialNumber,String passTypeIdentifier,Map<String, Object> payload){
+		InputStream passInputStream = null;
+		
+		List<GolfScoreDao> golfDaoList = null;
+		List<com.mds.passkit.GolfScore> scores = null;
+		GolfWallet wallet;
+		
+		String fileNamePath = "passes/"+fileName;
+
+
+		wallet = new GolfWallet();
+
+		golfDaoList = golfService.getScoresById(Long.valueOf(serialNumber));
+
+		GolfDao golfDao = golfDaoList.get(0).getGolf();
+
+		scores = generateGolfScore(golfDao, golfDaoList);
+
+		generatePass(fileNamePath, scores);
+
+		// Get new generated pass
+		passInputStream = readPassFile(fileNamePath);
+		
+		return passInputStream;
+
+	}
 
 	@Override
 	public InputStream createPassbook(Map<String, String> passbookDetails, GolfUserDao userDao) {
@@ -103,6 +139,8 @@ public class PassbookServiceBean implements PassbookService {
 
 		GolfDao golfDao;
 		InputStream passInputStream = null;
+		
+		String fileNamePath = "passes/"+fileName;
 
 		List<com.mds.passkit.GolfScore> scores;
 
@@ -114,9 +152,9 @@ public class PassbookServiceBean implements PassbookService {
 
 		scores = generateGolfScore(golfDao, scoreDao);
 
-		generatePass("passes/file3.pkpass", scores);
+		generatePass(fileNamePath, scores);
 
-		passInputStream = readPassFile("passes/file3.pkpass");
+		passInputStream = readPassFile(fileNamePath);
 
 		return passInputStream;
 	}
@@ -197,5 +235,17 @@ public class PassbookServiceBean implements PassbookService {
 
 		return pass.getToken();
 	}
+
+	@Override
+	public String getFileName() {
+		return fileName;
+	}
+
+	@Override
+	public void setFileName(String fileName) {
+		this.fileName = fileName+".pkpass";
+	}
+	
+	
 
 }
