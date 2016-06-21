@@ -26,6 +26,7 @@ import com.mds.passbook.data.repository.UserProfileRepository;
 import com.mds.passbook.data.repository.dao.GolfUserDao;
 import com.mds.passbook.data.repository.dao.UserProfile;
 import com.mds.passbook.service.GolfService;
+import com.mds.passbook.view.bean.GolfForm;
 
 
 @RestController
@@ -65,7 +66,7 @@ public class GolfController {
 		responseMap.put("hole_type_list", holes);
 		responseMap.put("golf_course_list", courses);
 		responseMap.put("genders", genders);
-		responseMap.put("tee_type_list", tees); 
+		responseMap.put("tee_type_list", tees);
 		
 		return responseMap;
 		

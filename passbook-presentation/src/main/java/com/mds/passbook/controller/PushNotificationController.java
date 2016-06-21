@@ -72,37 +72,18 @@ public class PushNotificationController {
 		return "Server Working...";
 	}
 
-	@RequestMapping(value = "/passbookStatus", produces = "text/html")
-	public String passbookStatus() {
-		PassbookStatus.getInstance();
-		return PassbookStatus.getUpdateStatus().toString();
-	}
-
-	@RequestMapping(value = "/changeStatus")
-	public void changeStatus() {
-		PassbookStatus.getInstance();
-		PassbookStatus.setUpdateStatus(false);
-	}
-
 	@RequestMapping(value = "/createPassbook", method = RequestMethod.GET, produces = "application/vnd.apple.pkpass")
-	public ResponseEntity<InputStreamResource> createPass(@RequestParam(name = "name", required = false) String name,
-			@RequestParam(name = "age", required = false) String age,
-			@RequestParam(name = "gender", required = false) String gender,
-			@RequestParam(name = "golf_course", required = false) String golf_course,
-			@RequestParam(name = "hole_type", required = false) String hole_type,
-			@RequestParam(name = "tee_type", required = false) String tee_type,
-			@RequestParam(name = "handicap", required = false) String handicap, Principal principal) throws IOException {
+	public ResponseEntity<InputStreamResource> createPass(@RequestParam Map<String, String> requestParams, Principal principal) throws IOException {
 
 		HttpHeaders responseHeaders;
 		InputStream passInputStream = null;
 
 		responseHeaders = new HttpHeaders();
 		
-		String userId = principal.getName();
-		UserProfile profile = userProfileRepo.findByEmail(userId);
-		
-		
-		passInputStream = passbookService.createPassbook(name, age, gender, golf_course, hole_type, tee_type, handicap, profile.getUserId());
+		String username = principal.getName();
+		UserProfile profile = userProfileRepo.findByEmail(username);
+
+		passInputStream = passbookService.createPassbook(requestParams, profile.getUserId());
 
 		// Setup headers for 0 expiry and no cache
 		responseHeaders.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -114,7 +95,6 @@ public class PushNotificationController {
 		// Send in response
 		return ResponseEntity.ok().headers(responseHeaders).contentLength(passbookService.getFileSize())
 				.body(new InputStreamResource(passInputStream));
-
 	}
 
 	/**
@@ -140,8 +120,6 @@ public class PushNotificationController {
 		logger.debug("DeviceLib: {} >>> PassType: {} >>> SerialNo.: {}", deviceLibraryIdentifier, passTypeIdentifier,
 				serialNumber);
 		logger.debug("Request: {}", payload);
-		PassbookStatus.getInstance();
-		PassbookStatus.setUpdateStatus(true);
 
 		token = payload.get("pushToken").toString();
 		logger.info("Push Token {}", token);
@@ -160,11 +138,9 @@ public class PushNotificationController {
 			@RequestParam(name = "score", required = true) String score, @RequestParam(name = "gameId") String gameId) {
 
 		String token = passbookService.updateGolfScore(hole, score, gameId);
-		System.out.println("Token --> "+token);
+
 		PassbookNotification pushNotification = new PassbookNotification();
 		pushNotification.initialize(token);
-		PassbookStatus.getInstance();
-		PassbookStatus.setUpdateStatus(false);
 		logger.info("Push notification initiated....");
 
 	}
@@ -194,9 +170,7 @@ public class PushNotificationController {
 		logger.info("Sending list of serial no. request for update....");
 		logger.debug("DeviceLib: {} >>> PassType: {}", deviceLibraryIdentifier, passTypeIdentifier);
 
-		if (passesUpdatedSince != null) {
-			logger.debug("Update Tag: " + passesUpdatedSince);
-		}
+		logger.debug("Update Tag: " + passesUpdatedSince);
 
 		logger.debug("Request: {}", payload);
 
@@ -274,8 +248,7 @@ public class PushNotificationController {
 		logger.info("Generating pass for update response....");
 		logger.debug("PassType: {} >>> SerialNo.: {}", passTypeIdentifier, serialNumber);
 		logger.debug("Request: {}", payload);
-		PassbookStatus.getInstance();
-		PassbookStatus.setUpdateStatus(true);
+
 		responseHeaders = new HttpHeaders();
 		generatePass = new GeneratePass();
 
