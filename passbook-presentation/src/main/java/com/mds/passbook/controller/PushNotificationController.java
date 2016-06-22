@@ -188,9 +188,11 @@ public class PushNotificationController {
 		logger.debug("PassType: {} >>> SerialNo.: {}", passTypeIdentifier, serialNumber);
 		logger.debug("Request: {}", payload);
 
+		long unixTime = System.currentTimeMillis() / 1000L;
+		
 		InputStream passInputStream = null;
 		HttpHeaders responseHeaders;
-		String fileName = principal.getName();
+		String fileName = "passbook-"+unixTime;
 
 		responseHeaders = new HttpHeaders();
 		
