@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.mds.passbook.data.repository.dao.GolfCourseDao;
-import com.mds.passbook.data.repository.dao.GolfDao;
-import com.mds.passbook.data.repository.dao.GolfUserDao;
+import com.mds.passbook.data.repository.golf.dao.GolfCourseDao;
+import com.mds.passbook.data.repository.golf.dao.GolfDao;
+import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
 
 public interface GolfRepository extends CrudRepository<GolfDao, Long>{
 	

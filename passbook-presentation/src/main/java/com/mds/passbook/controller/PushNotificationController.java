@@ -1,14 +1,9 @@
 package com.mds.passbook.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -26,21 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mds.passbook.bean.GameUpdate;
-import com.mds.passbook.bean.Golf;
-import com.mds.passbook.bean.GolfPass;
-import com.mds.passbook.bean.GolfScore;
-import com.mds.passbook.bean.PassRegistrations;
+import com.mds.passbook.bean.http.GolfHttpUpdates;
+import com.mds.passbook.bean.pass.PassRegistrations;
 import com.mds.passbook.data.repository.UserProfileRepository;
-import com.mds.passbook.data.repository.dao.GolfDao;
-import com.mds.passbook.data.repository.dao.GolfScoreDao;
-import com.mds.passbook.data.repository.dao.PassRegistrationsDao;
-import com.mds.passbook.data.repository.dao.UserProfile;
+import com.mds.passbook.data.repository.security.dao.UserProfile;
 import com.mds.passbook.notification.PassbookNotification;
 import com.mds.passbook.service.GolfService;
 import com.mds.passbook.service.PassbookService;
-import com.mds.passkit.GeneratePass;
-import com.mds.passkit.GolfWallet;
 
 /**
  * Apple Wallet webservice which allow Update, Delete, Add new Pass to wallet of
@@ -164,7 +151,7 @@ public class PushNotificationController {
 	 */
 
 	@RequestMapping(value = "/v1/devices/{deviceLibraryIdentifier}/registrations/{passTypeIdentifier:.+}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<GameUpdate> getSerialIdsOfPassForDevice(
+	public ResponseEntity<GolfHttpUpdates> getSerialIdsOfPassForDevice(
 			@PathVariable("deviceLibraryIdentifier") String deviceLibraryIdentifier,
 			@PathVariable("passTypeIdentifier") String passTypeIdentifier,
 			@RequestParam(value = "passesUpdatedSince", required = false) String passesUpdatedSince,
@@ -177,21 +164,8 @@ public class PushNotificationController {
 
 		logger.debug("Request: {}", payload);
 
-		List<PassRegistrations> register = golfService.findUpdatedPass(passTypeIdentifier, deviceLibraryIdentifier);
-		List<String> serialNumbersList = new ArrayList<String>();
-
-		GameUpdate update = new GameUpdate();
-		update.setLastUpdated(update.currentTimeStamp());
-
-		for (PassRegistrations passRegi : register) {
-			serialNumbersList.add(passRegi.getSerialNumber());
-		}
-
-		String[] passRegistrationsArr = serialNumbersList.toArray(new String[serialNumbersList.size()]);
-
-		update.setSerialNumbers(passRegistrationsArr);
-
-		return new ResponseEntity<GameUpdate>(update, HttpStatus.OK);
+		GolfHttpUpdates responseUpdates = passbookService.getListOfUpdatePass(deviceLibraryIdentifier, passTypeIdentifier, passesUpdatedSince);
+		return new ResponseEntity<GolfHttpUpdates>(responseUpdates, HttpStatus.OK);
 	}
 
 	/**

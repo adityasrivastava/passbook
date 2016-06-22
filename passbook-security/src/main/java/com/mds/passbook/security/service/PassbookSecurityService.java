@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.mds.passbook.data.repository.UserProfileRepository;
-import com.mds.passbook.data.repository.dao.UserProfile;
+import com.mds.passbook.data.repository.security.dao.UserProfile;
 
 public class PassbookSecurityService implements UserDetailsService {
 

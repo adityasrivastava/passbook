@@ -2,8 +2,8 @@ package com.mds.passbook.data.repository;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.mds.passbook.data.repository.dao.GolfPassDao;
+import com.mds.passbook.data.repository.user.dao.UserPassDao;
 
-public interface GolfPassRepository extends CrudRepository<GolfPassDao, Long>{
-		GolfPassDao findByDeviceId(String deviceId);
+public interface GolfPassRepository extends CrudRepository<UserPassDao, Long>{
+	UserPassDao findByDeviceId(String deviceId);
 }

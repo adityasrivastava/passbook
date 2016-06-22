@@ -7,8 +7,8 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
-import com.mds.passbook.bean.Golf;
-import com.mds.passbook.data.repository.dao.GolfDao;
+import com.mds.passbook.bean.golf.Golf;
+import com.mds.passbook.data.repository.golf.dao.GolfDao;
 
 @Mapper
 public interface GolfMapper extends GolfCourseMapper, GolfHolesMapper, GolfPassMapper, GolfScoreMapper, GolfTeeDetailsMapper, GolfTeeMapper, GolfUserMapper, PassRegistrationsMapper {

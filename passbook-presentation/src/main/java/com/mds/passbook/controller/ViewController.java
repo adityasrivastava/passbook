@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mds.passbook.bean.GolfUser;
-import com.mds.passbook.bean.RegisterForm;
+import com.mds.passbook.bean.golf.GolfUser;
+import com.mds.passbook.bean.http.RegisterForm;
 import com.mds.passbook.data.repository.GolfUserRepository;
 import com.mds.passbook.data.repository.UserProfileRepository;
-import com.mds.passbook.data.repository.dao.GolfUserDao;
-import com.mds.passbook.data.repository.dao.Role;
-import com.mds.passbook.data.repository.dao.UserProfile;
+import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
+import com.mds.passbook.data.repository.security.dao.Role;
+import com.mds.passbook.data.repository.security.dao.UserProfile;
 
 @Controller
 public class ViewController {

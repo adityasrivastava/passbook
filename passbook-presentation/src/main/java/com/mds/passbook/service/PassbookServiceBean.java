@@ -15,15 +15,19 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-import com.mds.passbook.bean.Golf;
-import com.mds.passbook.bean.GolfGame;
-import com.mds.passbook.bean.GolfPass;
-import com.mds.passbook.bean.GolfScore;
-import com.mds.passbook.bean.GolfUser;
-import com.mds.passbook.bean.PassRegistrations;
-import com.mds.passbook.data.repository.dao.GolfDao;
-import com.mds.passbook.data.repository.dao.GolfScoreDao;
-import com.mds.passbook.data.repository.dao.GolfUserDao;
+import com.mds.passbook.bean.golf.Golf;
+import com.mds.passbook.bean.golf.GolfCourse;
+
+import com.mds.passbook.bean.golf.GolfHoles;
+import com.mds.passbook.bean.golf.GolfScore;
+import com.mds.passbook.bean.golf.GolfTee;
+import com.mds.passbook.bean.golf.GolfUser;
+import com.mds.passbook.bean.http.GolfHttpUpdates;
+import com.mds.passbook.bean.pass.PassRegistrations;
+import com.mds.passbook.bean.pass.UserPass;
+import com.mds.passbook.data.repository.golf.dao.GolfDao;
+import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
+import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
 import com.mds.passkit.GeneratePass;
 import com.mds.passkit.GolfWallet;
 import com.mds.passbook.service.PassbookService;
@@ -33,10 +37,10 @@ public class PassbookServiceBean implements PassbookService {
 
 	@Autowired
 	GolfService golfService;
-	
+
 	@Autowired
 	Environment env;
-	
+
 	String fileName;
 
 	File newPass;
@@ -52,7 +56,7 @@ public class PassbookServiceBean implements PassbookService {
 		user.setGender(passbookDetails.get("gender"));
 		user.setHandicap(Integer.parseInt(passbookDetails.get("handicap")));
 		user.setName(passbookDetails.get("name"));
-		user.setPass(new GolfPass());
+		user.setPass(new UserPass());
 
 		user = golfService.updateUser(user);
 
@@ -61,18 +65,17 @@ public class PassbookServiceBean implements PassbookService {
 
 	public List<GolfScoreDao> persistNewGame(Map<String, String> passbookDetails, GolfUserDao userDao) {
 
-		GolfGame golfGame;
+		Golf golf;
 		List<GolfScoreDao> dao = null;
 
-		golfGame = new GolfGame();
+		golf = new Golf();
 
-		golfGame.setCourseId(Long.valueOf(passbookDetails.get("golf_course")));
-		golfGame.setHoleTypeId(Long.valueOf(passbookDetails.get("hole_type")));
-		golfGame.setTeeTypeId(Long.valueOf(passbookDetails.get("tee_type")));
-		golfGame.setUserId(userDao.getUserId());
-		golfGame.setPassTypeId("pass.com.mds.passbookapp");
+		golf.setGolfCoursesId(new GolfCourse(Long.valueOf(passbookDetails.get("golf_course"))));
+		golf.setHoleTypesId(new GolfHoles(Long.valueOf(passbookDetails.get("hole_type"))));
+		golf.setTeeTypesId(new GolfTee(Long.valueOf(passbookDetails.get("tee_type"))));
+		golf.setUsersId(new GolfUser(userDao.getUserId()));
 
-		dao = golfService.addGolf(golfGame);
+		dao = golfService.addGolf(golf);
 
 		return dao;
 
@@ -103,17 +106,16 @@ public class PassbookServiceBean implements PassbookService {
 
 		return scores;
 	}
-	
+
 	@Override
-	public InputStream updatePassbook(String serialNumber,String passTypeIdentifier,Map<String, Object> payload){
+	public InputStream updatePassbook(String serialNumber, String passTypeIdentifier, Map<String, Object> payload) {
 		InputStream passInputStream = null;
-		
+
 		List<GolfScoreDao> golfDaoList = null;
 		List<com.mds.passkit.GolfScore> scores = null;
 		GolfWallet wallet;
-		
-		String fileNamePath = "passes/"+fileName;
 
+		String fileNamePath = "passes/" + fileName;
 
 		wallet = new GolfWallet();
 
@@ -127,7 +129,7 @@ public class PassbookServiceBean implements PassbookService {
 
 		// Get new generated pass
 		passInputStream = readPassFile(fileNamePath);
-		
+
 		return passInputStream;
 
 	}
@@ -139,8 +141,8 @@ public class PassbookServiceBean implements PassbookService {
 
 		GolfDao golfDao;
 		InputStream passInputStream = null;
-		
-		String fileNamePath = "passes/"+fileName;
+
+		String fileNamePath = "passes/" + fileName;
 
 		List<com.mds.passkit.GolfScore> scores;
 
@@ -200,7 +202,7 @@ public class PassbookServiceBean implements PassbookService {
 		// Get the Pass Registration with serial number
 
 		PassRegistrations passRegi;
-		GolfPass golfPass;
+		UserPass golfPass;
 
 		passRegi = golfService.getPassRegisteredBySerialNumberAndPassTypeId(serialNumber, passTypeId);
 
@@ -231,7 +233,7 @@ public class PassbookServiceBean implements PassbookService {
 
 		Golf golf = golfService.getGolfById(scoreUpdated.getGolf().getId());
 
-		GolfPass pass = golf.getUsersId().getPass();
+		UserPass pass = golf.getUsersId().getPass();
 
 		return pass.getToken();
 	}
@@ -243,9 +245,27 @@ public class PassbookServiceBean implements PassbookService {
 
 	@Override
 	public void setFileName(String fileName) {
-		this.fileName = fileName+".pkpass";
+		this.fileName = fileName + ".pkpass";
 	}
-	
-	
+
+	@Override
+	public GolfHttpUpdates getListOfUpdatePass(String deviceId, String passTypeId, String updateSinceDate) {
+		List<PassRegistrations> register = golfService.findUpdatedPass(deviceId, passTypeId);
+		List<String> serialNumbersList = new ArrayList<String>();
+
+		GolfHttpUpdates updates = new GolfHttpUpdates();
+		updates.setLastUpdated(updates.currentTimeStamp());
+
+		for (PassRegistrations passRegi : register) {
+			serialNumbersList.add(passRegi.getSerialNumber());
+		}
+
+		String[] passRegistrationsArr = serialNumbersList.toArray(new String[serialNumbersList.size()]);
+
+		updates.setSerialNumbers(passRegistrationsArr);
+
+		return updates;
+
+	}
 
 }

@@ -12,7 +12,7 @@ import org.springframework.social.security.SocialUserDetails;
 import org.springframework.social.security.SocialUserDetailsService;
 
 import com.mds.passbook.data.repository.UserProfileRepository;
-import com.mds.passbook.data.repository.dao.UserProfile;
+import com.mds.passbook.data.repository.security.dao.UserProfile;
 
 public class PassbookSocialService implements SocialUserDetailsService {
 

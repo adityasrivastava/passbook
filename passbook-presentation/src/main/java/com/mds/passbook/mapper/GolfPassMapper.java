@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import com.mds.passbook.bean.GolfPass;
-import com.mds.passbook.data.repository.dao.GolfPassDao;
+
+import com.mds.passbook.bean.pass.UserPass;
+import com.mds.passbook.data.repository.user.dao.UserPassDao;
 
 public interface GolfPassMapper {
 	
@@ -16,7 +17,7 @@ public interface GolfPassMapper {
 		@Mapping(source="passAdded", target="passAdded"),
 		@Mapping(source="registeredPass", target="registeredPass", ignore=true)
 	})
-	GolfPass GolfPassDAOtoGolfPassDTO(GolfPassDao pass);
+	UserPass GolfPassDAOtoGolfPassDTO(UserPassDao pass);
 	
 	@Mappings({
 		@Mapping(source="passId", target="passId"),
@@ -25,10 +26,10 @@ public interface GolfPassMapper {
 		@Mapping(source="passAdded", target="passAdded"),
 		@Mapping(source="registeredPass", target="registeredPass")
 	})
-	GolfPassDao GolfPassDTOtoGolfPassDAO(GolfPass pass);
+	UserPassDao GolfPassDTOtoGolfPassDAO(UserPass pass);
 	
-	List<GolfPass> GolfPassDAOListToGolfPassDTOList(List<GolfPassDao> pass);
+	List<UserPass> GolfPassDAOListToGolfPassDTOList(List<UserPassDao> pass);
 	
-	List<GolfPassDao> GolfPassDTOListToGolfPassDAOList(List<GolfPass> pass);
+	List<UserPassDao> GolfPassDTOListToGolfPassDAOList(List<UserPass> pass);
 
 }

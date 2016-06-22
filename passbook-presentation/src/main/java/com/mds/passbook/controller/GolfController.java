@@ -15,18 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mds.passbook.bean.Golf;
-import com.mds.passbook.bean.GolfCourse;
-import com.mds.passbook.bean.GolfHoles;
-import com.mds.passbook.bean.GolfPass;
-import com.mds.passbook.bean.GolfScore;
-import com.mds.passbook.bean.GolfTee;
-import com.mds.passbook.bean.GolfUser;
+import com.mds.passbook.bean.golf.Golf;
+import com.mds.passbook.bean.golf.GolfCourse;
+import com.mds.passbook.bean.golf.GolfHoles;
+import com.mds.passbook.bean.golf.GolfScore;
+import com.mds.passbook.bean.golf.GolfTee;
+import com.mds.passbook.bean.golf.GolfUser;
+import com.mds.passbook.bean.pass.UserPass;
 import com.mds.passbook.data.repository.UserProfileRepository;
-import com.mds.passbook.data.repository.dao.GolfUserDao;
-import com.mds.passbook.data.repository.dao.UserProfile;
+import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
+import com.mds.passbook.data.repository.security.dao.UserProfile;
 import com.mds.passbook.service.GolfService;
-import com.mds.passbook.view.bean.GolfForm;
 
 
 @RestController
@@ -206,7 +205,7 @@ public class GolfController {
 	}
 	
 	@RequestMapping(value="/pass", method=RequestMethod.POST)
-	public String pass(@RequestBody(required=true) GolfPass pass, @RequestParam(name="target") String target){
+	public String pass(@RequestBody(required=true) UserPass pass, @RequestParam(name="target") String target){
 		String response;
 		
 		switch(target.toLowerCase()){

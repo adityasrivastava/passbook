@@ -4,20 +4,19 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.mds.passbook.bean.Golf;
-import com.mds.passbook.bean.GolfCourse;
-import com.mds.passbook.bean.GolfGame;
-import com.mds.passbook.bean.GolfHoles;
-import com.mds.passbook.bean.GolfPass;
-import com.mds.passbook.bean.GolfScore;
-import com.mds.passbook.bean.GolfTee;
-import com.mds.passbook.bean.GolfUser;
-import com.mds.passbook.bean.PassRegistrations;
-import com.mds.passbook.data.repository.dao.GolfDao;
-import com.mds.passbook.data.repository.dao.GolfScoreDao;
-import com.mds.passbook.data.repository.dao.GolfTeeDao;
-import com.mds.passbook.data.repository.dao.GolfUserDao;
-import com.mds.passbook.data.repository.dao.PassRegistrationsDao;
+import com.mds.passbook.bean.golf.Golf;
+import com.mds.passbook.bean.golf.GolfCourse;
+import com.mds.passbook.bean.golf.GolfHoles;
+import com.mds.passbook.bean.golf.GolfScore;
+import com.mds.passbook.bean.golf.GolfTee;
+import com.mds.passbook.bean.golf.GolfUser;
+import com.mds.passbook.bean.pass.PassRegistrations;
+import com.mds.passbook.bean.pass.UserPass;
+import com.mds.passbook.data.repository.golf.dao.GolfDao;
+import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
+import com.mds.passbook.data.repository.golf.dao.GolfTeeDao;
+import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
+import com.mds.passbook.data.repository.user.dao.PassRegistrationsDao;
 
 @Service
 public interface GolfService {
@@ -29,14 +28,13 @@ public interface GolfService {
 	void deleteGolfScore(GolfScore score);
 	void updateGolfScore(GolfScore score);
 	
-	List<GolfScoreDao> addGolf(GolfGame golf);
+	List<GolfScoreDao> addGolf(Golf golf);
 	void deleteGolf(Long id);
-	void updateGolf(GolfGame golf);
 	
-	void addGolfPass(GolfPass pass);
-	void deleteGolfPass(GolfPass pass);
-	GolfPass updateGolfPass(GolfPass pass);
-	GolfPass findGolfPassById(Long id);
+	void addGolfPass(UserPass pass);
+	void deleteGolfPass(UserPass pass);
+	UserPass updateGolfPass(UserPass pass);
+	UserPass findGolfPassById(Long id);
 	
 	void addGolfTee(GolfTee tee);
 	void deleteGolfTee(GolfTee tee);

@@ -127,8 +127,6 @@
 	</dependencies>
 
 	<build>
-		<!-- <resources> <resource> <directory>public/</directory> </resource> 
-			<resource> <directory>src/main/resources</directory> </resource> </resources> -->
 		<plugins>
 			<plugin>
 				<groupId>org.bsc.maven</groupId>
@@ -171,31 +169,6 @@
 				</configuration>
 			</plugin>
 
-		<!-- 	<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
- -->
-
-	<!-- 		<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-
-				<configuration>
-					or whatever version you use
-					<source>1.8</source>
-					<target>1.8</target>
-					<verbose>true</verbose>
-				</configuration>
-			</plugin> -->
 		</plugins>
 
 	</build>

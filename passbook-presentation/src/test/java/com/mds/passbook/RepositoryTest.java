@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.mds.passbook.bean.GolfCourse;
+import com.mds.passbook.bean.golf.GolfCourse;
 import com.mds.passbook.data.repository.GolfCourseRepository;
 import com.mds.passbook.data.repository.GolfHolesRepository;
 import com.mds.passbook.data.repository.GolfPassRepository;
@@ -17,14 +17,14 @@ import com.mds.passbook.data.repository.GolfRepository;
 import com.mds.passbook.data.repository.GolfScoreRepository;
 import com.mds.passbook.data.repository.GolfTeeRepository;
 import com.mds.passbook.data.repository.GolfUserRepository;
-import com.mds.passbook.data.repository.dao.GolfCourseDao;
-import com.mds.passbook.data.repository.dao.GolfDao;
-import com.mds.passbook.data.repository.dao.GolfHolesDao;
-import com.mds.passbook.data.repository.dao.GolfPassDao;
-import com.mds.passbook.data.repository.dao.GolfScoreDao;
-import com.mds.passbook.data.repository.dao.GolfTeeDao;
-import com.mds.passbook.data.repository.dao.GolfTeeDetailsDao;
-import com.mds.passbook.data.repository.dao.GolfUserDao;
+import com.mds.passbook.data.repository.golf.dao.GolfCourseDao;
+import com.mds.passbook.data.repository.golf.dao.GolfDao;
+import com.mds.passbook.data.repository.golf.dao.GolfHolesDao;
+import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
+import com.mds.passbook.data.repository.golf.dao.GolfTeeDao;
+import com.mds.passbook.data.repository.golf.dao.GolfTeeDetailsDao;
+import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
+import com.mds.passbook.data.repository.user.dao.UserPassDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -100,7 +100,7 @@ public class RepositoryTest {
 	@org.junit.Test
 	public void insertGolfPassTest(){
 		// Golf Pass Added
-		GolfPassDao gPass = new GolfPassDao();
+		UserPassDao gPass = new UserPassDao();
 		gPass.setPassAdded(true);
 		gPass.setToken("XYZ");
 		golfPassRepo.save(gPass);
@@ -177,11 +177,11 @@ public class RepositoryTest {
 		
 		// Create pass 
 		
-		GolfPassDao pass = new GolfPassDao();
+		UserPassDao pass = new UserPassDao();
 		pass.setPassAdded(true);
 		pass.setToken("ABC=XYZ");
 		
-		GolfPassDao pass2 = new GolfPassDao();
+		UserPassDao pass2 = new UserPassDao();
 		pass2.setPassAdded(true);
 		pass2.setToken("ABC=XYZ1");
 	

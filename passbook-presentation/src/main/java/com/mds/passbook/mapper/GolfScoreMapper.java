@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import com.mds.passbook.bean.GolfScore;
-import com.mds.passbook.data.repository.dao.GolfScoreDao;
+
+import com.mds.passbook.bean.golf.GolfScore;
+import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
 
 public interface GolfScoreMapper {
 	

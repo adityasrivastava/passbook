@@ -6,26 +6,34 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.mds.passbook.data.repository.dao.GolfDao;
-import com.mds.passbook.data.repository.dao.GolfScoreDao;
-import com.mds.passbook.data.repository.dao.GolfUserDao;
+import com.mds.passbook.bean.http.GolfHttpUpdates;
+import com.mds.passbook.data.repository.golf.dao.GolfDao;
+import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
+import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
 
 @Service
 public interface PassbookService {
-	
-	InputStream createPassbook(Map<String,String> passbookDetails, GolfUserDao userDao);
-	InputStream updatePassbook(String serialNumber,String passTypeIdentifier,Map<String, Object> payload);
-	
+
+	InputStream createPassbook(Map<String, String> passbookDetails, GolfUserDao userDao);
+
+	InputStream updatePassbook(String serialNumber, String passTypeIdentifier, Map<String, Object> payload);
+
 	long getFileSize();
+
 	void generatePass(String absolutePath, List<com.mds.passkit.GolfScore> scores);
+
 	InputStream readPassFile(String relativePath);
-	
+
 	void addPassbook(String serialNumber, String deviceId, String passTypeId, String pushToken);
+
 	String updateGolfScore(String hole, String score, String gameId);
-	
+
 	List<com.mds.passkit.GolfScore> generateGolfScore(GolfDao golfDao, List<GolfScoreDao> scoreDaoList);
-	
+
 	String getFileName();
+
 	void setFileName(String fileName);
+
+	GolfHttpUpdates getListOfUpdatePass(String deviceId, String passTypeId, String updateSinceDate);
 
 }

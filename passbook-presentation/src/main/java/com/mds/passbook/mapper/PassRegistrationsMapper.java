@@ -6,8 +6,9 @@ import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
-import com.mds.passbook.bean.PassRegistrations;
-import com.mds.passbook.data.repository.dao.PassRegistrationsDao;
+
+import com.mds.passbook.bean.pass.PassRegistrations;
+import com.mds.passbook.data.repository.user.dao.PassRegistrationsDao;
 
 
 public interface PassRegistrationsMapper {

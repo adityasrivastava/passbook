@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import com.mds.passbook.bean.GolfTee;
-import com.mds.passbook.data.repository.dao.GolfTeeDao;
+
+import com.mds.passbook.bean.golf.GolfTee;
+import com.mds.passbook.data.repository.golf.dao.GolfTeeDao;
 
 public interface GolfTeeMapper {
 
