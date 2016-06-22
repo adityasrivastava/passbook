@@ -1,0 +1,11 @@
+*.p12
+*.pkpass
+
+target/
+logs/
+bin/
+
+.settings/
+.project
+.DS_Store
+.classpath
