@@ -14,7 +14,9 @@ import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
 @Service
 public interface PassbookService {
 
-	InputStream createPassbook(Map<String, String> passbookDetails, GolfUserDao userDao);
+	Long persistPassbook(Map<String, String> passbookDetails, GolfUserDao userDao);
+	
+	InputStream createPassbook(Long gameId);
 
 	InputStream updatePassbook(String serialNumber, String passTypeIdentifier, Map<String, Object> payload);
 
@@ -28,7 +30,7 @@ public interface PassbookService {
 
 	String updateGolfScore(String hole, String score, String gameId);
 
-	List<com.mds.passkit.GolfScore> generateGolfScore(GolfDao golfDao, List<GolfScoreDao> scoreDaoList);
+	List<com.mds.passkit.GolfScore> generateGolfScore(List<GolfScoreDao> scoreDaoList);
 
 	String getFileName();
 

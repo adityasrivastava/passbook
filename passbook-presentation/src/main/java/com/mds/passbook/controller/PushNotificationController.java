@@ -73,7 +73,8 @@ public class PushNotificationController {
 		UserProfile profile = userProfileRepo.findByEmail(username);
 
 		passbookService.setFileName(username);
-		passInputStream = passbookService.createPassbook(requestParams, profile.getUserId());
+//		Long gameId = passbookService.persistPassbook(requestParams, profile.getUserId());
+		passInputStream = passbookService.createPassbook(Long.valueOf(requestParams.get("gameId")));
 
 		// Setup headers for 0 expiry and no cache
 		responseHeaders.add("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -197,7 +198,8 @@ public class PushNotificationController {
 		responseHeaders = new HttpHeaders();
 		
 		passbookService.setFileName(fileName);
-		passInputStream = passbookService.updatePassbook(serialNumber, passTypeIdentifier, payload);
+//		passInputStream = passbookService.updatePassbook(serialNumber, passTypeIdentifier, payload);
+		passInputStream = passbookService.createPassbook(Long.valueOf(serialNumber));
 
 		// Setup headers for 0 expiry and no cache
 		responseHeaders.add("Cache-Control", "no-cache, no-store, must-revalidate");

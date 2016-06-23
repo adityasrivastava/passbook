@@ -81,13 +81,14 @@ public class PassbookServiceBean implements PassbookService {
 
 	}
 
-	public List<com.mds.passkit.GolfScore> generateGolfScore(GolfDao golfDao, List<GolfScoreDao> scoreDaoList) {
+	public List<com.mds.passkit.GolfScore> generateGolfScore(List<GolfScoreDao> scoreDaoList) {
 
 		List<com.mds.passkit.GolfScore> scores;
 		GolfWallet wallet;
-
+		GolfDao golfDao;
+		
 		wallet = new GolfWallet();
-
+		golfDao = scoreDaoList.get(0).getGolf();
 		scores = new ArrayList<com.mds.passkit.GolfScore>();
 
 		wallet.setSerialNumber("" + golfDao.getId());
@@ -113,17 +114,14 @@ public class PassbookServiceBean implements PassbookService {
 
 		List<GolfScoreDao> golfDaoList = null;
 		List<com.mds.passkit.GolfScore> scores = null;
-		GolfWallet wallet;
 
 		String fileNamePath = "passes/" + fileName;
-
-		wallet = new GolfWallet();
 
 		golfDaoList = golfService.getScoresById(Long.valueOf(serialNumber));
 
 		GolfDao golfDao = golfDaoList.get(0).getGolf();
 
-		scores = generateGolfScore(golfDao, golfDaoList);
+		scores = generateGolfScore(golfDaoList);
 
 		generatePass(fileNamePath, scores);
 
@@ -135,29 +133,42 @@ public class PassbookServiceBean implements PassbookService {
 	}
 
 	@Override
-	public InputStream createPassbook(Map<String, String> passbookDetails, GolfUserDao userDao) {
+	public Long persistPassbook(Map<String, String> passbookDetails, GolfUserDao userDao) {
 
+		Long gameId = null;
+		
 		List<GolfScoreDao> scoreDao = null;
 
 		GolfDao golfDao;
-		InputStream passInputStream = null;
-
-		String fileNamePath = "passes/" + fileName;
-
-		List<com.mds.passkit.GolfScore> scores;
-
+		
 		updateUserDetails(passbookDetails, userDao);
 
 		scoreDao = persistNewGame(passbookDetails, userDao);
 
-		golfDao = scoreDao.get(0).getGolf();
+		scoreDao.get(0).getGolf();
 
-		scores = generateGolfScore(golfDao, scoreDao);
+		gameId = scoreDao.get(0).getGolf().getId();
+
+		return gameId;
+	}
+	
+	@Override
+	public InputStream createPassbook(Long gameId){
+		
+		InputStream passInputStream = null;
+		List<com.mds.passkit.GolfScore> scores;
+		List<GolfScoreDao> golfScoreDao;
+		
+		String fileNamePath = "passes/" + fileName;
+
+		golfScoreDao = golfService.getScoresById(gameId);
+		
+		scores = generateGolfScore(golfScoreDao);
 
 		generatePass(fileNamePath, scores);
 
 		passInputStream = readPassFile(fileNamePath);
-
+		
 		return passInputStream;
 	}
 
@@ -250,7 +261,7 @@ public class PassbookServiceBean implements PassbookService {
 
 	@Override
 	public GolfHttpUpdates getListOfUpdatePass(String deviceId, String passTypeId, String updateSinceDate) {
-		List<PassRegistrations> register = golfService.findUpdatedPass(deviceId, passTypeId);
+		List<PassRegistrations> register = golfService.findUpdatedPass(passTypeId,deviceId);
 		List<String> serialNumbersList = new ArrayList<String>();
 
 		GolfHttpUpdates updates = new GolfHttpUpdates();

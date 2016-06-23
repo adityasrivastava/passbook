@@ -5,7 +5,7 @@ app
 				"passbookCtrl",
 				function($scope, $http, $location, $document, $window,
 						$interval) {
-
+					$scope.passbookUrlPath = passbookUrlPath;
 					$scope.update = "";
 					$scope.error = "Please fill all the fields.";
 
@@ -23,6 +23,17 @@ app
 					};
 
 					$scope.data_properties = {};
+					
+					$scope.checkForEmptyPassbook = function(){
+						
+						console.log($scope.passbookUrlPath);
+						
+						if($scope.passbookUrlPath == null){
+							return true;
+						}else{
+							return false;
+						}
+					}
 
 					function init() {
 
@@ -55,8 +66,16 @@ app
 
 						var pushUrl = "/pushNotifications?hole="
 								+ $scope.user.hole + "&score="
-								+ $scope.user.score + "&gameId="
-								+ $scope.user.gameId;
+								+ $scope.user.score + "&gameId=";
+						
+						if(passbookId == null){
+
+							pushUrl += $scope.user.gameId;
+						}else{
+
+							pushUrl += passbookId;
+						}
+						
 
 						$http.get(pushUrl).then(function(response) {
 							$scope.update = "Pust Notification Successful";
@@ -69,16 +88,26 @@ app
 						$scope.user.age = "";
 						$scope.user.gender = "";
 					}
+					
+					$scope.redirectToUpdate = function() {
 
-					$scope.createPassbook = function() {
-
-						$scope.urlPath = "/createPassbook?name="
+						$scope.urlPath = "/update?name="
 								+ $scope.user.name + "&age=" + $scope.user.age
 								+ "&gender=" + $scope.user.gender
 								+ "&golf_course=" + $scope.user.golf_course
 								+ "&hole_type=" + $scope.user.hole_type
 								+ "&tee_type=" + $scope.user.tee_type
 								+ "&handicap=" + $scope.user.handicap;
+
+						return $scope.urlPath;
+
+					}
+
+					
+
+					$scope.createPassbook = function() {
+			
+						$scope.urlPath = $scope.passbookUrlPath;
 
 						return $scope.urlPath;
 

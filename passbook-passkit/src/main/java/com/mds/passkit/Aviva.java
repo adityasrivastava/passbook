@@ -41,7 +41,7 @@ public class Aviva {
             Location location = new Location();
             location.latitude(28.6139);
             location.longitude(77.2090);
-            location.relevantText("Hi this is test message");
+            location.relevantText("Golf Pass Update");
             Barcode barcode = new Barcode(BarcodeFormat.PDF417, "12122");
             Pass pass = new Pass()
                     .teamIdentifier(properties.getProperty(PasskitConstants.Keys.TEAM_IDENTIFIER))

@@ -12,12 +12,13 @@
 <script th:inline="javascript">
 /*<![CDATA[*/
     var userName = /*[[${user.name}]]*/ null;
+    var passbookUrlPath = /*[[${passbookUrl}]]*/ null;
+    var passbookId = /*[[${game_id}]]*/ null;
     /*]]>*/
 </script>
 
 	<script>
 		var updatePage = true;
-
 	</script>
 	<style type="text/css">
 		/* label{
@@ -39,11 +40,21 @@
 	<div class="container" ng-app="passbookApp">
 
 		<div ng-controller="passbookCtrl">
+		
+			<div class="form-group pull-right">
+			
+				<a href="/logout">Logout</a>
+			
+			</div>
 
-
+			<div  class="form-group" ng-if="!checkForEmptyPassbook()">
+			
+				<a ng-href="{{createPassbook()}}">Download Passbook</a>
+			
+			</div>
 			<br/>
 
-			<div class="form-group">
+			<div class="form-group" ng-if="checkForEmptyPassbook()">
 		
 					<label>Select Game Id:</label>
 				

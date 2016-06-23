@@ -1,6 +1,7 @@
 package com.mds.passbook.controller;
 
 import java.security.Principal;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
@@ -25,6 +26,7 @@ import com.mds.passbook.data.repository.UserProfileRepository;
 import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
 import com.mds.passbook.data.repository.security.dao.Role;
 import com.mds.passbook.data.repository.security.dao.UserProfile;
+import com.mds.passbook.service.PassbookService;
 
 @Controller
 public class ViewController {
@@ -40,6 +42,9 @@ public class ViewController {
 
 	@Autowired
 	UsersConnectionRepository connectionRepository;
+	
+	@Autowired
+	PassbookService passbookService;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(@RequestParam(name="id", required=false) String userId,Model model, Principal principal){
@@ -59,19 +64,29 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(Principal principal, Model model) {
+	public String update(@RequestParam Map<String, String> requestParams, Principal principal, Model model) {
 		
 		UserProfile profile = userProfileService.findByEmail(principal.getName());
-		
-		
-		PassbookStatus.getInstance();
-		PassbookStatus.setUpdateStatus(false);
+
 		if(profile != null){
 			GolfUserDao user = new GolfUserDao();
-			
 			user = profile.getUserId();
-			
+
 			model.addAttribute("user", user);
+			
+			if(requestParams.isEmpty() 
+					|| requestParams.containsKey("golf_course") == false 
+					|| requestParams.containsKey("hole_type") == false
+					|| requestParams.containsKey("tee_type") == false) {
+				
+				model.addAttribute("passbookUrl", null);
+			}else{
+				Long gameId = passbookService.persistPassbook(requestParams, profile.getUserId());
+				String createPassbookUrl = "/createPassbook?gameId="+gameId;
+				
+				model.addAttribute("passbookUrl", createPassbookUrl);
+				model.addAttribute("game_id", gameId);
+			}
 
 		}
 		return "update";
