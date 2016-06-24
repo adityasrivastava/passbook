@@ -49,7 +49,8 @@
 
 			<div class="form-group pull-right">
 			
-				<a href="/logout">Logout</a>
+			<a href="/">Home</a>
+			<a href="/logout">Logout</a>
 			
 			</div>
 
@@ -65,7 +66,7 @@
 
 			<div class="golf-course-container form-group">
 				<div class="golf-course-label">
-					<label>Gold Course</label>
+					<label>Golf Course</label>
 				</div>
 
 				<div class="golf-course-input-box">
@@ -112,7 +113,7 @@
 				</div>
 
 				<div class="name-input-box">
-					<input class="form-control" name="name" ng-model="user.name" />
+					<input class="form-control" name="name" ng-model="user.name" ng-disabled="true" />
 				</div>	
 			</div>
 
@@ -123,7 +124,7 @@
 				</div>
 
 				<div class="age-input-box ">
-					<input class="form-control" name="age" ng-model="user.age" />
+					<input class="form-control" name="age" ng-model="user.age" ng-disabled="true" />
 				</div>	
 			</div>
 
@@ -135,7 +136,7 @@
 					<label>Gender</label>
 				</div>
 				<div class="gender-input-box">
-					<select class="form-control" name="gender" ng-model="user.gender" ng-options="gender.value as gender.value for gender in data_properties.genders" >
+					<select class="form-control" name="gender" ng-model="user.gender" ng-options="gender.value as gender.value for gender in data_properties.genders" ng-disabled="true">
 					</select>
 				</div>	
 			</div>

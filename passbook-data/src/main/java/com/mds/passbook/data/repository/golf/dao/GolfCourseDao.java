@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity(name="GOLF_COURSE")
 public class GolfCourseDao extends BaseEntity<Long> {
@@ -23,6 +24,12 @@ public class GolfCourseDao extends BaseEntity<Long> {
 	@Column(name="COURSE_NAME")
 	private String courseName;
 	
+	@OneToOne
+	private GolfHolesDao holeId;
+	
+	@OneToOne
+	private GolfTeeDao teeId;
+	
 	@OneToMany(mappedBy="golfCoursesId", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<GolfDao> golf = new ArrayList<GolfDao>();
 	
@@ -31,10 +38,27 @@ public class GolfCourseDao extends BaseEntity<Long> {
 	}
 
 	public GolfCourseDao(Long golfCourseId) {
-		super();
 		this.golfCourseId = golfCourseId;
 	}
 	
+	
+	
+	public GolfHolesDao getHoleId() {
+		return holeId;
+	}
+
+	public void setHoleId(GolfHolesDao holeId) {
+		this.holeId = holeId;
+	}
+
+	public GolfTeeDao getTeeId() {
+		return teeId;
+	}
+
+	public void setTeeId(GolfTeeDao teeId) {
+		this.teeId = teeId;
+	}
+
 	public String getCourseName() {
 		return courseName;
 	}

@@ -13,6 +13,8 @@ public interface GolfCourseMapper {
 	@Mappings({
 		@Mapping(source="golfCourseId", target="golfCourseId"),
 		@Mapping(source="courseName", target="courseName"),
+		@Mapping(source="holeId", target="holeId"),
+		@Mapping(source="teeId", target="teeId"),
 		@Mapping(source="golf", target="golf", ignore=true)
 	})
 	GolfCourse golfCourseDAOtoGolfCourseDTO(GolfCourseDao courseDao);
@@ -20,6 +22,8 @@ public interface GolfCourseMapper {
 	@Mappings({
 		@Mapping(source="golfCourseId", target="golfCourseId"),
 		@Mapping(source="courseName", target="courseName"),
+		@Mapping(source="holeId", target="holeId"),
+		@Mapping(source="teeId", target="teeId")
 	})
 	GolfCourseDao golfCourseDTOtoGolfCourseDAO(GolfCourse course);
 	

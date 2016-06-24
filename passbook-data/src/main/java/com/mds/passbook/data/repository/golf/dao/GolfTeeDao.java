@@ -12,22 +12,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-@Entity(name="GOLF_TEE")
-public class GolfTeeDao extends BaseEntity<Long>{
+@Entity(name = "GOLF_TEE")
+public class GolfTeeDao extends BaseEntity<Long> {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="TEE_ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "TEE_ID")
 	private Long teeId;
-	
-	@Column(name="COLOR")
+
+	@Column(name = "COLOR")
 	private String color;
-	
-	@OneToMany(mappedBy="golfTee", cascade=CascadeType.ALL)
+
+	@OneToMany(mappedBy = "holeId", cascade = CascadeType.ALL)
+	private List<GolfCourseDao> courseIds;
+
+	@OneToMany(mappedBy = "golfTee", cascade = CascadeType.ALL)
 	private List<GolfTeeDetailsDao> teeDetails = new ArrayList<GolfTeeDetailsDao>();
-	
-	public GolfTeeDao(){
-		
+
+	public GolfTeeDao() {
+
+	}
+
+	public List<GolfCourseDao> getCourseId() {
+		return courseIds;
+	}
+
+	public void setCourseId(List<GolfCourseDao> courseIds) {
+		this.courseIds = courseIds;
 	}
 
 	public GolfTeeDao(Long teeId) {

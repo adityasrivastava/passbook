@@ -20,7 +20,8 @@ public interface GolfMapper extends GolfCourseMapper, GolfHolesMapper, GolfPassM
 	@Mapping(source="scoresId", target = "scoresId"),
 	@Mapping(source="teeTypesId", target="teeTypesId"),
 	@Mapping(source="holeTypesId", target="holeTypesId"),
-	@Mapping(source="usersId", target="usersId")
+	@Mapping(source="usersId", target="usersId"),
+	@Mapping(source="passRegistrationsId", target="passRegistrationsId")
 	})
 	Golf golfDAOtoGolfDTO(GolfDao golf);
 	
@@ -30,7 +31,8 @@ public interface GolfMapper extends GolfCourseMapper, GolfHolesMapper, GolfPassM
 		@Mapping(source="scoresId", target = "scoresId"),
 		@Mapping(source="teeTypesId", target="teeTypesId"),
 		@Mapping(source="holeTypesId", target="holeTypesId"),
-		@Mapping(source="usersId", target="usersId")
+		@Mapping(source="usersId", target="usersId"),
+		@Mapping(source="passRegistrationsId", target="passRegistrationsId")
 	})
 	GolfDao golfDTOtoGolfDAO(Golf golf);
 

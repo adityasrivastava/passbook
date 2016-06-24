@@ -40,7 +40,16 @@ public class GeneratePass {
 		for(GolfScore score: wallet){
 			totalScore += score.getScore();
 			totalPar += score.getPar();
-			String fieldText = "Score "+ score.getScore() +" , "+ score.getPar()+" Par, "+score.getStroke()+" Stroke, "+score.getTeeType()+" Tee, "+score.getYards()+" Yards";
+			
+			String score_;
+			
+			if(score.getScore() == 0){
+				score_ = "N/A";
+			}else{
+				score_ = Integer.toString(score.getScore());
+			}
+			
+			String fieldText = "Score "+ score_ +" , "+ score.getPar()+" Par, "+score.getStroke()+" Stroke, "+score.getTeeType()+" Tee, "+score.getYards()+" Yards";
 			scoreFields.add(new TextField("hole_"+count++,"Hole "+count, fieldText));
 		}
 		

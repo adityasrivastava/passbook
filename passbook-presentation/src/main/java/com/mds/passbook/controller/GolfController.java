@@ -42,14 +42,15 @@ public class GolfController {
 	
 	@RequestMapping(value="/golfDetails", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, List<?>> getGolfViewDetails(Principal principal){
-		 
-		List<Object> response = new ArrayList<Object>();
 		
 		HashMap<String, List<?>> responseMap = new HashMap<>();
 
 		UserProfile userProfile = userProfileService.findByEmail(principal.getName());
 		
 		GolfUserDao golfUser = userProfile.getUserId();
+		
+		List<GolfUserDao> user = new ArrayList<GolfUserDao>();
+		user.add(golfUser);
 		
 		List<Golf> golf = service.getAllGolf(golfUser);
 		List<GolfHoles> holes = service.findAllGolfHoles();
@@ -66,6 +67,7 @@ public class GolfController {
 		responseMap.put("golf_course_list", courses);
 		responseMap.put("genders", genders);
 		responseMap.put("tee_type_list", tees);
+		responseMap.put("golf_user", user);
 		
 		return responseMap;
 		

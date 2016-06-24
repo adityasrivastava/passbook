@@ -3,6 +3,8 @@ package com.mds.passbook.bean.golf;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mds.passbook.bean.pass.PassRegistrations;
+
 public class Golf {
 	
 	private Long id;
@@ -10,6 +12,7 @@ public class Golf {
 	private GolfCourse golfCoursesId;
 	private GolfHoles holeTypesId;
 	private GolfTee teeTypesId;
+	private PassRegistrations passRegistrationsId;
 	private List<GolfScore> scoresId = new ArrayList<GolfScore>();
 
 	
@@ -35,6 +38,20 @@ public class Golf {
 	public Golf(){
 		
 	}
+
+	
+	
+	public PassRegistrations getPassRegistrationsId() {
+		return passRegistrationsId;
+	}
+
+
+
+	public void setPassRegistrationsId(PassRegistrations passRegistrationsId) {
+		this.passRegistrationsId = passRegistrationsId;
+	}
+
+
 
 	public List<GolfScore> getScoresId() {
 		return scoresId;

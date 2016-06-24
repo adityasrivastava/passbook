@@ -1,6 +1,9 @@
 package com.mds.passbook.controller;
 
 import java.security.Principal;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mds.passbook.bean.golf.GolfUser;
 import com.mds.passbook.bean.http.RegisterForm;
 import com.mds.passbook.data.repository.GolfUserRepository;
@@ -104,11 +109,29 @@ public class ViewController {
 
 		Connection<?> connection = util.getConnectionFromSession(request);
 
-		System.out.println("NAME " + connection.getDisplayName());
-
 		RegisterForm form = createRegistrationDTO(connection);
+		
+		List<AbstractMap.SimpleEntry<String,String>> genders = new ArrayList<AbstractMap.SimpleEntry<String,String>>();
+		
+		genders.add(new AbstractMap.SimpleEntry<String,String>("value","Male"));
+		genders.add(new AbstractMap.SimpleEntry<String,String>("value","Female"));
+		
+		String[] a = new String[2];
+		a[0] = "Male";
+		a[1] = "Female";
 
-		model.addAttribute("register", form);
+		String jsonForm = null;
+		
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			jsonForm = mapper.writeValueAsString(form);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		
+		model.addAttribute("register", jsonForm);
+		model.addAttribute("genders", a);
 
 		return "register";
 	}
@@ -127,7 +150,7 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String registerAndRedirect(@ModelAttribute("register") RegisterForm userAccountData, BindingResult result,
+	public String registerAndRedirect(@ModelAttribute RegisterForm userAccountData, BindingResult result,
 			WebRequest request) {
 
 		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
@@ -135,6 +158,8 @@ public class ViewController {
 		GolfUserDao golfUser = new GolfUserDao();
 
 		golfUser.setName(userAccountData.getFirstName());
+		golfUser.setAge(userAccountData.getAge());
+		golfUser.setGender(userAccountData.getGender());
 
 		UserProfile profile = new UserProfile();
 		profile.setEmail(userAccountData.getEmail());

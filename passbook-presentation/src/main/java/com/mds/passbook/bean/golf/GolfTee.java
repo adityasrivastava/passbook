@@ -8,6 +8,7 @@ public class GolfTee implements Serializable {
 
 	private Long teeId;
 	private String color;
+	private List<GolfCourse> courseIds = new ArrayList<GolfCourse>();
 	private List<GolfTeeDetails> teeDetails = new ArrayList<GolfTeeDetails>();
 
 	public GolfTee() {
@@ -18,6 +19,14 @@ public class GolfTee implements Serializable {
 		this.teeId = teeId;
 		this.color = color;
 		this.teeDetails = teeDetails;
+	}
+
+	public List<GolfCourse> getCourseIds() {
+		return courseIds;
+	}
+
+	public void setCourseIds(List<GolfCourse> courseIds) {
+		this.courseIds = courseIds;
 	}
 
 	public GolfTee(Long teeId) {

@@ -8,7 +8,7 @@ app
 					$scope.passbookUrlPath = passbookUrlPath;
 					$scope.update = "";
 					$scope.error = "Please fill all the fields.";
-
+				
 					$scope.user = {
 						id : 0,
 						name : userName,
@@ -43,10 +43,14 @@ app
 										function(response) {
 											$scope.data_properties = response.data;
 
+											console.log(response.data);
 											$scope.data_properties.hole_numbers_array = [];
 											$scope.data_properties.hole_numbers_array = createHoleNumberList(parseInt($scope.data_properties.hole_type_list[0].holes));
 
-											console.log(response.data);
+											$scope.user.age = $scope.data_properties.golf_user[0].age;
+											$scope.user.name = $scope.data_properties.golf_user[0].name;
+											$scope.user.gender = $scope.data_properties.golf_user[0].gender;
+
 										});
 					}
 

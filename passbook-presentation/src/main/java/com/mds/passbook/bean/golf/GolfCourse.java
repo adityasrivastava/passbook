@@ -7,13 +7,32 @@ public class GolfCourse {
 
 	private Long golfCourseId;
 	private String courseName;
+	private GolfHoles holeId;
+	private GolfTee teeId;
+
 	private List<Golf> golf = new ArrayList<Golf>();
 
 	public GolfCourse() {
 
 	}
-	
-	public GolfCourse(Long golfCourseId){
+
+	public GolfHoles getHoleId() {
+		return holeId;
+	}
+
+	public void setHoleId(GolfHoles holeId) {
+		this.holeId = holeId;
+	}
+
+	public GolfTee getTeeId() {
+		return teeId;
+	}
+
+	public void setTeeId(GolfTee teeId) {
+		this.teeId = teeId;
+	}
+
+	public GolfCourse(Long golfCourseId) {
 		this.golfCourseId = golfCourseId;
 	}
 

@@ -225,8 +225,10 @@ public class GolfServiceBean implements GolfService {
 	public void addGolfCourse(GolfCourse course) {
 		GolfCourseDao courseDao;
 
-		courseDao = new GolfCourseDao();
-		courseDao.setCourseName(course.getCourseName());
+		courseDao = GolfMapper.INSTANCE.golfCourseDTOtoGolfCourseDAO(course);
+		
+//		courseDao = new GolfCourseDao();
+//		courseDao.setCourseName(course.getCourseName());
 		golfCourseRepo.save(courseDao);
 
 	}
