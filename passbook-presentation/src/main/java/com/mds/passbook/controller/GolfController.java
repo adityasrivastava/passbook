@@ -40,7 +40,7 @@ public class GolfController {
 	@Autowired
 	Environment env;
 	
-	@RequestMapping(value="/golfDetails", method=RequestMethod.GET)
+	@RequestMapping(value="/api/golfDetails", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, List<?>> getGolfViewDetails(Principal principal){
 		
 		HashMap<String, List<?>> responseMap = new HashMap<>();
@@ -73,7 +73,7 @@ public class GolfController {
 		
 	}
 	
-	@RequestMapping(value="/user", method=RequestMethod.POST)
+	@RequestMapping(value="/api/user", method=RequestMethod.POST)
 	public String user(@RequestBody(required=true) GolfUser user, @RequestParam(name="target", required=true) String target){
 		String response;
 		
@@ -99,7 +99,7 @@ public class GolfController {
 		
 	}
 	
-	@RequestMapping(value="/golfCourse", method=RequestMethod.POST)
+	@RequestMapping(value="/api/golfCourse", method=RequestMethod.POST)
 	public String golfCourse(@RequestBody GolfCourse course, @RequestParam(name="target") String target){
 		String response;
 		
@@ -124,7 +124,7 @@ public class GolfController {
 		return response;
 	}
 	
-	@RequestMapping(value="/holes", method=RequestMethod.POST)
+	@RequestMapping(value="/api/holes", method=RequestMethod.POST)
 	public String holes(@RequestBody(required=true) GolfHoles holes, @RequestParam(name="target") String target){
 		String response;
 		
@@ -150,7 +150,7 @@ public class GolfController {
 		return response;
 	}
 	
-	@RequestMapping(value="/tee", method=RequestMethod.POST)
+	@RequestMapping(value="/api/tee", method=RequestMethod.POST)
 	public String golf(@RequestBody(required=true) List<GolfTee> teeList, @RequestParam(name="target") String target){
 		
 		String response = "";
@@ -181,7 +181,7 @@ public class GolfController {
 	}
 	
 
-	@RequestMapping(value="/score", method=RequestMethod.POST)
+	@RequestMapping(value="/api/score", method=RequestMethod.POST)
 	public String score(@RequestBody(required=true) GolfScore score, @RequestParam(name="target") String target){
 		String response;
 		
@@ -206,7 +206,7 @@ public class GolfController {
 		return response;
 	}
 	
-	@RequestMapping(value="/pass", method=RequestMethod.POST)
+	@RequestMapping(value="/api/pass", method=RequestMethod.POST)
 	public String pass(@RequestBody(required=true) UserPass pass, @RequestParam(name="target") String target){
 		String response;
 		

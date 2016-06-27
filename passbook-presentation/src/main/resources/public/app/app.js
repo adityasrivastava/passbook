@@ -38,7 +38,7 @@ app
 					function init() {
 
 						$http
-								.get("/golfDetails")
+								.get("/api/golfDetails")
 								.then(
 										function(response) {
 											$scope.data_properties = response.data;
@@ -56,7 +56,7 @@ app
 
 					function createHoleNumberList(totalHoleNumber) {
 						var numbers_array = [];
-						console.log(totalHoleNumber);
+	
 						for (var count = 1; count <= totalHoleNumber; count++) {
 							numbers_array.push(count);
 						}

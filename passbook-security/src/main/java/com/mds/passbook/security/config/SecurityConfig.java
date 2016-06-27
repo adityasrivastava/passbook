@@ -30,22 +30,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.
 		csrf()
-		.disable().
-		formLogin()
+		.ignoringAntMatchers("/api/**","/v1/**")
+		.and()
+//		.disable().
+		.formLogin()
 		.loginPage("/login")
 		.permitAll()
 		.and()
 		.authorizeRequests()
 		.antMatchers("/login").hasAnyRole("ANONYMOUS","USER")
 		.antMatchers("/signup").hasAnyRole("ANONYMOUS","USER")
-		.antMatchers("/golfDetails").hasAnyRole("ANONYMOUS","USER")
-		.antMatchers("/user").hasAnyRole("ANONYMOUS","USER")
-		.antMatchers("/holes").hasAnyRole("ANONYMOUS","USER")
-		.antMatchers("/tee").hasAnyRole("ANONYMOUS","USER")
-		.antMatchers("/score").hasAnyRole("ANONYMOUS","USER")
-		.antMatchers("/pass").hasAnyRole("ANONYMOUS","USER")
+		.antMatchers("/api/**").permitAll()
 		.antMatchers("/v1/**").permitAll()
-		.antMatchers("/golfCourse").hasAnyRole("ANONYMOUS","USER")
+		.antMatchers("/app/**").permitAll()
 		.and()
 		.authorizeRequests()
 		.antMatchers("/**")

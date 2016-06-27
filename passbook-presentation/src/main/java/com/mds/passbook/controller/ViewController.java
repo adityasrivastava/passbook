@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
@@ -14,11 +15,14 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -149,8 +153,9 @@ public class ViewController {
 		return form;
 	}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public String registerAndRedirect(@ModelAttribute RegisterForm userAccountData, BindingResult result,
+	@RequestMapping(value = "/signup", method = RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
+	@ResponseBody
+	public String registerAndRedirect(@RequestBody RegisterForm userAccountData, BindingResult result,
 			WebRequest request) {
 
 		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
@@ -174,7 +179,7 @@ public class ViewController {
 		util.doPostSignUp(userAccountData.getEmail(), request);
 	
 
-		return "redirect:/home?id="+profile.getUserId().getUserId();
+		return "/home?id="+profile.getUserId().getUserId();
 
 	}
 

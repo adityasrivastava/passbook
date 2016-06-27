@@ -5,7 +5,9 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+//@JsonIgnoreProperties(ignoreUnknown = true)
 public class RegisterForm {
 
 	private String email;
