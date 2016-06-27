@@ -17,7 +17,7 @@ public interface PassRegistrationsMapper {
 		@Mapping(source="registerPassId", target="registerPassId"),
 		@Mapping(source="passTypeId", target="passTypeId"),
 		@Mapping(source="serialNumber", target="serialNumber"),
-		@Mapping(source="pass", target="pass")
+		@Mapping(source="pass", target="pass", ignore=true)
 	})
 	PassRegistrations PassRegistrationsDAOtoPassRegistrationsDTO(PassRegistrationsDao passRegistrations);
 	

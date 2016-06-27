@@ -47,26 +47,26 @@ public class GolfController {
 
 		UserProfile userProfile = userProfileService.findByEmail(principal.getName());
 		
-		GolfUserDao golfUser = userProfile.getUserId();
+		GolfUser golfUser = service.userProfileByEmailId(userProfile);
 		
-		List<GolfUserDao> user = new ArrayList<GolfUserDao>();
+		List<GolfUser> user = new ArrayList<GolfUser>();
 		user.add(golfUser);
 		
-		List<Golf> golf = service.getAllGolf(golfUser);
-		List<GolfHoles> holes = service.findAllGolfHoles();
-		List<GolfTee> tees = service.findAllGolfTee();
-		List<GolfCourse> courses = service.findAllGolfCourses();
+//		List<Golf> golf = service.getAllGolf(golfUser);
+//		List<GolfHoles> holes = service.findAllGolfHoles();
+//		List<GolfTee> tees = service.findAllGolfTee();
+//		List<GolfCourse> courses = service.findAllGolfCourses();
 		
 		List<AbstractMap.SimpleEntry<String,String>> genders = new ArrayList<AbstractMap.SimpleEntry<String,String>>();
 		
 		genders.add(new AbstractMap.SimpleEntry<String,String>("value","Male"));
 		genders.add(new AbstractMap.SimpleEntry<String,String>("value","Female"));
 		
-		responseMap.put("golf", golf);
-		responseMap.put("hole_type_list", holes);
-		responseMap.put("golf_course_list", courses);
+//		responseMap.put("golf", golf);
+//		responseMap.put("hole_type_list", holes);
+//		responseMap.put("golf_course_list", courses);
 		responseMap.put("genders", genders);
-		responseMap.put("tee_type_list", tees);
+//		responseMap.put("tee_type_list", tees);
 		responseMap.put("golf_user", user);
 		
 		return responseMap;

@@ -16,6 +16,7 @@ import com.mds.passbook.data.repository.golf.dao.GolfDao;
 import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
 import com.mds.passbook.data.repository.golf.dao.GolfTeeDao;
 import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
+import com.mds.passbook.data.repository.security.dao.UserProfile;
 import com.mds.passbook.data.repository.user.dao.PassRegistrationsDao;
 
 @Service
@@ -88,5 +89,7 @@ public interface GolfService {
 	List<Golf> findAllGolf();
 	
 	GolfTeeDao getTeeById(Long id);
+	
+	GolfUser userProfileByEmailId(UserProfile profile);
 
 }

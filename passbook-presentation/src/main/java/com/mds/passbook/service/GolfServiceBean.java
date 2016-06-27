@@ -26,6 +26,7 @@ import com.mds.passbook.data.repository.GolfScoreRepository;
 import com.mds.passbook.data.repository.GolfTeeDetailsRepository;
 import com.mds.passbook.data.repository.GolfTeeRepository;
 import com.mds.passbook.data.repository.GolfUserRepository;
+import com.mds.passbook.data.repository.UserProfileRepository;
 import com.mds.passbook.data.repository.golf.dao.GolfCourseDao;
 import com.mds.passbook.data.repository.golf.dao.GolfDao;
 import com.mds.passbook.data.repository.golf.dao.GolfHolesDao;
@@ -33,6 +34,7 @@ import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
 import com.mds.passbook.data.repository.golf.dao.GolfTeeDao;
 import com.mds.passbook.data.repository.golf.dao.GolfTeeDetailsDao;
 import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
+import com.mds.passbook.data.repository.security.dao.UserProfile;
 import com.mds.passbook.data.repository.user.dao.PassRegistrationsDao;
 import com.mds.passbook.data.repository.user.dao.UserPassDao;
 import com.mds.passbook.mapper.GolfMapper;
@@ -70,6 +72,9 @@ public class GolfServiceBean implements GolfService {
 
 	@Autowired
 	GolfTeeDetailsRepository golfTeeDetailsRepo;
+	
+	@Autowired
+	UserProfileRepository userProfileRepository;
 
 	@Override
 	public GolfUser addUser(GolfUser user) {
@@ -565,6 +570,16 @@ public class GolfServiceBean implements GolfService {
 	public void updateGolfScore(GolfScore score) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public GolfUser userProfileByEmailId(UserProfile profile) {
+		
+		GolfUserDao userDoa = profile.getUserId();
+		
+		GolfUser user = GolfMapper.INSTANCE.GolfUserDAOtoGolfUserDTO(userDoa);
+		
+		return user;
 	}
 
 }

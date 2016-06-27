@@ -34,11 +34,12 @@ app
 					}
 
 					$scope.selectGolfDetails = function(golf_course){
+						$scope.user.golf_course = golf_course.golfCourseId;
+						$scope.user.hole_type_selected = golf_course.holeId;
+						$scope.user.hole_type = golf_course.holeId.holeTypeId;
+						$scope.user.tee_type = golf_course.teeId.teeId;
+						$scope.user.tee_type_selected = golf_course.teeId;
 
-						console.log(golf_course);
-
-
-						// $scope.user.hole_type
 					}
 
 					function init() {
@@ -50,8 +51,8 @@ app
 											$scope.data_properties = response.data;
 
 											console.log(response.data);
-											$scope.data_properties.hole_numbers_array = [];
-											$scope.data_properties.hole_numbers_array = createHoleNumberList(parseInt($scope.data_properties.hole_type_list[0].holes));
+											// $scope.data_properties.hole_numbers_array = [];
+											// $scope.data_properties.hole_numbers_array = createHoleNumberList(parseInt($scope.data_properties.hole_type_list[0].holes));
 
 											$scope.user.age = $scope.data_properties.golf_user[0].age;
 											$scope.user.name = $scope.data_properties.golf_user[0].name;
