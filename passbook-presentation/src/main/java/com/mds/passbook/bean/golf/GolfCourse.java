@@ -67,7 +67,9 @@ public class GolfCourse {
 
 	@Override
 	public String toString() {
-		return "GolfCourse [golfCourseId=" + golfCourseId + ", courseName=" + courseName + "]";
+		return "GolfCourse [golfCourseId=" + golfCourseId + ", courseName=" + courseName + ", holeId=" + holeId
+				+ ", teeId=" + teeId + "]";
 	}
 
+	
 }

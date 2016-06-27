@@ -26,13 +26,19 @@ app
 					
 					$scope.checkForEmptyPassbook = function(){
 						
-						console.log($scope.passbookUrlPath);
-						
 						if($scope.passbookUrlPath == null){
 							return true;
 						}else{
 							return false;
 						}
+					}
+
+					$scope.selectGolfDetails = function(golf_course){
+
+						console.log(golf_course);
+
+
+						// $scope.user.hole_type
 					}
 
 					function init() {

@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -25,9 +26,11 @@ public class GolfCourseDao extends BaseEntity<Long> {
 	private String courseName;
 	
 	@OneToOne
+	@JoinColumn(name="HOLE_TYPE_ID")
 	private GolfHolesDao holeId;
 	
 	@OneToOne
+	@JoinColumn(name="TEE_TYPE_ID")
 	private GolfTeeDao teeId;
 	
 	@OneToMany(mappedBy="golfCoursesId", cascade = CascadeType.ALL, orphanRemoval=true)
@@ -77,10 +80,11 @@ public class GolfCourseDao extends BaseEntity<Long> {
 	public void setGolfCourseId(Long golfCourseId) {
 		this.golfCourseId = golfCourseId;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "GolfCourse [golfCourseId=" + golfCourseId + ", courseName=" + courseName + "]";
+		return "GolfCourseDao [golfCourseId=" + golfCourseId + ", courseName=" + courseName + ", holeId=" + holeId
+				+ ", teeId=" + teeId + "]";
 	}
 
 	@Override
