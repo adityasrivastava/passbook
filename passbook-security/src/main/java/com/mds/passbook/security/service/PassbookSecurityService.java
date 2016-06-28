@@ -36,7 +36,10 @@ public class PassbookSecurityService implements UserDetailsService {
 	}
 
 	public User buildUser(UserProfile user) {
-
+		
+		if(user.getPassword() == null){
+			user.setPassword("");
+		}
 		User securityUser = new User(user.getEmail(), user.getPassword(), buildGrantedAuthority(user));
 
 		return securityUser;

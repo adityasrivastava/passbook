@@ -56,7 +56,7 @@ public interface GolfService {
 	GolfUser updateUser(GolfUser user);
 	
 	Iterable<GolfDao> getAllGolf();
-	List<Golf> getAllGolf(GolfUserDao user);
+	List<Golf> getAllGolf(GolfUser user);
 	Golf getGolfById(Long id);
 	void addGame(GolfDao golf);
 	void deleteGame(GolfDao golf);

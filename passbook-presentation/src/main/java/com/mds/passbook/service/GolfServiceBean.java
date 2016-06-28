@@ -553,8 +553,11 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public List<Golf> getAllGolf(GolfUserDao user) {
-		List<GolfDao> golfList = golfRepo.findByUsersId(user);
+	public List<Golf> getAllGolf(GolfUser user) {
+		
+		GolfUserDao userDao = GolfMapper.INSTANCE.GolfUserDTOtoGolfUserDAO(user);
+
+		List<GolfDao> golfList = golfRepo.findByUsersId(userDao);
 
 		List<Golf> golf = GolfMapper.INSTANCE.golfDAOListToGolfDTOList(golfList);
 

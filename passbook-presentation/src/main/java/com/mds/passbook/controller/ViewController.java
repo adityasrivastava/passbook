@@ -6,13 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInUtils;
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.facebook.api.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MimeTypeUtils;
@@ -54,6 +63,9 @@ public class ViewController {
 	
 	@Autowired
 	PassbookService passbookService;
+	
+	@Autowired
+	AuthenticationManager authenticationManager;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String homePage(@RequestParam(name="id", required=false) String userId,Model model, Principal principal){
@@ -107,22 +119,26 @@ public class ViewController {
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
-	public String signUpPage(WebRequest request, Model model) {
+	public String signUpPage(WebRequest webRequest, HttpServletRequest request, Model model) {
 
 		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
 
-		Connection<?> connection = util.getConnectionFromSession(request);
+		Connection<?> connection = util.getConnectionFromSession(webRequest);
+		
+		Facebook facebook = (Facebook) connection.getApi();
+		
+		User user = facebook.userOperations().getUserProfile();
 
-		RegisterForm form = createRegistrationDTO(connection);
+		RegisterForm form = createRegistrationDTO(user);
 		
-		List<AbstractMap.SimpleEntry<String,String>> genders = new ArrayList<AbstractMap.SimpleEntry<String,String>>();
-		
-		genders.add(new AbstractMap.SimpleEntry<String,String>("value","Male"));
-		genders.add(new AbstractMap.SimpleEntry<String,String>("value","Female"));
-		
-		String[] a = new String[2];
-		a[0] = "Male";
-		a[1] = "Female";
+		if(user.getEmail() != null && user.getBirthday() != null){
+
+			UserProfile profile = persistUserRegistrationDetails(form, webRequest);
+			
+			authenticateUserAndSetSession(user.getEmail(), "" , request);
+			
+			return "redirect:/home?id="+profile.getUserId().getUserId();
+		}
 
 		String jsonForm = null;
 		
@@ -132,22 +148,21 @@ public class ViewController {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		model.addAttribute("register", jsonForm);
-		model.addAttribute("genders", a);
 
 		return "register";
 	}
 
-	public RegisterForm createRegistrationDTO(Connection<?> connection) {
+	public RegisterForm createRegistrationDTO(User connection) {
 
 		RegisterForm form = new RegisterForm();
 
 		if (connection != null) {
-			form.setEmail(connection.getDisplayName());
-			form.setFirstName(connection.getDisplayName());
-			form.setLastName(connection.getDisplayName());
+			form.setEmail(connection.getEmail());
+			form.setFirstName(connection.getFirstName());
+			form.setLastName(connection.getLastName());
+			form.setGender(connection.getGender());
 		}
 
 		return form;
@@ -158,6 +173,15 @@ public class ViewController {
 	public String registerAndRedirect(@RequestBody RegisterForm userAccountData, BindingResult result,
 			WebRequest request) {
 
+		UserProfile profile = persistUserRegistrationDetails(userAccountData, request);
+	
+
+		return "/home?id="+profile.getUserId().getUserId();
+
+	}
+	
+	
+	public UserProfile persistUserRegistrationDetails(RegisterForm userAccountData, WebRequest request){
 		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
 
 		GolfUserDao golfUser = new GolfUserDao();
@@ -177,10 +201,21 @@ public class ViewController {
 		profile = userProfileService.save(profile);
 
 		util.doPostSignUp(userAccountData.getEmail(), request);
-	
-
-		return "/home?id="+profile.getUserId().getUserId();
-
+		
+		return profile;
 	}
+	
+	private void authenticateUserAndSetSession(String username, String password, HttpServletRequest request) {
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+
+        // generate session if one doesn't exist
+        request.getSession();
+
+        token.setDetails(new WebAuthenticationDetails(request));
+        org.springframework.security.core.Authentication authenticatedUser = authenticationManager.authenticate(token);
+
+        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+    }
 
 }

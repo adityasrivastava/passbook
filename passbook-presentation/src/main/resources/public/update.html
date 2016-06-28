@@ -61,7 +61,7 @@
 				
 
 				<div>
-					<select class="form-control" name="game" ng-model="user.gameId" ng-options="golf.id as golf.id for golf in data_properties.golf"></select>
+					<select class="form-control" name="game" ng-model="user.gameId_selected" ng-change="setSelectedGameId(user.gameId_selected)" ng-options="golf as golf.id for golf in updateGolfArray"></select>
 				</div>	
 			</div>
 
@@ -71,8 +71,42 @@
 					<label>Select hole:</label>
 				
 				<div>
-					<select class="form-control" name="hole" ng-model="user.hole" ng-options="hole as hole for hole in data_properties.hole_numbers_array track by hole"></select>
+					<select class="form-control" name="hole" ng-model="user.hole" ng-change="generateHoleDetails(user.hole)" ng-options="hole as hole for hole in generateHoleNumbers(user.gameId_selected)"></select>
 				</div>	
+			</div>
+
+			<div class="form-group" ng-if="user.hole_selected_details != undefined">
+
+				<label>Hole Details</label>
+
+				<div class="hole-table">
+
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th> Hole </th>
+								<th> Color </th>
+								<th> Par </th>
+								<th> Stroke </th>
+								<th> Yards </th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>{{user.hole_selected_details.holeNumber}}</td>
+								<td>{{user.hole_selected_details.color}} </td>
+								<td>{{user.hole_selected_details.par}}</td>
+								<td>{{user.hole_selected_details.stroke}}</td>
+								<td>{{user.hole_selected_details.yards}}</td>
+							</tr>
+
+						</tbody>	
+
+
+					</table>
+				</div>
+
+
 			</div>
 
 

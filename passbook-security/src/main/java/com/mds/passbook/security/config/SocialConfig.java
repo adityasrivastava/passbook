@@ -28,10 +28,14 @@ public class SocialConfig implements SocialConfigurer{
 
 	@Override
 	public void addConnectionFactories(ConnectionFactoryConfigurer configFactory, Environment env) {
-		configFactory.addConnectionFactory(new FacebookConnectionFactory(
-				env.getProperty("facebook.appId"),
-				env.getProperty("facebook.secretKey")
-				));
+		
+		FacebookConnectionFactory facebookFactory = new FacebookConnectionFactory(	env.getProperty("facebook.appId"),
+				env.getProperty("facebook.secretKey"));
+		
+		facebookFactory.setScope("user_birthday");
+		
+		configFactory.addConnectionFactory(facebookFactory);
+	
 	}
 
 	@Override

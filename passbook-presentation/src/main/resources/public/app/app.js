@@ -8,10 +8,12 @@ app
 					$scope.passbookUrlPath = passbookUrlPath;
 					$scope.update = "";
 					$scope.error = "Please fill all the fields.";
+
+					$scope.updateGolfArray = new Array();
 				
 					$scope.user = {
 						id : 0,
-						name : userName,
+						name : "",
 						age : "",
 						gender : "",
 						golf_course : "",
@@ -51,14 +53,76 @@ app
 											$scope.data_properties = response.data;
 
 											console.log(response.data);
-											// $scope.data_properties.hole_numbers_array = [];
-											// $scope.data_properties.hole_numbers_array = createHoleNumberList(parseInt($scope.data_properties.hole_type_list[0].holes));
 
 											$scope.user.age = $scope.data_properties.golf_user[0].age;
 											$scope.user.name = $scope.data_properties.golf_user[0].name;
 											$scope.user.gender = $scope.data_properties.golf_user[0].gender;
 
+											setUpdateDetails();
+
 										});
+
+
+					}
+
+					$scope.setSelectedGameId = function (game_selected){
+						$scope.user.gameId = game_selected.id;
+					}
+
+					$scope.generateHoleNumbers = function (golf_game){
+						var hole_array = [];
+
+						if(golf_game == undefined){
+
+
+
+
+							return hole_array;
+						}
+
+						var holeSize = golf_game.holeTypesId.holes;
+
+						for(var number=0; number<holeSize; number++){
+							hole_array.push(number+1);
+						}
+
+						return hole_array;
+					}
+
+					$scope.generateHoleDetails = function(selectedHole){
+
+						for(index in $scope.user.gameId_selected.teeTypesId.teeDetails){
+							if($scope.user.gameId_selected.teeTypesId.teeDetails[index].holeNumber == selectedHole){
+								$scope.user.hole_selected_details = $scope.user.gameId_selected.teeTypesId.teeDetails[index];
+								$scope.user.hole_selected_details.color = $scope.user.gameId_selected.teeTypesId.color;
+								console.log($scope.user.hole_selected_details);
+							}
+						}
+
+					}
+
+
+					function setUpdateDetails(){
+
+						$scope.updateGolfArray.length = 0;
+
+						if(passbookId != null){
+							for(index in $scope.data_properties.golf){
+								if($scope.data_properties.golf[index].id == passbookId){
+									$scope.updateGolfArray.push($scope.data_properties.golf[index]);
+									$scope.user.gameId_selected = $scope.data_properties.golf[index];
+
+									console.log($scope.user.gameId_selected);
+									break;
+								}
+							}
+						}else{
+							for(index in $scope.data_properties.golf){
+								
+									$scope.updateGolfArray.push($scope.data_properties.golf[index]);
+								
+							}
+						}
 					}
 
 					function createHoleNumberList(totalHoleNumber) {
