@@ -10,6 +10,15 @@
   <body>
   <hr/>
     <div tiles:fragment="content" class="container">
+
+
+      <div class="form-group pull-right">
+      
+        <a href="/registerForm">Register</a>
+      
+      </div>
+
+
         <form name="f" th:action="@{/login}" method="post" class="form">               
             <fieldset>
                <div class="form-group">
@@ -49,7 +58,13 @@
         </form>
         
         <div class="form-group">
-        <a href="/auth/facebook"><img src="http://i.stack.imgur.com/ZW4QC.png" /></a>
+      <!--   <a href="/auth/facebook"><img src="http://i.stack.imgur.com/ZW4QC.png" /></a> -->
+      
+      	<form action="/auth/facebook" method="post">
+      	 <input type="hidden" name="scope" value="user_birthday,email" />
+      	 	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
+      	 <button style="padding: 0px; border: 0px;" type="submit"><img src="http://i.stack.imgur.com/ZW4QC.png" /></button>
+      	</form>
         
         </div>
     </div>

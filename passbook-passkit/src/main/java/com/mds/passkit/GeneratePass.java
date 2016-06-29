@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import com.mds.passkit.constants.PasskitConstants;
 import com.mds.passkit.exception.PasskitException;
 import com.mds.passkit.pass.container.StorePassContainer;
 import com.mds.passkit.utils.PassKitUtils;
@@ -22,7 +23,7 @@ import com.ryantenney.passkit4j.model.TextField;
  */
 public class GeneratePass {
 	
-	private Properties properites;
+	private Properties properties;
 	private StorePassContainer storeCardPass;
 	
 	public void createGenericPass(String passLocation, List<GolfScore> wallet) throws IOException{
@@ -52,8 +53,13 @@ public class GeneratePass {
 			String fieldText = "Score "+ score_ +" , "+ score.getPar()+" Par, "+score.getStroke()+" Stroke, "+score.getTeeType()+" Tee, "+score.getYards()+" Yards";
 			scoreFields.add(new TextField("hole_"+count++,"Hole "+count, fieldText));
 		}
+
+		properties = PassKitUtils.getProperties();
 		
-		properites = PassKitUtils.getProperties();
+		String url = properties.getProperty(PasskitConstants.Keys.WEB_SERVICE_URL);
+		String serialNumber = wallet.get(0).getUser().getSerialNumber();
+		
+		scoreFields.add(new TextField("update_url", "Update Url: ", "<a href='"+url+"/update?game_id="+serialNumber+"'>Update Pass</a>"));
 		
 		long unixTime = System.currentTimeMillis() / 1000L;
 		Aviva aviva = new Aviva();
@@ -82,7 +88,7 @@ public class GeneratePass {
 	
 	public void createPass(String passLocation, String serialNumber, String name, String age, String gender) throws IOException{
 		
-		properites = PassKitUtils.getProperties();
+		properties = PassKitUtils.getProperties();
 		
 		long unixTime = System.currentTimeMillis() / 1000L;
 		Aviva aviva = new Aviva();

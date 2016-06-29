@@ -74,9 +74,6 @@ app
 
 						if(golf_game == undefined){
 
-
-
-
 							return hole_array;
 						}
 
@@ -95,7 +92,7 @@ app
 							if($scope.user.gameId_selected.teeTypesId.teeDetails[index].holeNumber == selectedHole){
 								$scope.user.hole_selected_details = $scope.user.gameId_selected.teeTypesId.teeDetails[index];
 								$scope.user.hole_selected_details.color = $scope.user.gameId_selected.teeTypesId.color;
-								console.log($scope.user.hole_selected_details);
+								
 							}
 						}
 
@@ -154,6 +151,14 @@ app
 
 						$http.get(pushUrl).then(function(response) {
 							$scope.update = "Pust Notification Successful";
+
+							if($scope.user.hole + 1 <= $scope.user.gameId_selected.holeTypesId.holes){
+								$scope.user.hole = $scope.user.hole + 1;
+								$scope.generateHoleDetails($scope.user.hole);
+							}
+								
+							
+							$scope.user.score = undefined;
 						});
 
 					}

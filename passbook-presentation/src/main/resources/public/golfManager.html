@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:tiles="http://www.thymeleaf.org">
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+	<title>Passbook Sample Page</title>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="app/app.js"></script>
+	<script type="text/javascript" src="golfManager.js"></script>
+</head>
+
+<body>
+<hr/>
+	<div class="container" ng-app="passbookApp">
+
+		<div class="main-content" ng-controller="GolfManagerCtrl">
+		
+			
+			<div class="holes">
+			
+				<div class="form-group">
+				
+					<label>Hole</label>
+					<input class="form-control" type="text" name="hole">
+					<div class="btn btn-primary">Submit</div>
+				</div>
+			
+			
+			</div>
+			
+			<div class="tee">
+			
+				<div class="form-group">
+				
+					<label>Hole</label>
+					<input class="form-control" type="text" name="hole">
+					<div class="btn btn-primary">Submit</div>
+				</div>
+			
+			
+			</div>
+			
+		
+		
+			<div class="golfCourse">
+			
+				<div class="form-group">
+				
+					<label>Golf Course</label>
+					<input class="form-control" type="text" name="golfCourse">
+				
+				</div>
+			
+			
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

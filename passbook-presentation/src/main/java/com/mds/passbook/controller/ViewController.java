@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
@@ -27,6 +29,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -51,7 +54,7 @@ public class ViewController {
 
 	@Autowired
 	UserProfileRepository userProfileService;
-	
+
 	@Autowired
 	GolfUserRepository golfUserService;
 
@@ -60,24 +63,24 @@ public class ViewController {
 
 	@Autowired
 	UsersConnectionRepository connectionRepository;
-	
+
 	@Autowired
 	PassbookService passbookService;
-	
+
 	@Autowired
 	AuthenticationManager authenticationManager;
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String homePage(@RequestParam(name="id", required=false) String userId,Model model, Principal principal){
-		
-		if(userId != null){
+	public String homePage(@RequestParam(name = "id", required = false) String userId, Model model,
+			Principal principal) {
+
+		if (userId != null) {
 			GolfUserDao user = new GolfUserDao();
-			
-			
+
 			Integer golfUserId = Integer.parseInt(userId);
-			
+
 			user = golfUserService.findOne(Long.valueOf(userId));
-			
+
 			model.addAttribute("user", user);
 
 		}
@@ -86,25 +89,30 @@ public class ViewController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(@RequestParam Map<String, String> requestParams, Principal principal, Model model) {
-		
+
 		UserProfile profile = userProfileService.findByEmail(principal.getName());
 
-		if(profile != null){
+
+		if (profile != null) {
 			GolfUserDao user = new GolfUserDao();
 			user = profile.getUserId();
 
 			model.addAttribute("user", user);
-			
-			if(requestParams.isEmpty() 
-					|| requestParams.containsKey("golf_course") == false 
+
+			if (requestParams.isEmpty() || requestParams.containsKey("golf_course") == false
 					|| requestParams.containsKey("hole_type") == false
 					|| requestParams.containsKey("tee_type") == false) {
-				
+
 				model.addAttribute("passbookUrl", null);
-			}else{
-				Long gameId = passbookService.persistPassbook(requestParams, profile.getUserId());
-				String createPassbookUrl = "/createPassbook?gameId="+gameId;
 				
+				if(requestParams.containsKey("game_id") == true){
+					model.addAttribute("game_id", requestParams.get("game_id"));
+				}
+		
+			} else {
+				Long gameId = passbookService.persistPassbook(requestParams, profile.getUserId());
+				String createPassbookUrl = "/createPassbook?gameId=" + gameId;
+
 				model.addAttribute("passbookUrl", createPassbookUrl);
 				model.addAttribute("game_id", gameId);
 			}
@@ -117,31 +125,93 @@ public class ViewController {
 	public String loginPage() {
 		return "login";
 	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
+	    return "redirect:/login?logout"; 
+	}
+	
+	@RequestMapping(value="/updateForm", method = RequestMethod.GET)
+	public String updateUser(Principal principal, Model model){
+		
+		UserProfile profile = userProfileService.findByEmail(principal.getName());
+		
+		RegisterForm form = new RegisterForm();
+		
+		form.setAge(profile.getUserId().getAge());
+		form.setEmail(profile.getEmail());
+		form.setFirstName(profile.getFirstName());
+		form.setLastName(profile.getLastName());
+		form.setGender(profile.getUserId().getGender());
+		form.setPassword(profile.getPassword());
+		
+
+		String jsonForm = null;
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			jsonForm = mapper.writeValueAsString(form);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("register", jsonForm);
+		model.addAttribute("updateFormRedirect",true);
+		
+		return "updateForm";
+			
+	}
+	
+	
+	@RequestMapping(value="/registerForm", method = RequestMethod.GET)
+	public String registerUser(@ModelAttribute("register") RegisterForm registerForm, Model model, Principal principal){
+		
+		String jsonForm = null;
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			jsonForm = mapper.writeValueAsString(registerForm);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		model.addAttribute("register", jsonForm);
+		model.addAttribute("updateFormRedirect",false);
+		
+		
+		return "register";
+	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signUpPage(WebRequest webRequest, HttpServletRequest request, Model model) {
+		
+		RegisterForm form = new RegisterForm();
 
 		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
 
 		Connection<?> connection = util.getConnectionFromSession(webRequest);
-		
+
 		Facebook facebook = (Facebook) connection.getApi();
-		
+
 		User user = facebook.userOperations().getUserProfile();
 
-		RegisterForm form = createRegistrationDTO(user);
-		
-		if(user.getEmail() != null && user.getBirthday() != null){
+		form = createRegistrationDTO(user);
 
-			UserProfile profile = persistUserRegistrationDetails(form, webRequest);
-			
-			authenticateUserAndSetSession(user.getEmail(), "" , request);
-			
-			return "redirect:/home?id="+profile.getUserId().getUserId();
+		if (user.getEmail() != null && user.getBirthday() != null) {
+
+			UserProfile profile = persistUserRegistrationDetails(form);
+
+			authenticateUserAndSetSession(user.getEmail(), "", request);
+
+			return "redirect:/home?id=" + profile.getUserId().getUserId();
 		}
-
-		String jsonForm = null;
 		
+		String jsonForm = null;
+
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			jsonForm = mapper.writeValueAsString(form);
@@ -150,6 +220,8 @@ public class ViewController {
 		}
 
 		model.addAttribute("register", jsonForm);
+		model.addAttribute("updateFormRedirect",false);
+		
 
 		return "register";
 	}
@@ -167,22 +239,66 @@ public class ViewController {
 
 		return form;
 	}
+	
+	@RequestMapping(value = "/signup", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
+	@ResponseBody
+	public String updateForm(@RequestBody RegisterForm userAccountData, BindingResult result,
+			WebRequest request, Principal principal) {
+		
+		boolean userEmailOrPasswordChanged = false;
+		
+		UserProfile profile = userProfileService.findByEmail(principal.getName());
+		
+		if((userAccountData.getEmail().compareTo(profile.getEmail()) != 0) || (userAccountData.getPassword().compareTo(profile.getPassword()) != 0)){
+			userEmailOrPasswordChanged = true;
+		}
+		
+		profile = updateUserRegistrationDetails(userAccountData, profile);
+		
+		if(userEmailOrPasswordChanged == true){
+			return "/logout";
+		}
 
-	@RequestMapping(value = "/signup", method = RequestMethod.POST, produces=MediaType.TEXT_PLAIN_VALUE)
+		return "/home?id=" + profile.getUserId().getUserId();
+
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String registerAndRedirect(@RequestBody RegisterForm userAccountData, BindingResult result,
 			WebRequest request) {
+		
+		UserProfile profile = persistUserRegistrationDetails(userAccountData);
+		
+		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
 
-		UserProfile profile = persistUserRegistrationDetails(userAccountData, request);
-	
+		util.doPostSignUp(userAccountData.getEmail(), request);
 
-		return "/home?id="+profile.getUserId().getUserId();
+		return "/home?id=" + profile.getUserId().getUserId();
 
 	}
 	
-	
-	public UserProfile persistUserRegistrationDetails(RegisterForm userAccountData, WebRequest request){
-		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
+	public UserProfile updateUserRegistrationDetails(RegisterForm userAccountData, UserProfile profile) {
+
+		GolfUserDao golfUser = new GolfUserDao();
+		golfUser = profile.getUserId();
+
+		golfUser.setName(userAccountData.getFirstName());
+		golfUser.setAge(userAccountData.getAge());
+		golfUser.setGender(userAccountData.getGender());
+
+		profile.setEmail(userAccountData.getEmail());
+		profile.setFirstName(userAccountData.getFirstName());
+		profile.setLastName(userAccountData.getLastName());
+		profile.setPassword(userAccountData.getPassword());
+		profile.setUserId(golfUser);
+
+		profile = userProfileService.save(profile);
+
+		return profile;
+	}
+
+	public UserProfile persistUserRegistrationDetails(RegisterForm userAccountData) {
 
 		GolfUserDao golfUser = new GolfUserDao();
 
@@ -200,22 +316,19 @@ public class ViewController {
 
 		profile = userProfileService.save(profile);
 
-		util.doPostSignUp(userAccountData.getEmail(), request);
-		
 		return profile;
 	}
-	
+
 	private void authenticateUserAndSetSession(String username, String password, HttpServletRequest request) {
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
 
-        // generate session if one doesn't exist
-        request.getSession();
+		request.getSession();
 
-        token.setDetails(new WebAuthenticationDetails(request));
-        org.springframework.security.core.Authentication authenticatedUser = authenticationManager.authenticate(token);
+		token.setDetails(new WebAuthenticationDetails(request));
+		org.springframework.security.core.Authentication authenticatedUser = authenticationManager.authenticate(token);
 
-        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-    }
+		SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
+	}
 
 }

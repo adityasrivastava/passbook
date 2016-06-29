@@ -36,6 +36,10 @@ public class PassbookSocialService implements SocialUserDetailsService {
 	}
 
 	public SocialUser buildUser(UserProfile user) {
+		
+		if(user.getPassword() == null){
+			user.setPassword("");
+		}
 
 		SocialUser securityUser = new SocialUser(user.getEmail(), user.getPassword(), buildGrantedAuthority(user));
 

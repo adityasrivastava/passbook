@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.
 		csrf()
-		.ignoringAntMatchers("/api/**","/v1/**")
+		.ignoringAntMatchers("/api/**","/v1/**","/logout")
 		.and()
 //		.disable().
 		.formLogin()
@@ -43,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/api/**").permitAll()
 		.antMatchers("/v1/**").permitAll()
 		.antMatchers("/app/**").permitAll()
+		.antMatchers("/registerForm").permitAll()
+		.antMatchers("/logout").permitAll()
 		.and()
 		.authorizeRequests()
 		.antMatchers("/**")

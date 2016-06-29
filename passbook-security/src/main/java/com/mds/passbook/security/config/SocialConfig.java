@@ -31,7 +31,7 @@ public class SocialConfig implements SocialConfigurer{
 		
 		FacebookConnectionFactory facebookFactory = new FacebookConnectionFactory(	env.getProperty("facebook.appId"),
 				env.getProperty("facebook.secretKey"));
-		
+		System.out.println("TEST");
 		facebookFactory.setScope("user_birthday");
 		
 		configFactory.addConnectionFactory(facebookFactory);
