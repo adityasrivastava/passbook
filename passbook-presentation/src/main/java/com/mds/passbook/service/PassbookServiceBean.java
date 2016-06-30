@@ -145,8 +145,6 @@ public class PassbookServiceBean implements PassbookService {
 
 		scoreDao = persistNewGame(passbookDetails, userDao);
 
-		scoreDao.get(0).getGolf();
-
 		gameId = scoreDao.get(0).getGolf().getId();
 
 		return gameId;

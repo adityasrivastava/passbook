@@ -27,6 +27,12 @@
 
 </script>
 
+	<style type="text/css">
+	.has-error{
+		color: #d67d7d;
+	}
+	</style>
+
 </head>
 
 <body ng-app="passbookApp">
@@ -44,6 +50,9 @@
  			
  			<label for="firstName">First Name</label>
 			<input class="form-control" id="firstName" name="firstName" ng-model="registerForm.firstName" /> 
+			<div class="first-name-error">
+					<span class="control-label has-error" ng-show="user.error.firstName">Please enter first name.</span>
+				</div>
 			</div>
  			
  			<div class="form-group">
@@ -51,6 +60,9 @@
  			<label for="lastName">Last Name</label>
  			
 			<input class="form-control" id="lastName" name="lastName" ng-model="registerForm.lastName" />
+			<div class="last-name-error">
+					<span class="control-label has-error" ng-show="user.error.lastName">Please enter last name.</span>
+				</div>
 			
  			</div>
  			
@@ -59,6 +71,9 @@
 			
 			<label for="email">Email Address</label>
 			<input id="email" class="form-control" name="email" ng-model="registerForm.email" />
+			<div class="email-error">
+					<span class="control-label has-error" ng-show="user.error.email">Please enter email address.</span>
+				</div>
 			
 			</div>
 
@@ -66,7 +81,10 @@
 			
 			
 			<label for="age">Age</label>
-			<input id="age" class="form-control" name="age" ng-model="registerForm.age" />
+			<input id="age" class="form-control" name="age" type="number" ng-model="registerForm.age" />
+				<div class="age-error">
+					<span class="control-label has-error" ng-show="user.error.age">Please enter age.</span>
+				</div>
 			
 			</div>
 
@@ -75,6 +93,10 @@
 			
 			<label for="gender">Gender</label>
 			<select id="gender" class="form-control" name="gender" ng-model="registerForm.gender" ng-options="gen as gen for gen in genders"></select> 
+
+					<div class="gender-error">
+					<span class="control-label has-error" ng-show="user.error.gender">Please select gender</span>
+				</div>
 			
 			</div>
 			

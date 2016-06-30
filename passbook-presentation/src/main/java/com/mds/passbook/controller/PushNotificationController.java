@@ -106,6 +106,7 @@ public class PushNotificationController {
 			@PathVariable("serialNumber") String serialNumber,
 			@RequestBody(required = false) Map<String, Object> payload) {
 
+		String token = null;
 		logger.info("Adding Passbook......");
 		logger.debug("DeviceLib: {} >>> PassType: {} >>> SerialNo.: {}", deviceLibraryIdentifier, passTypeIdentifier,
 				serialNumber);

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -77,8 +80,6 @@ public class ViewController {
 		if (userId != null) {
 			GolfUserDao user = new GolfUserDao();
 
-			Integer golfUserId = Integer.parseInt(userId);
-
 			user = golfUserService.findOne(Long.valueOf(userId));
 
 			model.addAttribute("user", user);
@@ -86,12 +87,26 @@ public class ViewController {
 		}
 		return "index";
 	}
+	
+	@RequestMapping(value= "/createPass", method = RequestMethod.GET)
+	public String createPass(@RequestParam Map<String, String> requestParams, Principal principal, Model model, RedirectAttributes redirectAtr){
+		
+		UserProfile profile = userProfileService.findByEmail(principal.getName());
+		
+		Long gameId = passbookService.persistPassbook(requestParams, profile.getUserId());
+		
+		requestParams.put("game_id", Long.toString(gameId));
+		redirectAtr.addAllAttributes(requestParams);
+		
+		return "redirect:/update";
+	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(@RequestParam Map<String, String> requestParams, Principal principal, Model model) {
+	public String update(@RequestParam Map<String, String> requestParams, 
+			Principal principal, 
+			Model model) {
 
 		UserProfile profile = userProfileService.findByEmail(principal.getName());
-
 
 		if (profile != null) {
 			GolfUserDao user = new GolfUserDao();
@@ -108,13 +123,14 @@ public class ViewController {
 				if(requestParams.containsKey("game_id") == true){
 					model.addAttribute("game_id", requestParams.get("game_id"));
 				}
-		
+	
 			} else {
-				Long gameId = passbookService.persistPassbook(requestParams, profile.getUserId());
-				String createPassbookUrl = "/createPassbook?gameId=" + gameId;
+
+				String createPassbookUrl = "/createPassbook?gameId=" + requestParams.get("game_id");
 
 				model.addAttribute("passbookUrl", createPassbookUrl);
-				model.addAttribute("game_id", gameId);
+				model.addAttribute("game_id", requestParams.get("game_id"));
+
 			}
 
 		}
@@ -122,7 +138,8 @@ public class ViewController {
 	}
 
 	@RequestMapping("/login")
-	public String loginPage() {
+	public String loginPage(HttpServletRequest request, HttpServletResponse response) {
+		
 		return "login";
 	}
 	
@@ -266,13 +283,15 @@ public class ViewController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST, produces = MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String registerAndRedirect(@RequestBody RegisterForm userAccountData, BindingResult result,
-			WebRequest request) {
+			WebRequest webRequest, HttpServletRequest request) {
 		
 		UserProfile profile = persistUserRegistrationDetails(userAccountData);
 		
 		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
 
-		util.doPostSignUp(userAccountData.getEmail(), request);
+		util.doPostSignUp(userAccountData.getEmail(), webRequest);
+		
+		authenticateUserAndSetSession(profile.getEmail(), userAccountData.getPassword(), request);
 
 		return "/home?id=" + profile.getUserId().getUserId();
 

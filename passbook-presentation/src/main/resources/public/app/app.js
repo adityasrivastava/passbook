@@ -9,6 +9,8 @@ app
 					$scope.update = "";
 					$scope.error = "Please fill all the fields.";
 
+					$scope.modelSelected = false;
+
 					$scope.updateGolfArray = new Array();
 				
 					$scope.user = {
@@ -23,6 +25,8 @@ app
 						par : "",
 						score : ""
 					};
+
+					$scope.user.error = {};
 
 					$scope.data_properties = {};
 					
@@ -132,7 +136,15 @@ app
 						return numbers_array;
 					}
 
+					
+
 					$scope.updatePassbook = function() {
+
+						if(updateFormValidation()){
+							return null;
+						}
+
+						$scope.modelSelected = true;
 
 						$scope.update = "";
 
@@ -159,6 +171,7 @@ app
 								
 							
 							$scope.user.score = undefined;
+							$scope.modelSelected = false;
 						});
 
 					}
@@ -171,7 +184,11 @@ app
 					
 					$scope.redirectToUpdate = function() {
 
-						$scope.urlPath = "/update?name="
+						if(golfGameValidation()){
+							return null;
+						}
+
+						$scope.urlPath = "/createPass?name="
 								+ $scope.user.name + "&age=" + $scope.user.age
 								+ "&gender=" + $scope.user.gender
 								+ "&golf_course=" + $scope.user.golf_course
@@ -179,7 +196,9 @@ app
 								+ "&tee_type=" + $scope.user.tee_type
 								+ "&handicap=" + $scope.user.handicap;
 
-						return $scope.urlPath;
+						// return $scope.urlPath;
+
+						window.location = $scope.urlPath;
 
 					}
 
@@ -191,6 +210,43 @@ app
 
 						return $scope.urlPath;
 
+					}
+
+					 function updateFormValidation(){
+
+			            var error_flag = false;
+			            $scope.user.error = {};
+
+			            if(angular.isNumber($scope.user.hole) != true){
+			              $scope.user.error.hole = true;
+			              error_flag = true;
+			            }
+
+			            if(angular.isNumber($scope.user.score) != true){
+			              $scope.user.error.score = true;
+			              error_flag = true;
+			            }
+
+			            return error_flag;
+					}
+
+					function golfGameValidation(){
+
+						var error_flag = false;
+						$scope.user.error = {};
+
+						if(angular.isNumber($scope.user.handicap) != true){
+							$scope.user.error.handicap = true;
+							error_flag = true;
+						}
+
+
+						if($scope.user.golf_course == undefined || $scope.user.golf_course === ""){
+							$scope.user.error.golf_course = true;
+							error_flag = true;
+						}
+
+						return error_flag;
 					}
 
 					init();

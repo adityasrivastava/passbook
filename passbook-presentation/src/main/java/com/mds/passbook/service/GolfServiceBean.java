@@ -535,8 +535,17 @@ public class GolfServiceBean implements GolfService {
 		PassRegistrationsDao passRegiDao;
 		PassRegistrations passRegi;
 		passRegiDao = golfPassRegisterRepo.findBySerialNumberAndPassTypeId(serialNumber, passTypeId);
+		
+		
+		// Patch for infinite loop
+		UserPassDao pass = passRegiDao.getPass();
+		pass.setRegisteredPass(null);
+		
 		passRegi = GolfMapper.INSTANCE.PassRegistrationsDAOtoPassRegistrationsDTO(passRegiDao);
-
+		UserPass userPass = GolfMapper.INSTANCE.GolfPassDAOtoGolfPassDTO(pass);
+		
+		passRegi.setPass(userPass);
+		
 		return passRegi;
 	}
 

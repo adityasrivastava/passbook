@@ -7,8 +7,10 @@
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.3/ui-bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="app/app.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/loader.css"></link>
 <script th:inline="javascript">
 /*<![CDATA[*/
     var userName = /*[[${user.name}]]*/ null;
@@ -21,17 +23,10 @@
 		var updatePage = true;
 	</script>
 	<style type="text/css">
-		/* label{
-			font-size: 20px;
-			color: white;
-		}
+	.has-error{
+		color: #d67d7d;
+	}
 
-		h1{
-			color: white;
-		}
-		body{
-			background-color: #CBE32D;
-		} */
 	</style>
 </head>	
 
@@ -73,6 +68,10 @@
 				<div>
 					<select class="form-control" name="hole" ng-model="user.hole" ng-change="generateHoleDetails(user.hole)" ng-options="hole as hole for hole in generateHoleNumbers(user.gameId_selected)"></select>
 				</div>	
+
+				<div class="golf-score-error">
+					<span class="control-label has-error" ng-show="user.error.score">Please select hole number.</span>
+				</div>
 			</div>
 
 			<div class="form-group" ng-if="user.hole_selected_details != undefined">
@@ -116,8 +115,12 @@
 				
 
 				<div>
-					<input class="form-control" name="score" ng-model="user.score"/>
+					<input class="form-control" name="score" type="number" ng-model="user.score"/>
 				</div>	
+
+				<div class="golf-score-error">
+					<span class="control-label has-error" ng-show="user.error.score">Please enter score.</span>
+				</div>
 			</div>
 
 
@@ -137,11 +140,27 @@
 
 			</div>
 
+			<!-- Modal -->
+			<div ng-if="modelSelected">
+				<div class="modal fade in" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: block; padding-right: 15px;">
+					  <div class="modal-dialog" role="document">
+					   	<div class="loader">Loading....</div>
+					  </div>
+				</div>
+				<div class="modal-backdrop fade in"></div>
+			</div>
+
 		</div>
 
 	</div>
 
 <hr/>
+
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+   	<div class="loader">Loading....</div>
+  </div>
+</div> -->
 
 </body>
 

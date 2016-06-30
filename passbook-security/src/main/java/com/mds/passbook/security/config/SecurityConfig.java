@@ -28,6 +28,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+//		http.
+//		csrf()
+//		.ignoringAntMatchers("/api/**","/v1/**","/logout")
+//		.and()
+//		.formLogin()
+//		.loginPage("/login")
+//		.permitAll()
+//		.and()
+//		.authorizeRequests()
+//		.antMatchers("/**").hasAnyRole("ANONYMOUS","USER")
+//		.and()
+//		.apply(new SpringSocialConfigurer());
+		
+		
 		http.
 		csrf()
 		.ignoringAntMatchers("/api/**","/v1/**","/logout")

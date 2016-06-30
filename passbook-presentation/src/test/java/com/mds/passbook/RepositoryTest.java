@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.mds.passbook.bean.golf.Golf;
 import com.mds.passbook.bean.golf.GolfCourse;
+import com.mds.passbook.bean.pass.PassRegistrations;
 import com.mds.passbook.data.repository.GolfCourseRepository;
 import com.mds.passbook.data.repository.GolfHolesRepository;
 import com.mds.passbook.data.repository.GolfPassRepository;
@@ -25,6 +27,7 @@ import com.mds.passbook.data.repository.golf.dao.GolfTeeDao;
 import com.mds.passbook.data.repository.golf.dao.GolfTeeDetailsDao;
 import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
 import com.mds.passbook.data.repository.user.dao.UserPassDao;
+import com.mds.passbook.service.GolfService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(Application.class)
@@ -51,15 +54,28 @@ public class RepositoryTest {
 	@Autowired
 	GolfTeeRepository golfTeeRepo;
 	
+	@Autowired
+	GolfService golfService;
+	
 	@org.junit.Test
 	
 	public void mapperTest(){
-	
 		
+		Golf golf = golfService.getGolfById(1L);
+		
+		System.out.println(golf.toString());
+	
+		PassRegistrations regi = golfService.getPassRegisteredBySerialNumberAndPassTypeId("3","pass.com.mds.passbookapp");
+		
+		if(regi == null){
+			System.out.println("NULL");
+		}else{
+			System.out.println(regi.toString());
+		}
 	}
 	
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void getAllTest(){
 		Iterable<GolfDao> it = golfRepo.findAll();
 		for(GolfDao g:it){
@@ -70,7 +86,7 @@ public class RepositoryTest {
 		}
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void findOneTest(){
 		GolfDao g = golfRepo.findOne(new Long(1));
 		System.out.println("Golf "+g.getId()+">>>>>>>>>>>>>>>>>>>>FIND ONE BY ID>>>>>>>>>>>>>>>>>>>>");
@@ -78,7 +94,7 @@ public class RepositoryTest {
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void insertGolfCourseTest(){
 		// Golf Course Added
 		GolfCourseDao gCourse = new GolfCourseDao();
@@ -88,7 +104,7 @@ public class RepositoryTest {
 		
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void insertGolfHolesTest(){
 		// Golf holes Added
 		GolfHolesDao gHoles = new GolfHolesDao();
@@ -97,7 +113,7 @@ public class RepositoryTest {
 		
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void insertGolfPassTest(){
 		// Golf Pass Added
 		UserPassDao gPass = new UserPassDao();
@@ -107,7 +123,7 @@ public class RepositoryTest {
 
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void insertGolfUserTest(){
 	
 		GolfUserDao gUser = new GolfUserDao();
@@ -120,7 +136,7 @@ public class RepositoryTest {
 
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void insertGolfScoreTest(){
 		GolfScoreDao gScore = new GolfScoreDao();
 		gScore.setScore(10);
@@ -128,7 +144,7 @@ public class RepositoryTest {
 		golfScoreRepo.save(gScore);
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void insertGolfTeeTest(){
 		
 		GolfTeeDao gTee = new GolfTeeDao();
@@ -152,7 +168,7 @@ public class RepositoryTest {
 		golfTeeRepo.save(gTee);
 	}
 	
-	@org.junit.Test
+//	@org.junit.Test
 	public void mainTest(){
 		// Create Golf Course
 		GolfCourseDao gCourse = new GolfCourseDao();
