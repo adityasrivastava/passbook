@@ -19,10 +19,22 @@ public class RegisterForm {
 	private int age;
 
 	private String gender;
+	
+	private int handicap;
 
 	private String password;
 
 	private String passwordVerification;
+	
+	
+
+	public int getHandicap() {
+		return handicap;
+	}
+
+	public void setHandicap(int handicap) {
+		this.handicap = handicap;
+	}
 
 	public String getEmail() {
 		return email;

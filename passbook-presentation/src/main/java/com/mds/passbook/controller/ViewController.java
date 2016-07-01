@@ -120,6 +120,7 @@ public class ViewController {
 					|| requestParams.containsKey("tee_type") == false) {
 
 				model.addAttribute("passbookUrl", null);
+				model.addAttribute("cookie_token", System.currentTimeMillis() / 1000L);
 				
 				if(requestParams.containsKey("game_id") == true){
 					model.addAttribute("game_id", requestParams.get("game_id"));
@@ -131,6 +132,7 @@ public class ViewController {
 
 				model.addAttribute("passbookUrl", createPassbookUrl);
 				model.addAttribute("game_id", requestParams.get("game_id"));
+				model.addAttribute("cookie_token", System.currentTimeMillis() / 1000L);
 
 			}
 
@@ -166,6 +168,7 @@ public class ViewController {
 		form.setLastName(profile.getLastName());
 		form.setGender(profile.getUserId().getGender());
 		form.setPassword(profile.getPassword());
+		form.setHandicap(0);
 		
 
 		String jsonForm = null;
@@ -204,6 +207,14 @@ public class ViewController {
 		return "register";
 	}
 
+	/**
+	 * Register with facebook login and persist to Userprofile and Userconnection if incomplete fields
+	 * redirect to register form 
+	 * @param webRequest
+	 * @param request
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signUpPage(WebRequest webRequest, HttpServletRequest request, Model model) {
 		
@@ -222,6 +233,8 @@ public class ViewController {
 		if (user.getEmail() != null && user.getBirthday() != null) {
 
 			UserProfile profile = persistUserRegistrationDetails(form);
+			
+			util.doPostSignUp(form.getEmail(), webRequest);
 
 			authenticateUserAndSetSession(user.getEmail(), "", request);
 
@@ -240,6 +253,7 @@ public class ViewController {
 		model.addAttribute("register", jsonForm);
 		model.addAttribute("updateFormRedirect",false);
 		
+		util.doPostSignUp(form.getEmail(), webRequest);
 
 		return "register";
 	}
@@ -253,17 +267,28 @@ public class ViewController {
 			form.setFirstName(connection.getFirstName());
 			form.setLastName(connection.getLastName());
 			form.setGender(connection.getGender());
+			form.setHandicap(0);
 		}
 
 		return form;
 	}
 	
+	/*
+	 * When user updates the User profile field
+	 * 
+	 */
 	@RequestMapping(value = "/signup", method = RequestMethod.PUT, produces = MediaType.TEXT_PLAIN_VALUE)
 	@ResponseBody
 	public String updateForm(@RequestBody RegisterForm userAccountData, BindingResult result,
 			WebRequest request, Principal principal) {
 		
 		boolean userEmailOrPasswordChanged = false;
+		
+		UserProfile profileExistCheck = userProfileService.findByEmail(userAccountData.getEmail());
+		
+		if(profileExistCheck != null){
+			return "false";
+		}
 		
 		UserProfile profile = userProfileService.findByEmail(principal.getName());
 		
@@ -286,6 +311,12 @@ public class ViewController {
 	public String registerAndRedirect(@RequestBody RegisterForm userAccountData, BindingResult result,
 			WebRequest webRequest, HttpServletRequest request) {
 		
+		UserProfile profileExistCheck = userProfileService.findByEmail(userAccountData.getEmail());
+		
+		if(profileExistCheck != null){
+			return "false";
+		}
+		
 		UserProfile profile = persistUserRegistrationDetails(userAccountData);
 		
 		ProviderSignInUtils util = new ProviderSignInUtils(connectionFactoryLocator, connectionRepository);
@@ -302,7 +333,8 @@ public class ViewController {
 
 		GolfUserDao golfUser = new GolfUserDao();
 		golfUser = profile.getUserId();
-
+		
+		golfUser.setHandicap(userAccountData.getHandicap());
 		golfUser.setName(userAccountData.getFirstName());
 		golfUser.setAge(userAccountData.getAge());
 		golfUser.setGender(userAccountData.getGender());
@@ -325,6 +357,7 @@ public class ViewController {
 		golfUser.setName(userAccountData.getFirstName());
 		golfUser.setAge(userAccountData.getAge());
 		golfUser.setGender(StringUtils.capitalize(userAccountData.getGender()));
+		golfUser.setHandicap(userAccountData.getHandicap());
 
 		UserProfile profile = new UserProfile();
 		profile.setEmail(userAccountData.getEmail());

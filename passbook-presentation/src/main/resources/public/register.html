@@ -78,6 +78,9 @@
 				<div class="email-error">
 					<span class="control-label has-error" ng-show="user.error.email">Please enter email address.</span>
 				</div>
+				<div class="email-error">
+					<span class="control-label has-error" ng-show="user.error.emailexist">Email Id already exists.</span>
+				</div>
 			</div>
 			
 	
@@ -104,6 +107,13 @@
 				<div class="gender-error">
 					<span class="control-label has-error" ng-show="user.error.gender">Please select gender</span>
 				</div>
+			</div> 
+
+			<div class="form-group">
+			
+			
+			<label for="handicap">Handicap</label>
+				<input id="handicap" class="form-control" type="number" name="handicap" ng-model="registerForm.handicap" />
 			</div> 
 			
 		

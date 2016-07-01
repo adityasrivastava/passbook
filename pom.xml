@@ -163,7 +163,7 @@
                 <artifactId>maven-eclipse-plugin</artifactId>
                 <configuration>
                     <downloadSources>true</downloadSources>
-          			<pde>true</pde>
+          			<!-- <pde>true</pde> -->
                     <!-- <downloadJavadocs>true</downloadJavadocs> -->
                 </configuration>
             </plugin>

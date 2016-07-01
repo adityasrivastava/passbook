@@ -61,6 +61,7 @@ app
 											$scope.user.age = $scope.data_properties.golf_user[0].age;
 											$scope.user.name = $scope.data_properties.golf_user[0].name;
 											$scope.user.gender = $scope.data_properties.golf_user[0].gender;
+											$scope.user.handicap = $scope.data_properties.golf_user[0].handicap;
 
 											setUpdateDetails();
 
@@ -207,6 +208,19 @@ app
 					$scope.createPassbook = function() {
 			
 						$scope.urlPath = $scope.passbookUrlPath;
+
+						$scope.urlPath+"&cookie_token="+cookie_token;
+
+						$interval(function(){
+							
+
+							if(document.cookie.indexOf(cookie_token) > 0){
+								$scope.modelSelected = false;
+								document.cookie = "cookie_token=;";
+							}else{
+								$scope.modelSelected = true;
+							}
+						}, 100)
 
 						return $scope.urlPath;
 

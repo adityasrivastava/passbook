@@ -16,6 +16,7 @@
     var userName = /*[[${user.name}]]*/ null;
     var passbookUrlPath = /*[[${passbookUrl}]]*/ null;
     var passbookId = /*[[${game_id}]]*/ null;
+    var cookie_token = /*[[${cookie_token}]]*/ null;
     /*]]>*/
 </script>
 
@@ -50,7 +51,8 @@
 			</div>
 			<br/>
 
-			<div class="form-group" ng-if="checkForEmptyPassbook()">
+			<!-- <div class="form-group" ng-if="checkForEmptyPassbook()"> -->
+				<div class="form-group" ng-if="false">
 		
 					<label>Select Game Id:</label>
 				

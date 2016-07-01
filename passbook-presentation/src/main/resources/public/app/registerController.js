@@ -43,12 +43,24 @@ app.controller("RegisterFormCtrl",['$scope','$location', '$http', function($scop
 
   		if(updateRedirect == "false"){
   			$http.post('/signup', $scope.registerForm, config).then(function(response){
+
+          if(response.data === 'false'){
+            $scope.user.error.emailexist = true;
+            return;
+          }
+
   			window.location = response.data;
   		}, function(response){
   			console.log("Error Whoops!!!");
   		});
   		}else{
   			$http.put('/signup', $scope.registerForm, config).then(function(response){
+
+          if(response.data === 'false'){
+            $scope.user.error.emailexist = true;
+            return;
+          }
+
   			window.location = response.data;
   		}, function(response){
   			console.log("Error Whoops!!!");

@@ -81,7 +81,9 @@ public class PushNotificationController {
 		responseHeaders.add("Expires", "0");
 		responseHeaders.setContentDispositionFormData("filename", passbookService.getFileName());
 		responseHeaders.setLastModified(new Date().getTime());
-
+		
+		if(requestParams.containsKey("cookie_token"))
+		responseHeaders.add(HttpHeaders.SET_COOKIE, "cookie_token="+requestParams.get("cookie_token")+";");
 		// Send in response
 		return ResponseEntity.ok().headers(responseHeaders).contentLength(passbookService.getFileSize())
 				.body(new InputStreamResource(passInputStream));
