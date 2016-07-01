@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.Authentication;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -323,7 +324,7 @@ public class ViewController {
 
 		golfUser.setName(userAccountData.getFirstName());
 		golfUser.setAge(userAccountData.getAge());
-		golfUser.setGender(userAccountData.getGender());
+		golfUser.setGender(StringUtils.capitalize(userAccountData.getGender()));
 
 		UserProfile profile = new UserProfile();
 		profile.setEmail(userAccountData.getEmail());

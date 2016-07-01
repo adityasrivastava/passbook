@@ -10,4 +10,5 @@ import com.mds.passbook.data.repository.user.dao.UserPassDao;
 public interface GolfPassRegistrationsRepository extends CrudRepository<PassRegistrationsDao, Long>{
 		List<PassRegistrationsDao> findByPassTypeIdAndPass(String passTypeId, UserPassDao pass);
 		PassRegistrationsDao findBySerialNumberAndPassTypeId(String serialNumber, String passTypeId);
+		PassRegistrationsDao findBySerialNumberAndPassTypeIdAndModificationTime(String serialNumber, String passTypeId, String modificationTime);
 }
