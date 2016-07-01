@@ -166,6 +166,11 @@ public class PushNotificationController {
 		logger.debug("Request: {}", payload);
 
 		GolfHttpUpdates responseUpdates = passbookService.getListOfUpdatePass(deviceLibraryIdentifier, passTypeIdentifier, passesUpdatedSince);
+		
+		if(responseUpdates.getSerialNumbers().length == 0){
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}
+		
 		return new ResponseEntity<GolfHttpUpdates>(responseUpdates, HttpStatus.OK);
 	}
 
@@ -198,7 +203,6 @@ public class PushNotificationController {
 		responseHeaders = new HttpHeaders();
 		
 		passbookService.setFileName(fileName);
-//		passInputStream = passbookService.updatePassbook(serialNumber, passTypeIdentifier, payload);
 		passInputStream = passbookService.createPassbook(Long.valueOf(serialNumber));
 
 		// Setup headers for 0 expiry and no cache

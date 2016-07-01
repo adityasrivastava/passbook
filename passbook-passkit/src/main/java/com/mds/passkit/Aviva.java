@@ -55,7 +55,7 @@ public class Aviva {
                     .foregroundColor(Color.BLACK)
                     .backgroundColor(new Color(254, 220, 56))
                     .relevantDate(new Date())
-                    .description("Aviva Pass")
+                    .description(properties.getProperty(PasskitConstants.Keys.ORGANIZATION_NAME))
                     .barcode(barcode)
                     .files(
                             new PassResource("en.lproj/pass.strings", new File(resourcePath + "/en.lproj/pass.strings")),

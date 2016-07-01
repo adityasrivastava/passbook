@@ -259,7 +259,7 @@ public class PassbookServiceBean implements PassbookService {
 
 	@Override
 	public GolfHttpUpdates getListOfUpdatePass(String deviceId, String passTypeId, String updateSinceDate) {
-		List<PassRegistrations> register = golfService.findUpdatedPass(passTypeId,deviceId);
+		List<PassRegistrations> register = golfService.findUpdatedPass(passTypeId,deviceId,updateSinceDate);
 		List<String> serialNumbersList = new ArrayList<String>();
 
 		GolfHttpUpdates updates = new GolfHttpUpdates();

@@ -3,6 +3,7 @@ package com.mds.passbook.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -461,15 +462,27 @@ public class GolfServiceBean implements GolfService {
 	}
 
 	@Override
-	public List<PassRegistrations> findUpdatedPass(String passTypeId, String deviceId) {
+	public List<PassRegistrations> findUpdatedPass(String passTypeId, String deviceId, String updatedSince) {
 
-		UserPassDao passDao;
+		List<UserPassDao> passDao;
 		List<PassRegistrationsDao> registrationsDao;
-		List<PassRegistrations> registrations;
+		List<PassRegistrations> registrations = new ArrayList<PassRegistrations>();
 
 		passDao = golfPassRepo.findByDeviceId(deviceId);
-		registrationsDao = golfPassRegisterRepo.findByPassTypeId(passTypeId);
-		registrations = GolfMapper.INSTANCE.PassRegistrationsDAOListToPassRegistrationsDTOList(registrationsDao);
+		
+		for(UserPassDao userPass: passDao){
+			
+			List<PassRegistrations> registrations_ = new ArrayList<PassRegistrations>();
+			
+			registrationsDao = golfPassRegisterRepo.findByPassTypeIdAndPass(passTypeId, userPass);
+			
+			if(registrationsDao.isEmpty() != true){
+				registrations_ = GolfMapper.INSTANCE.PassRegistrationsDAOListToPassRegistrationsDTOList(registrationsDao);
+				registrations = ListUtils.union(registrations, registrations_);
+			}
+			
+		}
+		
 		return registrations;
 
 	}

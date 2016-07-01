@@ -78,7 +78,7 @@ public interface GolfService {
 	
 	void updatePassRegistrations(PassRegistrations passRegister);
 	
-	List<PassRegistrations> findUpdatedPass(String passTypeId, String deviceId);
+	List<PassRegistrations> findUpdatedPass(String passTypeId, String deviceId, String updatedSince);
 	
 	List<GolfCourse> findAllGolfCourses();
 	
