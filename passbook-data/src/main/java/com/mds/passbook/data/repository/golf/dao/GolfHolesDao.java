@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity(name = "GOLF_HOLES")
@@ -23,11 +24,11 @@ public class GolfHolesDao extends BaseEntity<Long> {
 	@Column(name = "HOLES")
 	private int holes;
 
-	@OneToMany(mappedBy = "teeId", cascade = CascadeType.ALL)
-	private List<GolfCourseDao> courseIds = new ArrayList<GolfCourseDao>();
+//	@OneToMany(mappedBy = "holeId", cascade = CascadeType.ALL)
+//	private List<GolfCourseDao> courseIds = new ArrayList<GolfCourseDao>();
 
-	@OneToMany(mappedBy = "holeTypesId", cascade = CascadeType.ALL)
-	private List<GolfDao> golf = new ArrayList<GolfDao>();
+//	@OneToMany(mappedBy = "holeTypesId", cascade = CascadeType.ALL)
+//	private List<GolfDao> golf = new ArrayList<GolfDao>();
 
 	public GolfHolesDao() {
 
@@ -37,21 +38,21 @@ public class GolfHolesDao extends BaseEntity<Long> {
 		this.holeTypeId = holeTypeId;
 	}
 
-	public List<GolfCourseDao> getCourseId() {
-		return courseIds;
-	}
+//	public List<GolfCourseDao> getCourseId() {
+//		return courseIds;
+//	}
+//
+//	public void setCourseId(List<GolfCourseDao> courseIds) {
+//		this.courseIds = courseIds;
+//	}
 
-	public void setCourseId(List<GolfCourseDao> courseIds) {
-		this.courseIds = courseIds;
-	}
-
-	public List<GolfDao> getGolf() {
-		return golf;
-	}
-
-	public void setGolf(List<GolfDao> golf) {
-		this.golf = golf;
-	}
+//	public List<GolfDao> getGolf() {
+//		return golf;
+//	}
+//
+//	public void setGolf(List<GolfDao> golf) {
+//		this.golf = golf;
+//	}
 
 	public Long getHoleTypeId() {
 		return holeTypeId;

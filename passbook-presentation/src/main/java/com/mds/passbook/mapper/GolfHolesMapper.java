@@ -14,14 +14,14 @@ public interface GolfHolesMapper {
 	@Mappings({
 		@Mapping(source="holeTypeId", target="holeTypeId"),
 		@Mapping(source="holes", target="holes"),
-		@Mapping(source="golf", target="golf", ignore=true)
+//		@Mapping(source="golf", target="golf", ignore=true)
 	})
 	GolfHoles golfHolesDAOtoGolfHolesDTO(GolfHolesDao holes);
 	
 	@Mappings({
 		@Mapping(source="holeTypeId", target="holeTypeId"),
 		@Mapping(source="holes", target="holes"),
-		@Mapping(source="golf", target="golf", ignore=true)
+//		@Mapping(source="golf", target="golf", ignore=true)
 	})
 	GolfHolesDao golfHolesDTOtoGolfHolesDAO(GolfHoles holes);
 	

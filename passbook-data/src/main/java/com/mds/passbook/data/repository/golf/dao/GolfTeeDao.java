@@ -23,8 +23,8 @@ public class GolfTeeDao extends BaseEntity<Long> {
 	@Column(name = "COLOR")
 	private String color;
 
-	@OneToMany(mappedBy = "holeId", cascade = CascadeType.ALL)
-	private List<GolfCourseDao> courseIds;
+//	@OneToMany(mappedBy = "teeId", cascade = CascadeType.ALL)
+//	private List<GolfCourseDao> courseIds;
 
 	@OneToMany(mappedBy = "golfTee", cascade = CascadeType.ALL)
 	private List<GolfTeeDetailsDao> teeDetails = new ArrayList<GolfTeeDetailsDao>();
@@ -33,13 +33,13 @@ public class GolfTeeDao extends BaseEntity<Long> {
 
 	}
 
-	public List<GolfCourseDao> getCourseId() {
-		return courseIds;
-	}
-
-	public void setCourseId(List<GolfCourseDao> courseIds) {
-		this.courseIds = courseIds;
-	}
+//	public List<GolfCourseDao> getCourseId() {
+//		return courseIds;
+//	}
+//
+//	public void setCourseId(List<GolfCourseDao> courseIds) {
+//		this.courseIds = courseIds;
+//	}
 
 	public GolfTeeDao(Long teeId) {
 		this.teeId = teeId;

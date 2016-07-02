@@ -42,8 +42,6 @@ app
 					$scope.selectGolfDetails = function(golf_course){
 						$scope.user.golf_course = golf_course.golfCourseId;
 						$scope.user.hole_type_selected = golf_course.holeId;
-						$scope.user.hole_type = golf_course.holeId.holeTypeId;
-						$scope.user.tee_type = golf_course.teeId.teeId;
 						$scope.user.tee_type_selected = golf_course.teeId;
 
 					}

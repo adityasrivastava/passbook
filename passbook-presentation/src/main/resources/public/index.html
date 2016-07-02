@@ -86,7 +86,7 @@
 				</div>
 
 				<div class="hole-type-input-box ">
-					<input class="form-control" name="hole_type" ng-model="user.hole_type_selected.holes" ng-disabled="true" />
+					<select class="form-control" name="hole_type" ng-model="user.hole_type "  ng-options="holes_selected.holeTypeId as holes_selected.holes for holes_selected in user.hole_type_selected"></select>
 				</div>	
 			</div>
 
@@ -96,7 +96,7 @@
 				</div>
 
 				<div class="tee-type-input-box ">
-					<input class="form-control" name="tee_type" ng-model="user.tee_type_selected.color" ng-disabled="true" />
+					<select class="form-control" name="tee_type" ng-model="user.tee_type" ng-options="tee_type_selected.teeId as tee_type_selected.color for tee_type_selected in user.tee_type_selected" ></select>
 				</div>	
 			</div>
 

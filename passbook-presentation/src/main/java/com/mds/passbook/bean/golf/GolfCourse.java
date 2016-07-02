@@ -7,8 +7,8 @@ public class GolfCourse {
 
 	private Long golfCourseId;
 	private String courseName;
-	private GolfHoles holeId;
-	private GolfTee teeId;
+	private List<GolfHoles> holeId;
+	private List<GolfTee> teeId;
 
 	private List<Golf> golf = new ArrayList<Golf>();
 
@@ -16,21 +16,31 @@ public class GolfCourse {
 
 	}
 
-	public GolfHoles getHoleId() {
+	
+
+	public List<GolfHoles> getHoleId() {
 		return holeId;
 	}
 
-	public void setHoleId(GolfHoles holeId) {
+
+
+	public void setHoleId(List<GolfHoles> holeId) {
 		this.holeId = holeId;
 	}
 
-	public GolfTee getTeeId() {
+
+
+	public List<GolfTee> getTeeId() {
 		return teeId;
 	}
 
-	public void setTeeId(GolfTee teeId) {
+
+
+	public void setTeeId(List<GolfTee> teeId) {
 		this.teeId = teeId;
 	}
+
+
 
 	public GolfCourse(Long golfCourseId) {
 		this.golfCourseId = golfCourseId;

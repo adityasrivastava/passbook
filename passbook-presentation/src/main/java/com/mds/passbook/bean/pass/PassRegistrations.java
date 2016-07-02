@@ -1,5 +1,7 @@
 package com.mds.passbook.bean.pass;
 
+import com.mds.passbook.data.repository.golf.dao.GolfDao;
+
 public class PassRegistrations {
 
 	private int registerPassId;
@@ -9,6 +11,16 @@ public class PassRegistrations {
 	private String serialNumber;
 
 	private UserPass pass;
+	
+	private GolfDao golf;
+
+	public GolfDao getGolf() {
+		return golf;
+	}
+
+	public void setGolf(GolfDao golf) {
+		this.golf = golf;
+	}
 
 	public PassRegistrations(String passTypeId, String serialNumber) {
 		this.passTypeId = passTypeId;

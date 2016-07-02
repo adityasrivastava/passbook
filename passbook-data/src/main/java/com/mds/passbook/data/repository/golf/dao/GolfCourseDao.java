@@ -25,13 +25,13 @@ public class GolfCourseDao extends BaseEntity<Long> {
 	@Column(name="COURSE_NAME")
 	private String courseName;
 	
-	@OneToOne
-	@JoinColumn(name="HOLE_TYPE_ID")
-	private GolfHolesDao holeId;
+	@OneToMany
+//	@JoinColumn(name="HOLE_TYPE_ID")
+	private List<GolfHolesDao> holeId;
 	
-	@OneToOne
+	@OneToMany
 	@JoinColumn(name="TEE_TYPE_ID")
-	private GolfTeeDao teeId;
+	private List<GolfTeeDao> teeId;
 	
 	@OneToMany(mappedBy="golfCoursesId", cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<GolfDao> golf = new ArrayList<GolfDao>();
@@ -43,22 +43,20 @@ public class GolfCourseDao extends BaseEntity<Long> {
 	public GolfCourseDao(Long golfCourseId) {
 		this.golfCourseId = golfCourseId;
 	}
-	
-	
-	
-	public GolfHolesDao getHoleId() {
+
+	public List<GolfHolesDao> getHoleId() {
 		return holeId;
 	}
 
-	public void setHoleId(GolfHolesDao holeId) {
+	public void setHoleId(List<GolfHolesDao> holeId) {
 		this.holeId = holeId;
 	}
 
-	public GolfTeeDao getTeeId() {
+	public List<GolfTeeDao> getTeeId() {
 		return teeId;
 	}
 
-	public void setTeeId(GolfTeeDao teeId) {
+	public void setTeeId(List<GolfTeeDao> teeId) {
 		this.teeId = teeId;
 	}
 
