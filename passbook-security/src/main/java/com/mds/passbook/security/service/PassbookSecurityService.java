@@ -26,7 +26,7 @@ public class PassbookSecurityService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		UserProfile profile = userRepo.findByEmail(username);
+		UserProfile profile = userRepo.findByUsername(username);
 
 		if (profile == null) {
 			throw new UsernameNotFoundException("Username not found!");

@@ -207,20 +207,28 @@ app
 			
 						$scope.urlPath = $scope.passbookUrlPath;
 
-						$scope.urlPath+"&cookie_token="+cookie_token;
+						$scope.urlPath += "&cookie_token="+cookie_token;
 
-						$interval(function(){
+
+						return $scope.urlPath;
+
+					}
+
+					$scope.loader = function(){
+
+
+
+						var interval = $interval(function(){
 							
 
 							if(document.cookie.indexOf(cookie_token) > 0){
 								$scope.modelSelected = false;
 								document.cookie = "cookie_token=;";
+								$interval.cancel(interval);
 							}else{
 								$scope.modelSelected = true;
 							}
 						}, 100)
-
-						return $scope.urlPath;
 
 					}
 

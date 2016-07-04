@@ -92,7 +92,7 @@ public class ViewController {
 	@RequestMapping(value= "/createPass", method = RequestMethod.GET)
 	public String createPass(@RequestParam Map<String, String> requestParams, Principal principal, Model model, RedirectAttributes redirectAtr){
 		
-		UserProfile profile = userProfileService.findByEmail(principal.getName());
+		UserProfile profile = userProfileService.findByUsername(principal.getName());
 		
 		Long gameId = passbookService.persistPassbook(requestParams, profile.getUserId());
 		
@@ -107,7 +107,7 @@ public class ViewController {
 			Principal principal, 
 			Model model) {
 
-		UserProfile profile = userProfileService.findByEmail(principal.getName());
+		UserProfile profile = userProfileService.findByUsername(principal.getName());
 
 		if (profile != null) {
 			GolfUserDao user = new GolfUserDao();
@@ -158,7 +158,7 @@ public class ViewController {
 	@RequestMapping(value="/updateForm", method = RequestMethod.GET)
 	public String updateUser(Principal principal, Model model){
 		
-		UserProfile profile = userProfileService.findByEmail(principal.getName());
+		UserProfile profile = userProfileService.findByUsername(principal.getName());
 		
 		RegisterForm form = new RegisterForm();
 		
@@ -168,7 +168,7 @@ public class ViewController {
 		form.setLastName(profile.getLastName());
 		form.setGender(profile.getUserId().getGender());
 		form.setPassword(profile.getPassword());
-		form.setHandicap(0);
+		form.setHandicap(profile.getUserId().getHandicap());
 		
 
 		String jsonForm = null;
@@ -264,6 +264,7 @@ public class ViewController {
 
 		if (connection != null) {
 			form.setEmail(connection.getEmail());
+			form.setUsername(connection.getEmail());
 			form.setFirstName(connection.getFirstName());
 			form.setLastName(connection.getLastName());
 			form.setGender(connection.getGender());
@@ -284,21 +285,19 @@ public class ViewController {
 		
 		boolean userEmailOrPasswordChanged = false;
 		
-		UserProfile profileExistCheck = userProfileService.findByEmail(userAccountData.getEmail());
+		UserProfile profileExistCheck = userProfileService.findByUsername(principal.getName());
 		
-		UserProfile profile = userProfileService.findByEmail(principal.getName());
-		
-		if((userAccountData.getEmail().compareTo(profile.getEmail()) != 0) || (userAccountData.getPassword().compareTo(profile.getPassword()) != 0)){
+		if(userAccountData.getPassword() != null && (userAccountData.getPassword().compareTo(profileExistCheck.getPassword()) != 0)){
 			userEmailOrPasswordChanged = true;
 		}
 		
-		profile = updateUserRegistrationDetails(userAccountData, profile);
+		profileExistCheck = updateUserRegistrationDetails(userAccountData, profileExistCheck);
 		
 		if(userEmailOrPasswordChanged == true){
 			return "/logout";
 		}
 
-		return "/home?id=" + profile.getUserId().getUserId();
+		return "/home?id=" + profileExistCheck.getUserId().getUserId();
 
 	}
 
@@ -307,7 +306,8 @@ public class ViewController {
 	public String registerAndRedirect(@RequestBody RegisterForm userAccountData, BindingResult result,
 			WebRequest webRequest, HttpServletRequest request) {
 		
-		UserProfile profileExistCheck = userProfileService.findByEmail(userAccountData.getEmail());
+		UserProfile profileExistCheck = userProfileService.findByUsername(userAccountData.getUsername());
+		UserProfile profileExistCheckByEmail = userProfileService.findByEmail(userAccountData.getEmail());
 		
 		if(profileExistCheck != null){
 			return "false";
@@ -357,6 +357,7 @@ public class ViewController {
 
 		UserProfile profile = new UserProfile();
 		profile.setEmail(userAccountData.getEmail());
+		profile.setUsername(userAccountData.getEmail());
 		profile.setFirstName(userAccountData.getFirstName());
 		profile.setLastName(userAccountData.getLastName());
 		profile.setPassword(userAccountData.getPassword());

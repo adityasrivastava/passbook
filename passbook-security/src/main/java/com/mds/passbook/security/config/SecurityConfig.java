@@ -43,11 +43,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.and()
 //		.apply(new SpringSocialConfigurer());
 		
-		http
-		.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+		
+		
 	
-		http.
-		csrf()
+		http
+		.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+		.csrf()
 		.ignoringAntMatchers("/api/**","/v1/**","/logout")
 		.and()
 //		.disable().

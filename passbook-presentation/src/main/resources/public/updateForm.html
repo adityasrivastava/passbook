@@ -11,7 +11,7 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="app/app.js"></script>
-<script type="text/javascript" src="app/registerController.js"></script>
+<script type="text/javascript" src="app/updateController.js"></script>
 <title>Update Form</title>
 
 <script th:inline="javascript">
@@ -41,7 +41,7 @@
 
 
 	<hr/>
-	<div class="container" ng-controller="RegisterFormCtrl">
+	<div class="container" ng-controller="UpdateFormCtrl">
 	<h1 ng-if="registerFormStatus()">Update Form</h1>		
 	<form name="signupform"  enctype="utf8" role="form" ng-submit="submitForm()">
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
@@ -112,6 +112,9 @@
 			<label ng-if="registerFormStatus()" for="password">Change Password</label>
 
 			<input id="password" type="password" class="form-control" name="password" ng-model="registerForm.password" /> 
+				<div class="gender-error">
+					<span class="control-label has-error" ng-show="user.error.password">Please enter a password</span>
+				</div>
 			
 			</div>
 			

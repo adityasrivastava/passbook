@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class RegisterForm {
 
 	private String email;
+	
+	private String username;
 
 	private String firstName;
 
@@ -31,6 +33,20 @@ public class RegisterForm {
 	public int getHandicap() {
 		return handicap;
 	}
+	
+	
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
 
 	public void setHandicap(int handicap) {
 		this.handicap = handicap;

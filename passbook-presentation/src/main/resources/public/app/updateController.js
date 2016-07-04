@@ -1,4 +1,4 @@
-app.controller("RegisterFormCtrl",['$scope','$location', '$http', function($scope,$location, $http){
+app.controller("UpdateFormCtrl",['$scope','$location', '$http', function($scope,$location, $http){
 	$scope.registerForm = registerForm;
   console.log(registerForm);
   $scope.user = {};
@@ -79,12 +79,6 @@ app.controller("RegisterFormCtrl",['$scope','$location', '$http', function($scop
   		
   }
 
-  // Validates email address of course.
-function validEmail(e) {
-    var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
-    return String(e).search (filter) != -1;
-}
-
 
 
           function registerFormValidation(){
@@ -106,11 +100,6 @@ function validEmail(e) {
               $scope.user.error.email = true;
               error_flag = true;
             }
-            
-            if($scope.registerForm.username === "" || $scope.registerForm.username === undefined || $scope.registerForm.username === null){
-                $scope.user.error.username = true;
-                error_flag = true;
-             }
 
             if(angular.isNumber($scope.registerForm.age) != true){
               $scope.user.error.age = true;

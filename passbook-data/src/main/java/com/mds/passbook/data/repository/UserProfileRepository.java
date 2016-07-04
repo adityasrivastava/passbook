@@ -7,5 +7,6 @@ import com.mds.passbook.data.repository.security.dao.UserProfile;
 public interface UserProfileRepository extends JpaRepository<UserProfile, Long>{
 	
 	UserProfile findByEmail(String email);
+	UserProfile findByUsername(String username);
 
 }

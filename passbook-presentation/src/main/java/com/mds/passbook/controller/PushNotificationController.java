@@ -70,7 +70,7 @@ public class PushNotificationController {
 		
 		String username = principal.getName();
 		
-		UserProfile profile = userProfileRepo.findByEmail(username);
+		UserProfile profile = userProfileRepo.findByUsername(username);
 
 		passbookService.setFileName(username);
 		passInputStream = passbookService.createPassbook(Long.valueOf(requestParams.get("gameId")));

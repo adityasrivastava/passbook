@@ -45,7 +45,7 @@ public class GolfController {
 		
 		HashMap<String, List<?>> responseMap = new HashMap<>();
 
-		UserProfile userProfile = userProfileService.findByEmail(principal.getName());
+		UserProfile userProfile = userProfileService.findByUsername(principal.getName());
 		
 		GolfUser golfUser = service.userProfileByEmailId(userProfile);
 		

@@ -26,7 +26,7 @@ public class PassbookSocialService implements SocialUserDetailsService {
 	@Override
 	public SocialUserDetails loadUserByUserId(String username) throws UsernameNotFoundException{
 
-		UserProfile user = userRepo.findByEmail(username);
+		UserProfile user = userRepo.findByUsername(username);
 
 		if (user == null) {
 			throw new UsernameNotFoundException("Username not found " + username);

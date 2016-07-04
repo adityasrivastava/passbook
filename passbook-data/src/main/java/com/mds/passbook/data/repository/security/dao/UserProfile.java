@@ -24,8 +24,11 @@ public class UserProfile extends BaseEntity<Long>{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "EMAIL", length = 100, nullable = false, unique = true)
+    @Column(name = "EMAIL", length = 100, nullable = false)
     private String email;
+    
+    @Column(name= "USERNAME", length = 100, nullable=false, unique = true)
+    private String username;
 
     @Column(name = "FIRST_NAME", length = 100,nullable = false)
     private String firstName;
@@ -62,6 +65,14 @@ public class UserProfile extends BaseEntity<Long>{
 
 	public void setSignInProvider(SocialMediaService signInProvider) {
 		this.signInProvider = signInProvider;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Long getId() {

@@ -83,6 +83,21 @@
 				</div>
 			</div>
 			
+			<div class="form-group">
+			
+			
+			<label for="email">Username</label>
+			<input id="email" class="form-control" name="email" ng-model="registerForm.username" />
+
+				<div class="email-error">
+					<span class="control-label has-error" ng-show="user.error.username">Please enter Username.</span>
+				</div>
+				<div class="email-error">
+					<span class="control-label has-error" ng-show="user.error.usernameexist">Username already exists.</span>
+				</div>
+			</div>
+			
+			
 	
 
 			<div class="form-group">
