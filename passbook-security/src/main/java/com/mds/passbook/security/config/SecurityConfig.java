@@ -7,9 +7,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import com.mds.passbook.data.repository.UserProfileRepository;
+import com.mds.passbook.security.filter.UserNamePasswordCustomFilter;
 import com.mds.passbook.security.service.PassbookSecurityService;
 import com.mds.passbook.security.service.PassbookSocialService;
 
@@ -19,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	UserProfileRepository userProfileRepo;
-	
+
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.
@@ -41,7 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.and()
 //		.apply(new SpringSocialConfigurer());
 		
-		
+		http
+		.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+	
 		http.
 		csrf()
 		.ignoringAntMatchers("/api/**","/v1/**","/logout")
@@ -49,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.disable().
 		.formLogin()
 		.loginPage("/login")
+		.usernameParameter("username")
+		.passwordParameter("password")
 		.permitAll()
 		.and()
 		.authorizeRequests()
@@ -80,6 +86,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PassbookSecurityService userDetailsService(){
 		return new PassbookSecurityService(userProfileRepo);
+	}
+	
+	@Bean
+	public UsernamePasswordAuthenticationFilter authenticationFilter(){
+		return new UserNamePasswordCustomFilter();
 	}
 
 }

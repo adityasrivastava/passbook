@@ -14,6 +14,7 @@ import com.mds.passbook.bean.golf.GolfCourse;
 import com.mds.passbook.bean.pass.PassRegistrations;
 import com.mds.passbook.data.repository.GolfCourseRepository;
 import com.mds.passbook.data.repository.GolfHolesRepository;
+import com.mds.passbook.data.repository.GolfPassRegistrationsRepository;
 import com.mds.passbook.data.repository.GolfPassRepository;
 import com.mds.passbook.data.repository.GolfRepository;
 import com.mds.passbook.data.repository.GolfScoreRepository;
@@ -26,6 +27,7 @@ import com.mds.passbook.data.repository.golf.dao.GolfScoreDao;
 import com.mds.passbook.data.repository.golf.dao.GolfTeeDao;
 import com.mds.passbook.data.repository.golf.dao.GolfTeeDetailsDao;
 import com.mds.passbook.data.repository.golf.dao.GolfUserDao;
+import com.mds.passbook.data.repository.user.dao.PassRegistrationsDao;
 import com.mds.passbook.data.repository.user.dao.UserPassDao;
 import com.mds.passbook.service.GolfService;
 
@@ -57,10 +59,22 @@ public class RepositoryTest {
 	@Autowired
 	GolfService golfService;
 	
+	@Autowired
+	GolfPassRegistrationsRepository golfPassRegistrationRepo;
+	
 	@org.junit.Test
 	
-	public void mapperTest(){
+	public void timeStampTest(){
+		String time = "2016-07-01 09:40:42.744";
 		
+		PassRegistrationsDao regi = golfPassRegistrationRepo.findBySerialNumberAndPassTypeIdAndModificationTime("1", "XYZ", time);
+		
+		if(regi != null){
+			System.out.println("NOT NULL");
+		}
+	}
+	
+	public void mapperTest(){
 		Golf golf = golfService.getGolfById(1L);
 		
 		System.out.println(golf.toString());

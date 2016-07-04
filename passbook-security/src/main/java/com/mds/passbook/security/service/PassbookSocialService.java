@@ -24,7 +24,7 @@ public class PassbookSocialService implements SocialUserDetailsService {
 	}
 
 	@Override
-	public SocialUserDetails loadUserByUserId(String username) throws UsernameNotFoundException {
+	public SocialUserDetails loadUserByUserId(String username) throws UsernameNotFoundException{
 
 		UserProfile user = userRepo.findByEmail(username);
 
@@ -37,12 +37,14 @@ public class PassbookSocialService implements SocialUserDetailsService {
 
 	public SocialUser buildUser(UserProfile user) {
 		
+		SocialUser securityUser = null;
+		
 		if(user.getPassword() == null){
 			user.setPassword("");
 		}
 
-		SocialUser securityUser = new SocialUser(user.getEmail(), user.getPassword(), buildGrantedAuthority(user));
-
+		securityUser = new SocialUser(user.getEmail(), user.getPassword(), buildGrantedAuthority(user));
+	
 		return securityUser;
 	}
 

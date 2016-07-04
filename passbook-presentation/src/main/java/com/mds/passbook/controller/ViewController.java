@@ -286,10 +286,6 @@ public class ViewController {
 		
 		UserProfile profileExistCheck = userProfileService.findByEmail(userAccountData.getEmail());
 		
-		if(profileExistCheck != null){
-			return "false";
-		}
-		
 		UserProfile profile = userProfileService.findByEmail(principal.getName());
 		
 		if((userAccountData.getEmail().compareTo(profile.getEmail()) != 0) || (userAccountData.getPassword().compareTo(profile.getPassword()) != 0)){
