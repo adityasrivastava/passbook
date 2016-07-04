@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	
 		http
-		.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+//		.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 		.csrf()
 		.ignoringAntMatchers("/api/**","/v1/**","/logout")
 		.and()
@@ -89,9 +89,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new PassbookSecurityService(userProfileRepo);
 	}
 	
-	@Bean
-	public UsernamePasswordAuthenticationFilter authenticationFilter(){
-		return new UserNamePasswordCustomFilter();
-	}
+//	@Bean
+//	public UsernamePasswordAuthenticationFilter authenticationFilter(){
+//		return new UserNamePasswordCustomFilter();
+//	}
 
 }

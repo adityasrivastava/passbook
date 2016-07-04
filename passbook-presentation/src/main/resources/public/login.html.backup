@@ -1,17 +1,15 @@
- <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org"> 
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
   <head>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
   	<script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.js"></script>
 	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="app/app.js"></script>
-  <script type="text/javascript" src="app/loginController.js"></script>
     <title tiles:fragment="title">Passbook Login Page</title>
   </head>
-  <body ng-app="passbookApp">
+  <body>
   <hr/>
-    <div tiles:fragment="content" class="container" ng-controller="LoginCtrl">
+    <div tiles:fragment="content" class="container">
 
 
       <div class="form-group pull-right">
@@ -21,41 +19,38 @@
       </div>
 
 
-        <form name="loginForm" action="/login" method="post" class="form">               
+        <form name="f" th:action="@{/login}" method="post" class="form">               
             <fieldset>
                <div class="form-group">
                
                	<h3>Login</h3>
                
                </div>
-               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
+               
                <div class="form-group">
-               <!-- 	<div th:if="${param.error}" class="alert alert-danger">    
-                    Invalid username and password.
-                </div> -->
-                <div ng-show="loginForm.username.$touched &amp;&amp; loginForm.username.$invalid || loginForm.password.$touched &amp;&amp; loginForm.password.$invalid" class="alert alert-danger">
+               	<div th:if="${param.error}" class="alert alert-danger">    
                     Invalid username and password.
                 </div>
-               <div th:if="${param.logout}" class="alert alert-success"> 
+                <div th:if="${param.logout}" class="alert alert-success"> 
                     You have been logged out.
-                </div> 
+                </div>
             
                </div>
             
                
                <div class="form-group">
                  <label for="username">Username</label>
-                 <input id="username" class="form-control" type="text" name="username" ng-model="username" required="required"/> 
+                 <input id="username" class="form-control" type="text" name="username"/> 
                </div>
 
                <div class="form-group">
                  <label for="password">Password</label>
-                 <input id="password" class="form-control" type="password" name="password" ng-model="password" required="required"/>    
+                 <input id="password" class="form-control" type="password" name="password"/>    
                </div> 
               
                 <div class="form-group">
                 
-                    <button class="btn btn-primary" type="submit" ng-disabled="loginForm.username.$invalid || loginForm.password.$invalid">Log in</button>
+                    <button class="btn btn-primary" type="submit">Log in</button>
                
                 
                 </div>
