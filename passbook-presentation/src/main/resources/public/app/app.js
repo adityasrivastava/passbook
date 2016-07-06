@@ -1,4 +1,4 @@
-var app = angular.module("passbookApp", []);
+var app = angular.module("passbookApp", ['ngTouch']);
 
 app
 		.controller(
