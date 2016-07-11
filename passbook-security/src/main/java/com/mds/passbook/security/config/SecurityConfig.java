@@ -49,9 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 //		.addFilterBefore(authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 		.csrf()
-		.ignoringAntMatchers("/api/**","/v1/**","/logout")
-		.and()
-//		.disable().
+		.disable()
+//		.ignoringAntMatchers("/api/**","/v1/**","/logout")
+//		.and()
 		.formLogin()
 		.loginPage("/login")
 		.usernameParameter("username")

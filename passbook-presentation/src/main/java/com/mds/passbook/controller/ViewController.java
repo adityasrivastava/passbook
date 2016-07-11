@@ -231,7 +231,9 @@ public class ViewController {
 		form = createRegistrationDTO(user);
 
 		if (user.getEmail() != null && user.getBirthday() != null) {
-
+			
+			form.setUsername(form.getEmail());
+			
 			UserProfile profile = persistUserRegistrationDetails(form);
 			
 			util.doPostSignUp(form.getEmail(), webRequest);
@@ -357,7 +359,7 @@ public class ViewController {
 
 		UserProfile profile = new UserProfile();
 		profile.setEmail(userAccountData.getEmail());
-		profile.setUsername(userAccountData.getEmail());
+		profile.setUsername(userAccountData.getUsername());
 		profile.setFirstName(userAccountData.getFirstName());
 		profile.setLastName(userAccountData.getLastName());
 		profile.setPassword(userAccountData.getPassword());

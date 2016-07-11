@@ -3,8 +3,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-  <meta name="_csrf" th:content="${_csrf.token}"/>
-  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+<!--   <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/> -->
   <meta name="_update_redirect" th:content="${updateFormRedirect}"/>
 	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"></link>
@@ -46,7 +46,7 @@
 	<div class="container" ng-controller="UpdateFormCtrl">
 	<h1 ng-if="registerFormStatus()">Update Form</h1>		
 	<form name="signupform"  enctype="utf8" role="form" ng-submit="submitForm()">
-		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> 
+		<!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />  -->
 		
  			<div class="form-group">
  			

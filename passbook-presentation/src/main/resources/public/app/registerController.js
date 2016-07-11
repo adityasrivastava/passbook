@@ -41,7 +41,7 @@ app.controller("RegisterFormCtrl",['$scope','$location', '$http', function($scop
       }
 
 
-  		if(updateRedirect == "false"){
+  		if(updateRedirect === "false"){
   			$http.post('/signup', $scope.registerForm, config).then(function(response){
 
 //          if(response.data === 'false'){
@@ -56,6 +56,12 @@ app.controller("RegisterFormCtrl",['$scope','$location', '$http', function($scop
 
   			window.location = response.data;
   		}, function(response){
+
+            if(response.data === 'false'){
+              $scope.user.error.usernameexist = true;
+            
+            }
+
   			console.log("Error Whoops!!!");
   		});
   		}else{
@@ -73,6 +79,10 @@ app.controller("RegisterFormCtrl",['$scope','$location', '$http', function($scop
 
   			window.location = response.data;
   		}, function(response){
+            if(response.data === 'false'){
+              $scope.user.error.usernameexist = true;
+       
+            }
   			console.log("Error Whoops!!!");
   		});
   		}

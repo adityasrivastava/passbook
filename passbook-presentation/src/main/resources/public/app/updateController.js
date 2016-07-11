@@ -78,7 +78,11 @@ app.controller("UpdateFormCtrl",['$scope','$location', '$http', function($scope,
   		}
   		
   }
-
+  // Validates email address of course.
+function validEmail(e) {
+    var filter = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+    return String(e).search (filter) != -1;
+}
 
 
           function registerFormValidation(){
